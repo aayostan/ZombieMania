@@ -11,7 +11,7 @@ Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~
 Add Progression (num bullets fired linked to kills): ~1.5hrs  
 Create score tracking and timer: ~1hrs  
 Add score and restart button to end screen: ~0.5hrs  
-Create Github Repo: ~0.25hrs 
+Create Github Repo: ~0.25hrs  
 Ideation: ~0.4hrs
 
 ## Ideas
