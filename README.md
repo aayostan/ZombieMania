@@ -24,7 +24,7 @@ Updating UI to Reflect Changes: ~0.75hrs
    - Define Clip Size + reload delay 
 2. Extra Game Loop: Gun Options (Time: ~1.75hrs)
    - Shotgun: bullet spread
-   - Machine Gun: continuous fire
+   - Machine Gun: burst fire
 3. Gates: level gates to unlock guns
    - levels based on experience
    - experience gained by killing enemies
