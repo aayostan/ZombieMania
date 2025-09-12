@@ -17,7 +17,7 @@ var pistol = {
 var shotgun = { 
 	"name" = "shotgun",
 	"max_ammo" = 8,
-	"reload_time" = 2, #seconds
+	"reload_time" = 1.75, #seconds
 	"fire_type" = "spread"
 }
 
@@ -38,8 +38,11 @@ var guns = [pistol, shotgun, machine_gun]
 
 var ammo_label
 var reload_canvas
+var reload_label
 var gun_type_label
 var spread_arr
+var reload_timer
+var reload_active = false;
 
 func _ready() -> void:
 	gun_type = GUN_TYPE.PISTOL
@@ -47,7 +50,9 @@ func _ready() -> void:
 	reload_time = guns[gun_type]["reload_time"]
 	ammo_label = find_parent("Game").find_child("Ammo")
 	reload_canvas = find_parent("Game").find_child("Reload")
+	reload_label = find_parent("Game").find_child("Reload_Time")
 	gun_type_label = find_parent("Game").find_child("Gun_Type") 
+	reload_timer = find_parent("Game").find_child("ReloadTimer")
 	ammo_label.text = "Ammo = " + str(ammo)
 	gun_type_label.text = "Gun: " + guns[gun_type]['name']
 	spread_arr = [%ShootingPoint, %ShootingPoint2, %ShootingPoint3]
@@ -61,6 +66,8 @@ func _process(_delta):
 	#if enemies_in_range.size() > 0:
 		#var target_enemy = enemies_in_range.front()
 		#look_at(target_enemy.global_position)
+	if(reload_active):
+		reload_label.text = "Reloading (" + str(round(reload_timer.time_left * pow(10, 1)) / pow(10, 1)) + "s)"
 	
 	
 func _input(event):
@@ -87,8 +94,9 @@ func change_gun():
 		gun_type = GUN_TYPE.PISTOL
 	else:
 		printerr("Unknown Gun Type")
-	reload_time = guns[gun_type]['reload_time']
+	reload_time = 0.75
 	reload()
+	reload_time = guns[gun_type]['reload_time']
 	gun_type_label.text = "Gun: " + guns[gun_type]['name']
 
 func shoot():
@@ -113,11 +121,14 @@ func inst_bullet(shooting_point : Marker2D):
 
 func reload():
 	active = false
+	reload_active = true
 	reload_canvas.show()
-	await get_tree().create_timer(reload_time).timeout
+	reload_timer = get_tree().create_timer(reload_time)
+	await reload_timer.timeout
 	reload_canvas.hide()
 	ammo = guns[gun_type]["max_ammo"]
 	ammo_label.text = "Ammo = " + str(ammo)
 	active = true
+	reload_active = false
 		
 	
