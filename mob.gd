@@ -22,7 +22,7 @@ func take_damage(amount : int):
 	%Slime.play_hurt()
 	health -= amount
 
-	if health == 0:
+	if health <= 0:
 		died.emit()
 		var smoke_scene = preload("res://smoke_explosion/smoke_explosion.tscn")
 		var smoke = smoke_scene.instantiate()

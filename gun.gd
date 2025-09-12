@@ -5,6 +5,7 @@ var active : bool = true
 var gun_type = null
 var ammo = 0
 var reload_time = 0
+var bullet_damage = 1
 
 var pistol = { 
 	"name" = "pistol",
@@ -70,6 +71,21 @@ func _input(event):
 				shoot()
 		elif event.is_action_pressed("reload"):
 			reload()
+		elif event.is_action_pressed("cycle_guns"):
+			change_gun()
+			
+				
+func change_gun():
+	if(gun_type == GUN_TYPE.PISTOL):
+		gun_type = GUN_TYPE.SHOTGUN
+	elif(gun_type == GUN_TYPE.SHOTGUN):
+		gun_type = GUN_TYPE.MACHINE_GUN
+	elif(gun_type == GUN_TYPE.MACHINE_GUN):
+		gun_type = GUN_TYPE.PISTOL
+	else:
+		printerr("Unknown Gun Type")
+	reload_time = guns[gun_type]['reload_time']
+	reload()
 
 func shoot():
 	if(ammo > 0):

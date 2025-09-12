@@ -29,7 +29,7 @@ func _physics_process(delta):
 
 
 func _on_game_level_up() -> void:
-	find_child("Gun").num_shots = clamp(find_child("Gun").num_shots + 1, 1, 5)
+	find_child("Gun").bullet_damage = clamp(find_child("Gun").bullet_damage + 1, 1, 3)
 
 func _on_game_endgame() -> void:
 	active = false
