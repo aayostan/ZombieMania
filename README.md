@@ -30,3 +30,4 @@ Updating UI to Reflect Changes: ~0.75hrs
    - experience gained by killing enemies
    - certain gun types unlocked at higher levels
    - Note: rewrites the current main game loop
+   - Stretch: add strong enemies for bonus XP
