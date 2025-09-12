@@ -13,9 +13,9 @@ Create score tracking and timer: ~1hrs
 Add score and restart button to end screen: ~0.5hrs  
 Create Github Repo: ~0.25hrs  
 Ideation: ~0.4hrs  
-Ammo Counter + Reload: ~1.5hrs
-Firing Type Differentiation: ~1hrs
-Updating UI to Reflect Changes: ~0.75hrs
+Ammo Counter + Reload: ~1.5hrs  
+Firing Type Differentiation: ~1hrs  
+Updating UI to Reflect Changes: ~0.75hrs  
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
