@@ -6,7 +6,6 @@ var damage = 1
 
 func _ready():
 	damage = find_parent("Gun").bullet_damage
-	print(damage)
 
 func _physics_process(delta):
 	const SPEED = 1000

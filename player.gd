@@ -5,31 +5,36 @@ signal health_depleted
 var health = 100.0
 var active = true
 
+func _ready():
+	%Level.text = "Level: " + str(find_child("Gun").bullet_damage)
+
 func _physics_process(delta):
-	const SPEED = 600.0
-	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	velocity = direction * SPEED
 	
 	if(active):
+		const SPEED = 600.0
+		var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		velocity = direction * SPEED
+		
 		move_and_slide()
 	
-	if velocity.length() > 0.0:
-		%HappyBoo.play_walk_animation()
-	else:
-		%HappyBoo.play_idle_animation()
-	
-	# Taking damage
-	const DAMAGE_RATE = 10.0
-	var overlapping_mobs = %HurtBox.get_overlapping_bodies()
-	if overlapping_mobs:
-		health -= DAMAGE_RATE * overlapping_mobs.size() * delta
-		%HealthBar.value = health
-		if health <= 0.0:
-			health_depleted.emit()
+		if velocity.length() > 0.0:
+			%HappyBoo.play_walk_animation()
+		else:
+			%HappyBoo.play_idle_animation()
+		
+		# Taking damage
+		const DAMAGE_RATE = 10.0
+		var overlapping_mobs = %HurtBox.get_overlapping_bodies()
+		if overlapping_mobs:
+			health -= DAMAGE_RATE * overlapping_mobs.size() * delta
+			%HealthBar.value = health
+			if health <= 0.0:
+				health_depleted.emit()
 
 
 func _on_game_level_up() -> void:
 	find_child("Gun").bullet_damage = clamp(find_child("Gun").bullet_damage + 1, 1, 3)
+	%Level.text = "Level: " + str(find_child("Gun").bullet_damage)
 
 func _on_game_endgame() -> void:
 	active = false

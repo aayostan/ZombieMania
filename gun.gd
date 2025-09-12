@@ -38,15 +38,18 @@ var guns = [pistol, shotgun, machine_gun]
 
 var ammo_label
 var reload_canvas
+var gun_type_label
 var spread_arr
 
 func _ready() -> void:
-	gun_type = GUN_TYPE.MACHINE_GUN
+	gun_type = GUN_TYPE.PISTOL
 	ammo = guns[gun_type]["max_ammo"]
 	reload_time = guns[gun_type]["reload_time"]
 	ammo_label = find_parent("Game").find_child("Ammo")
-	reload_canvas = find_parent("Game").find_child("Reload") 
+	reload_canvas = find_parent("Game").find_child("Reload")
+	gun_type_label = find_parent("Game").find_child("Gun_Type") 
 	ammo_label.text = "Ammo = " + str(ammo)
+	gun_type_label.text = "Gun: " + guns[gun_type]['name']
 	spread_arr = [%ShootingPoint, %ShootingPoint2, %ShootingPoint3]
 
 func _process(_delta):
@@ -86,6 +89,7 @@ func change_gun():
 		printerr("Unknown Gun Type")
 	reload_time = guns[gun_type]['reload_time']
 	reload()
+	gun_type_label.text = "Gun: " + guns[gun_type]['name']
 
 func shoot():
 	if(ammo > 0):

@@ -25,6 +25,7 @@ func _on_died():
 	death_count += 1
 	if(death_count % 15 == 0):
 		level_up.emit()
+		%Level.text
 	%Score.text = "Score = " + str(death_count)
 
 func _on_timer_2_timeout() -> void:
