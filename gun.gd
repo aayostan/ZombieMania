@@ -2,9 +2,30 @@ extends Area2D
 
 var num_shots : int = 1
 var active : bool = true
-const ammo_start = 12
-var ammo = ammo_start
-var reload_time = 1.5 #seconds
+var gun_type = null
+var ammo = 0
+var reload_time = 0
+
+var pistol = { 
+	"name" = "pistol",
+	"max_ammo" = 12,
+	"reload_time" = 1, #seconds
+	"fire_type" = "single"
+}
+
+var shotgun = { 
+	"name" = "shotgun",
+	"max_ammo" = 8,
+	"reload_time" = 2, #seconds
+	"fire_type" = "spread"
+}
+
+var machine_gun = { 
+	"name" = "machine gun",
+	"max_ammo" = 30,
+	"reload_time" = 1.5, #seconds
+	"fire_type" = "continuous"
+}
 
 enum GUN_TYPE {
 	PISTOL,
@@ -12,12 +33,20 @@ enum GUN_TYPE {
 	MACHINE_GUN
 }
 
+var guns = [pistol, shotgun, machine_gun]
+
+var ammo_label
+var reload_canvas
+
 func _ready() -> void:
-	find_parent("Game").find_child("Ammo").text = "Ammo = " + str(ammo)
-	#%Ammo.text = "Ammo = 12"
+	gun_type = GUN_TYPE.PISTOL
+	ammo = guns[gun_type]["max_ammo"]
+	reload_time = guns[gun_type]["reload_time"]
+	ammo_label = find_parent("Game").find_child("Ammo")
+	reload_canvas = find_parent("Game").find_child("Reload") 
+	ammo_label.text = "Ammo = " + str(ammo)
 
 func _process(_delta):
-	
 	# Point Gun at mouse cursor 
 	look_at(get_global_mouse_position())
 	
@@ -31,9 +60,9 @@ func _process(_delta):
 func _input(event):
 	if(active):
 		if event.is_action_pressed("shoot"):
-			#for shot in num_shots:
 			shoot()
-			#	await get_tree().create_timer(0.05).timeout # Waits for 1/30 seconds
+		if event.is_action_pressed("reload"):
+			reload()
 
 func shoot():
 	if(ammo > 0):
@@ -48,11 +77,11 @@ func shoot():
 
 func reload():
 	active = false
-	find_parent("Game").find_child("Reload").show()
+	reload_canvas.show()
 	await get_tree().create_timer(reload_time).timeout
-	find_parent("Game").find_child("Reload").hide()
-	ammo = ammo_start
-	find_parent("Game").find_child("Ammo").text = "Ammo = " + str(ammo)
+	reload_canvas.hide()
+	ammo = guns[gun_type]["max_ammo"]
+	ammo_label.text = "Ammo = " + str(ammo)
 	active = true
 		
 	
