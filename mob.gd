@@ -29,3 +29,6 @@ func take_damage(amount : int):
 		get_parent().add_child(smoke)
 		smoke.global_position = global_position
 		queue_free()
+
+func _on_game_endgame():
+	queue_free()

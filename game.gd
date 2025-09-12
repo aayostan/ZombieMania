@@ -12,6 +12,7 @@ func spawn_mob():
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
 	new_mob.connect("died", _on_died)
+	connect("endgame", new_mob._on_game_endgame)
 
 func _on_timer_timeout():
 	if(active):
@@ -20,7 +21,6 @@ func _on_timer_timeout():
 func _on_player_health_depleted():
 	show_endgame(%Score.text)
 	
-
 func _on_died():
 	death_count += 1
 	if(death_count % 15 == 0):
