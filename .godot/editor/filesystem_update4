@@ -4,3 +4,5 @@ res://gun.tscn
 res://player.tscn
 res://game.gd
 res://mob.gd
+res://bullet_2d.gd
+res://player.gd

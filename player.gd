@@ -32,5 +32,11 @@ func _on_game_level_up() -> void:
 	find_child("Gun").num_shots = clamp(find_child("Gun").num_shots + 1, 1, 5)
 
 func _on_game_endgame() -> void:
-	active = false;
-	find_child("Gun").active = false
+	active = false
+	var child_gun = find_child("Gun")
+	if(child_gun.active == true):
+		child_gun.active = false
+	else:
+		await get_tree().create_timer(child_gun.reload_time).timeout
+		child_gun.active = false
+		

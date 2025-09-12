@@ -23,6 +23,20 @@ gizmo_extents = 47.7
 texture = ExtResource("2_idur6")
 offset = Vector2(16, 0)
 
+[node name="ShootingPoint2" type="Marker2D" parent="WeaponPivot/Pistol"]
+unique_name_in_owner = true
+show_behind_parent = true
+position = Vector2(35, -11)
+rotation = 0.610865
+gizmo_extents = 30.6
+
+[node name="ShootingPoint3" type="Marker2D" parent="WeaponPivot/Pistol"]
+unique_name_in_owner = true
+show_behind_parent = true
+position = Vector2(35, -11)
+rotation = -0.610865
+gizmo_extents = 30.6
+
 [node name="ShootingPoint" type="Marker2D" parent="WeaponPivot/Pistol"]
 unique_name_in_owner = true
 show_behind_parent = true

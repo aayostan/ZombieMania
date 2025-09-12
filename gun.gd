@@ -24,7 +24,7 @@ var machine_gun = {
 	"name" = "machine gun",
 	"max_ammo" = 30,
 	"reload_time" = 1.5, #seconds
-	"fire_type" = "continuous"
+	"fire_type" = "burst"
 }
 
 enum GUN_TYPE {
@@ -37,14 +37,16 @@ var guns = [pistol, shotgun, machine_gun]
 
 var ammo_label
 var reload_canvas
+var spread_arr
 
 func _ready() -> void:
-	gun_type = GUN_TYPE.PISTOL
+	gun_type = GUN_TYPE.MACHINE_GUN
 	ammo = guns[gun_type]["max_ammo"]
 	reload_time = guns[gun_type]["reload_time"]
 	ammo_label = find_parent("Game").find_child("Ammo")
 	reload_canvas = find_parent("Game").find_child("Reload") 
 	ammo_label.text = "Ammo = " + str(ammo)
+	spread_arr = [%ShootingPoint, %ShootingPoint2, %ShootingPoint3]
 
 func _process(_delta):
 	# Point Gun at mouse cursor 
@@ -60,20 +62,34 @@ func _process(_delta):
 func _input(event):
 	if(active):
 		if event.is_action_pressed("shoot"):
-			shoot()
-		if event.is_action_pressed("reload"):
+			if(guns[gun_type]['fire_type'] == "burst"):
+				for shot in range(3):
+					shoot()
+					await get_tree().create_timer(0.1).timeout
+			else:
+				shoot()
+		elif event.is_action_pressed("reload"):
 			reload()
 
 func shoot():
 	if(ammo > 0):
-		const BULLET = preload("res://bullet_2d.tscn")
-		var new_bullet = BULLET.instantiate()
-		new_bullet.global_transform = %ShootingPoint.global_transform
-		%ShootingPoint.add_child(new_bullet)
+		if(guns[gun_type]['fire_type'] == "single" or guns[gun_type]['fire_type'] == "burst"):
+			inst_bullet(%ShootingPoint)
+		elif(guns[gun_type]['fire_type'] == "spread"):
+			for point in spread_arr:
+				inst_bullet(point)
+		else:
+			printerr("Unknown fire_type")
 		ammo -= 1
-		find_parent("Game").find_child("Ammo").text = "Ammo = " + str(ammo)
+		ammo_label.text = "Ammo = " + str(ammo)
 	else: # Reload
 		reload() 
+
+func inst_bullet(shooting_point : Marker2D):
+	const BULLET = preload("res://bullet_2d.tscn")
+	var new_bullet = BULLET.instantiate()
+	new_bullet.global_transform = shooting_point.global_transform
+	shooting_point.add_child(new_bullet)
 
 func reload():
 	active = false
