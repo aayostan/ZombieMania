@@ -46,6 +46,7 @@ var reload_timer
 var reload_active = false;
 var gun_switch_time = 0.5
 var gun_switch_active
+var reload_label_prefix
 
 func _ready() -> void:
 	# Set base gun type
@@ -78,14 +79,8 @@ func _process(_delta):
 	# Show reload screen while reloading
 	if(reload_active):
 		print("Made it here: reload_active")
-		reload_label.text = "Reloading (" + str(round(reload_timer.time_left * 10) / 10) + "s)"
-	
-	if(gun_switch_active):
-		print("Made it here: gun_switch_active")
-		reload_label.text = "Switching Guns (" + str(round(reload_timer.time_left * 10) / 10) + "s)"
-	
-	
-	
+		reload_label.text = reload_label_prefix + str(round(reload_timer.time_left * 10) / 10) + "s)"
+
 func _input(event):
 	if(active):
 		if event.is_action_pressed("shoot"):
@@ -96,7 +91,7 @@ func _input(event):
 			else:
 				shoot()
 		elif event.is_action_pressed("reload"):
-			reload()
+			reload(guns[gun_type]["reload_time"], false)
 		elif event.is_action_pressed("cycle_guns"):
 			change_gun()
 
@@ -112,7 +107,7 @@ func shoot():
 		ammo -= 1
 		ammo_label.text = "Ammo = " + str(ammo)
 	else: # Reload
-		reload() 
+		reload(guns[gun_type]["reload_time"], false) 
 
 func inst_bullet(shooting_point : Marker2D):
 	const BULLET = preload("res://bullet_2d.tscn")
@@ -120,10 +115,20 @@ func inst_bullet(shooting_point : Marker2D):
 	new_bullet.global_transform = shooting_point.global_transform
 	shooting_point.add_child(new_bullet)
 
-func reload():
-	show_pausing_canvas(guns[gun_type]['reload_time'], true, false)
+func reload(time : float, switch : bool):
+	active = false
+	reload_label_prefix = "Reloading ("
+	if(switch):
+		reload_label_prefix = "Switching ("
+	reload_active = true;
+	reload_canvas.show()
+	reload_timer = get_tree().create_timer(time)
+	await reload_timer.timeout
+	reload_canvas.hide()
+	reload_active = false
+	active = true
 	ammo = guns[gun_type]["max_ammo"]
-	ammo_label.text = "Ammo = " + str(ammo)
+	ammo_label.text = "Ammo = " + str(guns[gun_type]["max_ammo"])
 
 func change_gun():	
 	# Grab a reference to the player level
@@ -138,24 +143,6 @@ func change_gun():
 		gun_type = GUN_TYPE.MACHINE_GUN
 	elif(gun_type == GUN_TYPE.MACHINE_GUN):
 		gun_type = GUN_TYPE.PISTOL
-	
-	show_pausing_canvas(gun_switch_time, false, true)
+	reload(gun_switch_time, true)
 	
 	gun_type_label.text = "Gun: " + guns[gun_type]['name']
-
-
-func show_pausing_canvas(time : float, reload : bool, switch : bool):
-	active = false
-	if(reload):
-		reload_active = true;
-	if(switch):
-		gun_switch_active = true;
-	reload_canvas.show()
-	reload_timer = get_tree().create_timer(time)
-	await reload_timer.timeout
-	reload_canvas.hide()
-	if(reload):
-		reload_active = false
-	if(switch):
-		gun_switch_active = false
-	active = true
