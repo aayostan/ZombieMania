@@ -14,7 +14,8 @@ point_count = 5
 y_sort_enabled = true
 script = ExtResource("1_qclsr")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Spawn_Timer" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 0.3
 autostart = true
 
@@ -173,33 +174,26 @@ grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 45
 
-[node name="Unlock Gun" type="CanvasLayer" parent="."]
+[node name="Unlock_Gun" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 visible = false
 
-[node name="ColorRect" type="ColorRect" parent="Unlock Gun"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.439216)
-
-[node name="Gun_Unlocked" type="Label" parent="Unlock Gun/ColorRect"]
-layout_mode = 1
+[node name="Gun_Unlocked" type="Label" parent="Unlock_Gun"]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -358.0
-offset_top = -107.0
+offset_top = -340.0
 offset_right = 358.0
-offset_bottom = 107.0
+offset_bottom = -126.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 124
-text = "Reloading..."
+text = "Test Words"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -269,7 +263,7 @@ position = Vector2(-573, -231)
 [connection signal="endgame" from="." to="Player" method="_on_game_endgame"]
 [connection signal="level_up" from="." to="Player" method="_on_level_up"]
 [connection signal="level_up" from="." to="Player" method="_on_game_level_up"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Spawn_Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="PlayTimer" to="." method="_on_timer_2_timeout"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="pressed" from="GameOver/ColorRect/Button" to="." method="_on_button_pressed"]

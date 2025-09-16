@@ -94,15 +94,16 @@ func _input(event):
 			change_gun()
 			
 				
-func change_gun():
+func change_gun():	
+	# Grab a reference to the player level
+	player_level = find_parent("Game").find_child("Player").level
+	print(player_level)
 	if(gun_type == GUN_TYPE.PISTOL and player_level > 0):
 		gun_type = GUN_TYPE.SHOTGUN
 	elif(gun_type == GUN_TYPE.SHOTGUN and player_level > 1):
 		gun_type = GUN_TYPE.MACHINE_GUN
 	elif(gun_type == GUN_TYPE.MACHINE_GUN):
 		gun_type = GUN_TYPE.PISTOL
-	else:
-		printerr("Unknown Gun Type")
 	reload_time = 0.75
 	reload()
 	reload_time = guns[gun_type]['reload_time']
