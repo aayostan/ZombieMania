@@ -6,3 +6,5 @@ res://player.tscn
 res://gun.tscn
 res://characters/happy_boo/happy_boo.tscn
 res://gun.gd
+res://mob.tscn
+res://characters/slime/slime.tscn

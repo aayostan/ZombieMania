@@ -26,8 +26,6 @@ one_shot = true
 autostart = true
 ignore_time_scale = true
 
-[node name="ReloadTimer" type="Timer" parent="."]
-
 [node name="Player" parent="." instance=ExtResource("2_a7q7f")]
 
 [node name="Path2D" type="Path2D" parent="Player"]

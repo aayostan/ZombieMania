@@ -7,13 +7,7 @@ var active = true
 var death_count = 0
 var player_experience = 0
 
-var level = [
-	500, # 1
-	2000, # 2
-	6000, # 3
-	24000, # 4
-	72000, # 5
-]
+var level = range(1, 11).map(func(n): return n**2*1000)
 
 func spawn_mob():
 	%PathFollow2D.progress_ratio = randf()
@@ -35,7 +29,6 @@ func _on_died(experience : int):
 	var temp = player_experience + experience
 	for i in range(level.size()):
 		if(player_experience < level[i] and temp >= level[i]):
-			print("Go up a level")
 			level_up.emit()
 	player_experience = temp
 	%Score.text = "Score = " + str(death_count)

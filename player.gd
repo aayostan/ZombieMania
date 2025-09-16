@@ -49,20 +49,30 @@ func _on_game_endgame() -> void:
 func _on_game_level_up() -> void:
 	level += 1
 	%Level.text = "Level: " + str(level)
-	var b_dam = find_child("Gun").bullet_damage
+	var gun = find_child("Gun")
+	var b_dam = gun.bullet_damage
 	
 	if(level == 1):
 		%Gun_Unlocked.text = "Unlocked: Shotgun\n(Press E to switch)"
 	elif(level == 2):
 		%Gun_Unlocked.text = "Unlocked: Machine Gun\n(Press E to switch)"
 	elif(level == 3):
-		%Gun_Unlocked.text = "Unlocked: Bullet Damage + 1"
+		%Gun_Unlocked.text = "Plus one to bullet damage\nAnd Fast Enemies!"
 		find_child("Gun").bullet_damage = b_dam + 1
 	elif(level == 4):
-		%Gun_Unlocked.text = "Unlocked: Bullet Damage * 2"
+		%Gun_Unlocked.text = "Times two to bullet damage\nAnd Big Enemies!"
 		find_child("Gun").bullet_damage = b_dam * 2
 	elif(level == 5):
-		%Gun_Unlocked.text = "Unlocked: Armaggedon"
+		%Gun_Unlocked.text = "Double Ammo + Half Reload Time\nFaster Enemy Spawn"
+		for g in gun.guns:
+			g['max_ammo'] *= 2
+			g['reload_time'] /= 2
+		%Spawn_Timer.wait_time = 0.2
+	elif(level == 6):
+		%Gun_Unlocked.text = "UNLIMITED Ammo + Immediate Gun Switching\nFaster Enemy Spawn"
+		for g in gun.guns:
+			g['max_ammo'] *= 10**7
+		gun.gun_switch_time = 0
 		%Spawn_Timer.wait_time = 0.1
 		
 		
