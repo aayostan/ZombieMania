@@ -32,3 +32,11 @@ New Enemies and Ramping Difficulty: ~2hrs
    - experience gained by killing enemies (Time: ~0.5hrs)
    - certain gun types unlocked at higher levels (Time: ~0.75hrs)
    - Stretch: add strong enemies for bonus XP (Time: ~2hrs)
+4. Game Economy: spend experience on powerups (Time Est: ~5hrs)
+   - need a pause screen where exchanges can be made (Time Est: ~3hrs)
+   - need to balance availability with difficulty (Time Est: ~2hrs)
+   - Stretch: bullet go through and bullet ricochet bonuses (Time EstL ~2.5hrs)
+5. Juice
+   - SoundFX play script (Time Est: ~1.25hrs)
+   - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time Est: ~1.25hrs)
+   - Screenshake and when to use it.. (Time Est: ~1hr)
