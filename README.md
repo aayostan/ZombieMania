@@ -4,7 +4,7 @@ https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=y
 
 
 ## Time Breakdown
-Total: ~6hrs\
+Total: ~9.25hrs\
 <br/>
 Tutorial: ~2hrs  
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
@@ -12,17 +12,22 @@ Add Progression (num bullets fired linked to kills): ~1.5hrs
 Create score tracking and timer: ~1hrs  
 Add score and restart button to end screen: ~0.5hrs  
 Create Github Repo: ~0.25hrs  
-Ideation: ~0.4hrs
+Ideation: ~0.4hrs  
+Ammo Counter + Reload: ~1.5hrs  
+Firing Type Differentiation: ~1hrs  
+Updating UI to Reflect Changes: ~0.75hrs  
 
 ## Ideas
-1. Ammo and reload (Medium: ~4hrs)
+1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
    - Ammo counter in UI  
    - Reload button binding
    - Define Clip Size + reload delay 
-2. Gun Options (Hard: ~5hrs)
+2. Extra Game Loop: Gun Options (Time: ~1.75hrs)
    - Shotgun: bullet spread
-   - Machine Gun: continuous fire
-3. BG Music and Sounds (Easy: ~3hrs)
-   - Tense plays music during game
-   - Different sounds for reload and fire per gun
-  
+   - Machine Gun: burst fire
+3. Gates: level gates to unlock guns (Time Est.: ~5hrs)
+   - levels based on experience
+   - experience gained by killing enemies
+   - certain gun types unlocked at higher levels
+   - Note: rewrites the current main game loop
+   - Stretch: add strong enemies for bonus XP
