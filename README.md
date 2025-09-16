@@ -4,7 +4,7 @@ https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=y
 
 
 ## Time Breakdown
-Total: ~9.25hrs\
+Total: ~13.25hrs\
 <br/>
 Tutorial: ~2hrs  
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
@@ -15,7 +15,9 @@ Create Github Repo: ~0.25hrs
 Ideation: ~0.4hrs  
 Ammo Counter + Reload: ~1.5hrs  
 Firing Type Differentiation: ~1hrs  
-Updating UI to Reflect Changes: ~0.75hrs  
+Updating UI to Reflect Changes: ~0.75hrs
+Level Gates for Guns and Power Ups: ~2hrs
+New Enemies and Ramping Difficulty: ~2hrs
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
