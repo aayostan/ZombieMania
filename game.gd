@@ -5,6 +5,15 @@ signal endgame
 var active = true
 
 var death_count = 0
+var player_experience = 0
+
+var level = [
+	500, # 1
+	2000, # 2
+	6000, # 3
+	24000, # 4
+	72000, # 5
+]
 
 func spawn_mob():
 	%PathFollow2D.progress_ratio = randf()
@@ -21,17 +30,19 @@ func _on_timer_timeout():
 func _on_player_health_depleted():
 	show_endgame(%Score.text)
 	
-func _on_died():
+func _on_died(experience : int):
 	death_count += 1
-	if(death_count % 15 == 0):
-		level_up.emit()
-		%Level.text
+	var temp = player_experience + experience
+	for i in range(level.size()):
+		if(player_experience < level[i] and temp >= level[i]):
+			print("Go up a level")
+			level_up.emit()
+	player_experience = temp
 	%Score.text = "Score = " + str(death_count)
 
 func _on_timer_2_timeout() -> void:
 	var score = death_count + round(find_child("Player").health)
 	show_endgame("Score = " + str(score))
-	#get_tree().paused = true
 	
 func _process(delta: float) -> void:
 	%Time.text = "Time Left: " + str(round(%PlayTimer.time_left))
@@ -46,10 +57,4 @@ func show_endgame(scoreText):
 	%FinalScore.text = scoreText
 	%Score.hide()
 	%GameOver.show()
-	#get_tree().paused = true
-	# need to replace this with: 
-	# stop player movement
-	# stop player shooting
-	# stop playtimer
-	# stop enemies
 	

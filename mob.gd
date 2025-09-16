@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
-signal died
+signal died(experience : int)
 
 var speed = randf_range(200, 300)
 var health = 3
+var experience = 100
 
 @onready var player = get_node("/root/Game/Player")
 
@@ -23,7 +24,7 @@ func take_damage(amount : int):
 	health -= amount
 
 	if health <= 0:
-		died.emit()
+		died.emit(experience)
 		var smoke_scene = preload("res://smoke_explosion/smoke_explosion.tscn")
 		var smoke = smoke_scene.instantiate()
 		get_parent().add_child(smoke)

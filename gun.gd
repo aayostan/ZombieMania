@@ -41,33 +41,42 @@ var reload_canvas
 var reload_label
 var gun_type_label
 var spread_arr
+var player_level
 var reload_timer
 var reload_active = false;
 
 func _ready() -> void:
+	# Set base gun type
 	gun_type = GUN_TYPE.PISTOL
 	ammo = guns[gun_type]["max_ammo"]
 	reload_time = guns[gun_type]["reload_time"]
+	
+	# Grab the ammo label and update
 	ammo_label = find_parent("Game").find_child("Ammo")
+	ammo_label.text = "Ammo = " + str(ammo)
+	
+	# Grab the gun_type label and update
+	gun_type_label = find_parent("Game").find_child("Gun_Type") 
+	gun_type_label.text = "Gun: " + guns[gun_type]['name']
+	
+	# Save variables for reload scene
 	reload_canvas = find_parent("Game").find_child("Reload")
 	reload_label = find_parent("Game").find_child("Reload_Time")
-	gun_type_label = find_parent("Game").find_child("Gun_Type") 
 	reload_timer = find_parent("Game").find_child("ReloadTimer")
-	ammo_label.text = "Ammo = " + str(ammo)
-	gun_type_label.text = "Gun: " + guns[gun_type]['name']
+	
+	# Grab a reference to the player level
+	player_level = find_parent("Game").find_child("Player").level
+	
+	# For Shotgun bulllet pattern
 	spread_arr = [%ShootingPoint, %ShootingPoint2, %ShootingPoint3]
 
 func _process(_delta):
 	# Point Gun at mouse cursor 
 	look_at(get_global_mouse_position())
 	
-	# Point Gun at Random Enemy
-	#var enemies_in_range = get_overlapping_bodies()
-	#if enemies_in_range.size() > 0:
-		#var target_enemy = enemies_in_range.front()
-		#look_at(target_enemy.global_position)
+	# Show reload screen while reloading
 	if(reload_active):
-		reload_label.text = "Reloading (" + str(round(reload_timer.time_left * pow(10, 1)) / pow(10, 1)) + "s)"
+		reload_label.text = "Reloading (" + str(round(reload_timer.time_left * 10) / 10) + "s)"
 	
 	
 func _input(event):
@@ -86,9 +95,9 @@ func _input(event):
 			
 				
 func change_gun():
-	if(gun_type == GUN_TYPE.PISTOL):
+	if(gun_type == GUN_TYPE.PISTOL and player_level > 0):
 		gun_type = GUN_TYPE.SHOTGUN
-	elif(gun_type == GUN_TYPE.SHOTGUN):
+	elif(gun_type == GUN_TYPE.SHOTGUN and player_level > 1):
 		gun_type = GUN_TYPE.MACHINE_GUN
 	elif(gun_type == GUN_TYPE.MACHINE_GUN):
 		gun_type = GUN_TYPE.PISTOL

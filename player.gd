@@ -4,9 +4,10 @@ signal health_depleted
 
 var health = 100.0
 var active = true
+var level = 0
 
 func _ready():
-	%Level.text = "Level: " + str(find_child("Gun").bullet_damage)
+	%Level.text = "Level: " + str(level)
 
 func _physics_process(delta):
 	
@@ -31,13 +32,11 @@ func _physics_process(delta):
 			if health <= 0.0:
 				health_depleted.emit()
 
-
-func _on_game_level_up() -> void:
-	find_child("Gun").bullet_damage = clamp(find_child("Gun").bullet_damage + 1, 1, 3)
-	%Level.text = "Level: " + str(find_child("Gun").bullet_damage)
-
 func _on_game_endgame() -> void:
+	# Deactivate player  movement
 	active = false
+	
+	# Deactivate gun, account for reloading
 	var child_gun = find_child("Gun")
 	if(child_gun.active == true):
 		child_gun.active = false
@@ -45,3 +44,10 @@ func _on_game_endgame() -> void:
 		await get_tree().create_timer(child_gun.reload_time).timeout
 		child_gun.active = false
 		
+
+
+func _on_game_level_up() -> void:
+	level += 1
+	print("New Level = " + str(level))
+	find_child("Gun").bullet_damage = clamp(level, 1, 3)
+	%Level.text = "Level: " + str(level)

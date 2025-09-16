@@ -1,8 +1,8 @@
 res://survivors_game.tscn
-res://gun.gd
-res://gun.tscn
-res://player.tscn
 res://game.gd
-res://mob.gd
-res://bullet_2d.gd
 res://player.gd
+res://mob.gd
+res://player.tscn
+res://gun.tscn
+res://characters/happy_boo/happy_boo.tscn
+res://gun.gd
