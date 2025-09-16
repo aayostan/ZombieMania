@@ -48,6 +48,24 @@ func _on_game_endgame() -> void:
 
 func _on_game_level_up() -> void:
 	level += 1
-	print("New Level = " + str(level))
-	find_child("Gun").bullet_damage = clamp(level, 1, 3)
 	%Level.text = "Level: " + str(level)
+	var b_dam = find_child("Gun").bullet_damage
+	
+	if(level == 1):
+		%Gun_Unlocked.text = "Unlocked: Shotgun\n(Press E to switch)"
+	elif(level == 2):
+		%Gun_Unlocked.text = "Unlocked: Machine Gun\n(Press E to switch)"
+	elif(level == 3):
+		%Gun_Unlocked.text = "Unlocked: Bullet Damage + 1"
+		find_child("Gun").bullet_damage = b_dam + 1
+	elif(level == 4):
+		%Gun_Unlocked.text = "Unlocked: Bullet Damage * 2"
+		find_child("Gun").bullet_damage = b_dam * 2
+	elif(level == 5):
+		%Gun_Unlocked.text = "Unlocked: Armaggedon"
+		%Spawn_Timer.wait_time = 0.1
+		
+		
+	%Unlock_Gun.show()
+	await get_tree().create_timer(3).timeout
+	%Unlock_Gun.hide()
