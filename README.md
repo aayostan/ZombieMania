@@ -25,8 +25,8 @@ Updating UI to Reflect Changes: ~0.75hrs
 2. Extra Game Loop: Gun Options (Time: ~1.75hrs)
    - Shotgun: bullet spread
    - Machine Gun: burst fire
-3. Gates: level gates to unlock guns (Time Est.: ~3hrs)
+3. Gates: level gates to unlock guns (Time: ~4hrs)
    - levels based on experience (Time: ~0.75hrs)
    - experience gained by killing enemies (Time: ~0.5hrs)
    - certain gun types unlocked at higher levels (Time: ~0.75hrs)
-   - Stretch: add strong enemies for bonus XP (Time Est.: ~1hrs)
+   - Stretch: add strong enemies for bonus XP (Time: ~2hrs)
