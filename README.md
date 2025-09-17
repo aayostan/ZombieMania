@@ -15,9 +15,9 @@ Create Github Repo: ~0.25hrs
 Ideation: ~0.4hrs  
 Ammo Counter + Reload: ~1.5hrs  
 Firing Type Differentiation: ~1hrs  
-Updating UI to Reflect Changes: ~0.75hrs
-Level Gates for Guns and Power Ups: ~2hrs
-New Enemies and Ramping Difficulty: ~2hrs
+Updating UI to Reflect Changes: ~0.75hrs  
+Level Gates for Guns and Power Ups: ~2hrs  
+New Enemies and Ramping Difficulty: ~2hrs  
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
