@@ -4,7 +4,7 @@ https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=y
 
 
 ## Time Breakdown
-Total: ~9.25hrs\
+Total: ~13.25hrs\
 <br/>
 Tutorial: ~2hrs  
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
@@ -15,7 +15,9 @@ Create Github Repo: ~0.25hrs
 Ideation: ~0.4hrs  
 Ammo Counter + Reload: ~1.5hrs  
 Firing Type Differentiation: ~1hrs  
-Updating UI to Reflect Changes: ~0.75hrs  
+Updating UI to Reflect Changes: ~0.75hrs
+Level Gates for Guns and Power Ups: ~2hrs
+New Enemies and Ramping Difficulty: ~2hrs
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
@@ -30,3 +32,11 @@ Updating UI to Reflect Changes: ~0.75hrs
    - experience gained by killing enemies (Time: ~0.5hrs)
    - certain gun types unlocked at higher levels (Time: ~0.75hrs)
    - Stretch: add strong enemies for bonus XP (Time: ~2hrs)
+4. Game Economy: spend experience on powerups (Time Est: ~5hrs)
+   - need a pause screen where exchanges can be made (Time Est: ~3hrs)
+   - need to balance availability with difficulty (Time Est: ~2hrs)
+   - Stretch: bullet go through and bullet ricochet bonuses (Time EstL ~2.5hrs)
+5. Juice
+   - SoundFX play script (Time Est: ~1.25hrs)
+   - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time Est: ~1.25hrs)
+   - Screenshake and when to use it.. (Time Est: ~1hr)
