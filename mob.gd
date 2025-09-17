@@ -5,7 +5,7 @@ signal died(experience : int)
 @export var speedMult : float
 
 var base_mob = {
- 	"speed" = randf_range(200, 300),
+ 	"speed" = randf_range(225, 300),
 	"health" = 3,
 	"experience" = 100
 }
@@ -18,15 +18,15 @@ var fast_mob = {
 
 var big_mob = {
  	"speed" = base_mob["speed"] - 50,
-	"health" = base_mob['health'] * 7,
-	"experience" = base_mob['experience'] * 7
+	"health" = base_mob['health'] * 15,
+	"experience" = base_mob['experience'] * 10
 }
 
 @onready var player = get_node("/root/Game/Player")
 
-var base_mob_prob = 0.8
-var fast_mob_prob = 0.125
-var big_mob_prob = 0.075
+var base_mob_prob = 0.65
+var fast_mob_prob = 0.175
+var big_mob_prob = 0.175
 
 var mob_type
 

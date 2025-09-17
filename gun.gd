@@ -78,7 +78,6 @@ func _process(_delta):
 	
 	# Show reload screen while reloading
 	if(reload_active):
-		print("Made it here: reload_active")
 		reload_label.text = reload_label_prefix + str(round(reload_timer.time_left * 10) / 10) + "s)"
 
 func _input(event):
