@@ -1,3 +1,8 @@
+ProgressBar
+AnimatedSprite2D
+Sprite2D
+ShapeCast2D
+ColorRect
 Timer
 Label
 CanvasLayer

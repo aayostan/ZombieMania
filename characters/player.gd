@@ -10,7 +10,6 @@ func _ready():
 	%Level.text = "Level: " + str(level)
 
 func _physics_process(delta):
-	
 	if(active):
 		const SPEED = 600.0
 		var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -31,6 +30,7 @@ func _physics_process(delta):
 			%HealthBar.value = health
 			if health <= 0.0:
 				health_depleted.emit()
+
 
 func _on_game_endgame() -> void:
 	# Deactivate player  movement

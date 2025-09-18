@@ -9,13 +9,26 @@ var player_experience = 0
 
 var level = range(1, 11).map(func(n): return n**2*1000)
 
+func _ready():
+	spawn_trees()
+
 func spawn_mob():
 	%PathFollow2D.progress_ratio = randf()
-	var new_mob = preload("res://mob.tscn").instantiate()
+	var new_mob = preload("res://characters/mob.tscn").instantiate()
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
 	new_mob.connect("died", _on_died)
 	connect("endgame", new_mob._on_game_endgame)
+
+func spawn_trees():
+	# Get bounding box
+	var bounds = get_viewport_rect()
+	# Create trees at random in bounding box
+	print(bounds.position)
+	print(bounds.end)
+	print(bounds.size)
+	# In each tree have a function that dequeue's it after character leaves
+	
 
 func _on_timer_timeout():
 	if(active):

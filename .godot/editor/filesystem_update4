@@ -1,10 +1,5 @@
-res://survivors_game.tscn
-res://game.gd
-res://player.gd
-res://mob.gd
-res://player.tscn
-res://gun.tscn
-res://characters/happy_boo/happy_boo.tscn
-res://gun.gd
-res://mob.tscn
-res://characters/slime/slime.tscn
+res://pistol/gun.tscn
+res://pistol/gun.gd
+res://characters/player.gd
+res://ZombieMania.tscn
+res://characters/player.tscn

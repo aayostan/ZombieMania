@@ -78,7 +78,9 @@ func _process(_delta):
 	
 	# Show reload screen while reloading
 	if(reload_active):
-		reload_label.text = reload_label_prefix + str(round(reload_timer.time_left * 10) / 10) + "s)"
+		%ReloadBar.value = remap(%Timer.time_left, 0, %Timer.wait_time , 0, 100.0)
+		#reload_label.text = reload_label_prefix + str(round(reload_timer.time_left * 10) / 10) + "s)"
+		
 
 func _input(event):
 	if(active):
@@ -108,11 +110,13 @@ func shoot():
 	else: # Reload
 		reload(guns[gun_type]["reload_time"], false) 
 
+
 func inst_bullet(shooting_point : Marker2D):
-	const BULLET = preload("res://bullet_2d.tscn")
+	const BULLET = preload("res://pistol/bullet_2d.tscn")
 	var new_bullet = BULLET.instantiate()
 	new_bullet.global_transform = shooting_point.global_transform
 	shooting_point.add_child(new_bullet)
+
 
 func reload(time : float, switch : bool):
 	active = false
@@ -120,10 +124,12 @@ func reload(time : float, switch : bool):
 	if(switch):
 		reload_label_prefix = "Switching ("
 	reload_active = true;
-	reload_canvas.show()
-	reload_timer = get_tree().create_timer(time)
-	await reload_timer.timeout
-	reload_canvas.hide()
+	#reload_canvas.show()
+	%ReloadBar.show() 
+	%Timer.start(time)
+	await %Timer.timeout
+	#reload_canvas.hide()
+	%ReloadBar.hide()
 	reload_active = false
 	active = true
 	ammo = guns[gun_type]["max_ammo"]
