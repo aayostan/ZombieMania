@@ -26,7 +26,7 @@ autostart = true
 
 [node name="PlayTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 180.0
+wait_time = 300.0
 one_shot = true
 autostart = true
 ignore_time_scale = true
@@ -124,8 +124,10 @@ unique_name_in_owner = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -199.0
-offset_bottom = 90.0
+offset_left = -230.0
+offset_top = 25.0
+offset_right = -31.0
+offset_bottom = 115.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 65
