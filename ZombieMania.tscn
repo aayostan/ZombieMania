@@ -1,14 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://dun1cpardk2xw"]
+[gd_scene load_steps=6 format=3 uid="uid://dun1cpardk2xw"]
 
 [ext_resource type="Script" uid="uid://b56o2gqw1kccx" path="res://game.gd" id="1_nr0af"]
 [ext_resource type="PackedScene" uid="uid://dsw8raqgacxsc" path="res://characters/player.tscn" id="2_4mm5m"]
-[ext_resource type="PackedScene" uid="uid://c2qg1nuvfnd4q" path="res://trees/pine_tree.tscn" id="3_3ds3e"]
 
 [sub_resource type="Curve2D" id="Curve2D_cp6e5"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -1055, -697, 0, 0, 0, 0, 1057, -697, 0, 0, 0, 0, 1057, 671, 0, 0, 0, 0, -1055, 663, 0, 0, 0, 0, -1055, -689)
 }
 point_count = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mm5m"]
+bg_color = Color(0, 0.6, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nr0af"]
+bg_color = Color(0.541176, 0.054902, 0.521569, 1)
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -116,33 +121,47 @@ grow_vertical = 2
 
 [node name="Score" type="Label" parent="UI"]
 unique_name_in_owner = true
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 45
-text = "Score"
-
-[node name="Time" type="Label" parent="UI"]
-unique_name_in_owner = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
+offset_left = -199.0
+offset_bottom = 90.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 45
-text = "Time"
+theme_override_font_sizes/font_size = 65
+text = "Kills: 0"
 horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ExpBar" type="ProgressBar" parent="UI"]
+unique_name_in_owner = true
+offset_left = 60.0
+offset_right = 120.0
+offset_bottom = 1080.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 65
+theme_override_styles/fill = SubResource("StyleBoxFlat_4mm5m")
+fill_mode = 3
+show_percentage = false
+
+[node name="TimeBar" type="ProgressBar" parent="UI"]
+unique_name_in_owner = true
+offset_right = 60.0
+offset_bottom = 1080.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_nr0af")
+value = 100.0
+fill_mode = 3
+show_percentage = false
 
 [node name="Ammo" type="Label" parent="UI"]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
+offset_left = -71.5
+offset_right = 71.5
+offset_bottom = 63.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 45
@@ -150,6 +169,7 @@ text = "Ammo"
 horizontal_alignment = 1
 
 [node name="Gun_Type" type="Label" parent="UI"]
+visible = false
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -163,6 +183,7 @@ text = "Gun_Type"
 
 [node name="Level" type="Label" parent="UI"]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -226,42 +247,9 @@ offset_bottom = 107.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 124
-text = "Reloading..."
+text = "Reload! [R]"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="PineTree" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(66, 591)
-
-[node name="PineTree2" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(155, 643)
-
-[node name="PineTree3" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(-9.99997, 687)
-
-[node name="PineTree4" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(682, 254)
-
-[node name="PineTree5" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(829, 384)
-
-[node name="PineTree11" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(781, -296)
-
-[node name="PineTree6" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(-677, 313)
-
-[node name="PineTree7" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(-788, 370)
-
-[node name="PineTree8" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(-829, 229)
-
-[node name="PineTree9" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(-346, -355)
-
-[node name="PineTree10" parent="." instance=ExtResource("3_3ds3e")]
-position = Vector2(-573, -231)
 
 [connection signal="endgame" from="." to="Player" method="_on_game_endgame"]
 [connection signal="level_up" from="." to="Player" method="_on_level_up"]

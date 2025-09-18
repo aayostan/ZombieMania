@@ -6,11 +6,16 @@ var active = true
 
 var death_count = 0
 var player_experience = 0
+var player_level = 0
 
 var level = range(1, 11).map(func(n): return n**2*1000)
 
+var forest_size = 10
+
+
 func _ready():
 	spawn_trees()
+
 
 func spawn_mob():
 	%PathFollow2D.progress_ratio = randf()
@@ -20,6 +25,7 @@ func spawn_mob():
 	new_mob.connect("died", _on_died)
 	connect("endgame", new_mob._on_game_endgame)
 
+
 func spawn_trees():
 	# Get bounding box
 	var bounds = get_viewport_rect()
@@ -27,34 +33,50 @@ func spawn_trees():
 	print(bounds.position)
 	print(bounds.end)
 	print(bounds.size)
-	# In each tree have a function that dequeue's it after character leaves
 	
+	# In each tree have a function that dequeue's it after character leaves
+	for i in range(forest_size):
+		var new_tree = preload("res://trees/pine_tree.tscn").instantiate()
+		new_tree.global_position = Vector2(randf_range(0,1920),randf_range(0,1080))
+		add_child(new_tree)
+
 
 func _on_timer_timeout():
 	if(active):
 		spawn_mob()
 
+
 func _on_player_health_depleted():
 	show_endgame(%Score.text)
-	
+
+
 func _on_died(experience : int):
 	death_count += 1
 	var temp = player_experience + experience
 	for i in range(level.size()):
 		if(player_experience < level[i] and temp >= level[i]):
 			level_up.emit()
+			player_level += 1
 	player_experience = temp
-	%Score.text = "Score = " + str(death_count)
+	%Score.text = "Kills: " + str(death_count)
+
 
 func _on_timer_2_timeout() -> void:
 	var score = death_count + round(find_child("Player").health)
 	show_endgame("Score = " + str(score))
-	
+
+
 func _process(delta: float) -> void:
-	%Time.text = "Time Left: " + str(round(%PlayTimer.time_left))
+	%TimeBar.value = remap(%PlayTimer.time_left, 0, %PlayTimer.wait_time, 0, 100)
+	if(player_level > 0):
+		%ExpBar.value = remap(player_experience, level[player_level-1], level[player_level], 0, 100)
+	elif(player_level < 1):
+		%ExpBar.value = remap(player_experience, 0, level[player_level], 0, 100)
+
 
 func _on_button_pressed() -> void:
 	get_tree().reload_current_scene()
+
 
 func show_endgame(scoreText):
 	active = false

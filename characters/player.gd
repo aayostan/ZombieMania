@@ -7,7 +7,7 @@ var active = true
 var level = 0
 
 func _ready():
-	%Level.text = "Level: " + str(level)
+	%LevelLabel.text = "L" + str(level)
 
 func _physics_process(delta):
 	if(active):
@@ -48,7 +48,7 @@ func _on_game_endgame() -> void:
 
 func _on_game_level_up() -> void:
 	level += 1
-	%Level.text = "Level: " + str(level)
+	%LevelLabel.text = "L" + str(level)
 	var gun = find_child("Gun")
 	var b_dam = gun.bullet_damage
 	
