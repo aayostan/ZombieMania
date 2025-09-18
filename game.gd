@@ -87,6 +87,5 @@ func show_endgame(scoreText):
 	endgame.emit()
 	%PlayTimer.stop()
 	%FinalScore.text = scoreText
-	%Score.hide()
 	%GameOver.show()
 	

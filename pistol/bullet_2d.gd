@@ -20,7 +20,8 @@ func _physics_process(delta):
 
 func _on_body_entered(body):
 	if body.has_method("take_damage"):
+		var temp = (body.mob_type['health'] - damage) * -1
 		body.take_damage(damage)
-		damage = (body.mob_type['health'] - damage) * -1
+		damage = temp
 		if(damage <= 0):
 			queue_free()
