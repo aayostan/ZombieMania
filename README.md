@@ -37,7 +37,7 @@ Passthrough Bullets and Tree Generation: ~0.75hrs
 4. Game Economy: spend experience on powerups (Time Est: ~5hrs)
    - need a pause screen where exchanges can be made (Time Est: ~3hrs) [Don't like this, interrupts gameplay!]
    - need to balance availability with difficulty (Time Est: ~2hrs)
-   - Stretch: bullet go through (Time: ~0.5hrs) and bullet ricochet bonuses (Time Est: ~1.75hrs)
+   - Stretch: bullet go through (Time: ~0.5hrs), bullet explode, and bullet ricochet bonuses (Time Est: ~2hrs)
 5. Juice
    - SoundFX play script (Time Est: ~1.25hrs)
    - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time Est: ~1.25hrs)
