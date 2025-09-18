@@ -18,6 +18,8 @@ Firing Type Differentiation: ~1hrs
 Updating UI to Reflect Changes: ~0.75hrs  
 Level Gates for Guns and Power Ups: ~2hrs  
 New Enemies and Ramping Difficulty: ~2hrs  
+UI Improvement + Ammo Tracking Bar: ~3.5hrs  
+Passthrough Bullets and Tree Generation: ~0.75hrs  
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
@@ -33,9 +35,9 @@ New Enemies and Ramping Difficulty: ~2hrs
    - certain gun types unlocked at higher levels (Time: ~0.75hrs)
    - Stretch: add strong enemies for bonus XP (Time: ~2hrs)
 4. Game Economy: spend experience on powerups (Time Est: ~5hrs)
-   - need a pause screen where exchanges can be made (Time Est: ~3hrs)
+   - need a pause screen where exchanges can be made (Time Est: ~3hrs) [Don't like this, interrupts gameplay!]
    - need to balance availability with difficulty (Time Est: ~2hrs)
-   - Stretch: bullet go through and bullet ricochet bonuses (Time EstL ~2.5hrs)
+   - Stretch: bullet go through (Time: ~0.5hrs) and bullet ricochet bonuses (Time Est: ~1.75hrs)
 5. Juice
    - SoundFX play script (Time Est: ~1.25hrs)
    - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time Est: ~1.25hrs)
