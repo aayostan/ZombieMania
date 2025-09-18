@@ -5,3 +5,4 @@ res://ZombieMania.tscn
 res://characters/player.tscn
 res://game.gd
 res://trees/pine_tree.tscn
+res://trees/pine_tree.gd

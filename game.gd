@@ -10,11 +10,11 @@ var player_level = 0
 
 var level = range(1, 11).map(func(n): return n**2*1000)
 
-var forest_size = 10
+var forest_size = 40
 
 
 func _ready():
-	spawn_trees()
+	init_spawn_trees()
 
 
 func spawn_mob():
@@ -26,7 +26,7 @@ func spawn_mob():
 	connect("endgame", new_mob._on_game_endgame)
 
 
-func spawn_trees():
+func init_spawn_trees():
 	# Get bounding box
 	var bounds = get_viewport_rect()
 	# Create trees at random in bounding box
@@ -35,9 +35,13 @@ func spawn_trees():
 	print(bounds.size)
 	
 	# In each tree have a function that dequeue's it after character leaves
+	# Create trees in bounding box initially
+	# better to do so off screen, make bounding box bigger?
+	# possible problem, no trees show up near player
 	for i in range(forest_size):
 		var new_tree = preload("res://trees/pine_tree.tscn").instantiate()
-		new_tree.global_position = Vector2(randf_range(0,1920),randf_range(0,1080))
+		new_tree.global_position = find_child("Player").global_position + \
+									Vector2(randf_range(-1920,1920),randf_range(-1080,1080))
 		add_child(new_tree)
 
 
