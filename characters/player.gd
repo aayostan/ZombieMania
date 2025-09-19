@@ -6,8 +6,19 @@ var health = 100.0
 var active = true
 var level = 0
 
+# Camera shake stuff
+var camera : Camera2D
+
+@export var decay : float = 0.8 # Time it takes to reach 0% of trauma
+@export var max_offset : Vector2 = Vector2(100, 75) # Max hor/ver shake in pixels
+@export var max_roll : float = 0.1 # Maximum rotation in radians (use sparingly)
+
+var trauma : float = 0.0 # Current shake strength
+var trauma_power : int = 2 # Trauma exponent. Increase for more extreme shaking
+
 func _ready():
 	%LevelLabel.text = "L" + str(level)
+	camera = get_viewport().get_camera_2d()
 
 func _physics_process(delta):
 	if(active):
@@ -26,11 +37,21 @@ func _physics_process(delta):
 		const DAMAGE_RATE = 10.0
 		var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 		if overlapping_mobs:
+			trauma = min(overlapping_mobs.size() / 10.0, 1.0)
 			health -= DAMAGE_RATE * overlapping_mobs.size() * delta
 			%HealthBar.value = health
 			if health <= 0.0:
 				health_depleted.emit()
-			
+			# shake camera
+			shake()
+
+
+func shake() -> void:
+	#? Set the camera's rotation and offset based on the shake strength
+	var amount = pow(trauma, trauma_power)
+	camera.rotation = max_roll * amount * randf_range(-1, 1)
+	camera.offset.x = max_offset.x * amount * randf_range(-1, 1)
+	camera.offset.y = max_offset.y * amount * randf_range(-1, 1)
 
 
 func _on_game_endgame() -> void:
