@@ -253,6 +253,8 @@ text = "Reload! [R]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [connection signal="endgame" from="." to="Player" method="_on_game_endgame"]
 [connection signal="level_up" from="." to="Player" method="_on_level_up"]
 [connection signal="level_up" from="." to="Player" method="_on_game_level_up"]

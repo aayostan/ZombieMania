@@ -62,9 +62,16 @@ func _physics_process(_delta):
 
 
 func take_damage(amount : int):
+	if(amount < 0):
+		return
+	
+	print("I'm taking damage")
+	print(amount)
+	print("\n")
+	
 	%Slime.play_hurt()
 	mob_type['health'] -= amount
-
+	
 	if mob_type['health'] <= 0:
 		died.emit(mob_type['experience'])
 		var smoke_scene = preload("res://smoke_explosion/smoke_explosion.tscn")

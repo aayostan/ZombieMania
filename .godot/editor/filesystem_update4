@@ -7,3 +7,4 @@ res://game.gd
 res://trees/pine_tree.tscn
 res://trees/pine_tree.gd
 res://pistol/bullet_2d.gd
+res://characters/mob.gd

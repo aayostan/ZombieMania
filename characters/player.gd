@@ -30,6 +30,7 @@ func _physics_process(delta):
 			%HealthBar.value = health
 			if health <= 0.0:
 				health_depleted.emit()
+			
 
 
 func _on_game_endgame() -> void:
