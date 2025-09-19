@@ -2,3 +2,4 @@ res://Audio/AudioManager.tscn
 res://Player/Gun/gun.gd
 res://Player/Gun/bullet_2d.gd
 res://Player/player.gd
+res://Audio/audio_manager.gd

@@ -41,17 +41,18 @@ func _physics_process(delta):
 			%HealthBar.value = health
 			
 			# SoundFX
-			AudioManager.play_sfx("Ow")
+			AudioManager.play_sfx("Ow", 0, false, false, true)
 			
 			# Camera Shake
 			trauma = min(trauma + (DAMAGE_RATE * overlapping_mobs.size()) / 1000, 1.2)
 			shake()
 			
 			if health <= 0.0:
+				AudioManager.play_sfx("Death")
 				health_depleted.emit()
 		
 		else:
-			trauma = 0
+			trauma = 0.3
 
 
 func shake() -> void:
