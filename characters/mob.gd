@@ -7,19 +7,23 @@ signal died(experience : int)
 var base_mob = {
  	"speed" = randf_range(225, 300),
 	"health" = 3,
-	"experience" = 100
+	"experience" = 100,
+	"sfx" = ["Ow"]
 }
 
 var fast_mob = {
  	"speed" = base_mob["speed"] * 2.25,
 	"health" = base_mob['health'] - 1,
-	"experience" = base_mob['experience'] + 50
+	"experience" = base_mob['experience'] + 50,
+	"sfx" = ["OwHi"]
+	
 }
 
 var big_mob = {
  	"speed" = base_mob["speed"] - 50,
 	"health" = base_mob['health'] * 15,
-	"experience" = base_mob['experience'] * 10
+	"experience" = base_mob['experience'] * 10,
+	"sfx" = ["OwLo"]
 }
 
 @onready var player = get_node("/root/Game/Player")
@@ -65,14 +69,16 @@ func take_damage(amount : int):
 	if(amount < 0):
 		return
 	
-	print("I'm taking damage")
-	print(amount)
-	print("\n")
+	# For Testing
+	#print("I'm taking damage")
+	#print(amount)
+	#print("\n")
 	
 	%Slime.play_hurt()
 	mob_type['health'] -= amount
 	
 	if mob_type['health'] <= 0:
+		AudioManager.play_sfx(mob_type['sfx'].pick_random())
 		died.emit(mob_type['experience'])
 		var smoke_scene = preload("res://smoke_explosion/smoke_explosion.tscn")
 		var smoke = smoke_scene.instantiate()

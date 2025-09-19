@@ -74,10 +74,14 @@ Settings/Show_Tooltips=true
 
 [application]
 
-config/name="Your First 2D Game With Godot 4 (GDQuest)"
+config/name="Zombie Mania"
 run/main_scene="res://ZombieMania.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.png"
+
+[autoload]
+
+AudioManager="*res://Audio/AudioManager.tscn"
 
 [display]
 

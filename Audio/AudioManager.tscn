@@ -1,0 +1,44 @@
+[gd_scene load_steps=10 format=3 uid="uid://byguda1krby1"]
+
+[ext_resource type="Script" uid="uid://dbdd4tsmihyip" path="res://Audio/audio_manager.gd" id="1_l0aok"]
+[ext_resource type="AudioStream" uid="uid://dvi562if8kevk" path="res://Audio/SoundFX/PistolandMachine.wav" id="2_5m6nf"]
+[ext_resource type="AudioStream" uid="uid://dij231e0uxehf" path="res://Audio/SoundFX/Ow2.wav" id="2_ss443"]
+[ext_resource type="AudioStream" uid="uid://xlpbg7qd5e58" path="res://Audio/SoundFX/tongue_click.wav" id="3_2l8vh"]
+[ext_resource type="AudioStream" uid="uid://dhhy3rg0nkbb3" path="res://Audio/SoundFX/Ow3.wav" id="3_glf7e"]
+[ext_resource type="AudioStream" uid="uid://bh7dgimf5x7sd" path="res://Audio/SoundFX/Ow.wav" id="4_c0pm0"]
+[ext_resource type="AudioStream" uid="uid://bqep4glgt3o6m" path="res://Audio/SoundFX/Shotgun.wav" id="5_nmk5h"]
+[ext_resource type="AudioStream" uid="uid://cd82w87x0lsla" path="res://Audio/SoundFX/OwHi.wav" id="5_ym8mb"]
+[ext_resource type="AudioStream" uid="uid://dn428ww637nn4" path="res://Audio/SoundFX/OwLo.wav" id="6_b7bmg"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_l0aok")
+
+[node name="Music" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Sfx" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Ow2" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("2_ss443")
+
+[node name="Ow3" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("3_glf7e")
+
+[node name="Ow" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("4_c0pm0")
+
+[node name="OwHi" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("5_ym8mb")
+
+[node name="OwLo" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("6_b7bmg")
+
+[node name="PistolandMachine" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("2_5m6nf")
+
+[node name="TongueClick" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("3_2l8vh")
+
+[node name="Shotgun" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("5_nmk5h")

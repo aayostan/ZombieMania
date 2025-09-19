@@ -97,8 +97,10 @@ func _input(event):
 func shoot():
 	if(ammo > 0):
 		if(guns[gun_type]['fire_type'] == "single" or guns[gun_type]['fire_type'] == "burst"):
+			AudioManager.play_sfx("PistolandMachine")
 			inst_bullet(%ShootingPoint)
 		elif(guns[gun_type]['fire_type'] == "spread"):
+			AudioManager.play_sfx("Shotgun")
 			for point in spread_arr:
 				inst_bullet(point)
 		else:
@@ -115,6 +117,10 @@ func inst_bullet(shooting_point : Marker2D):
 
 
 func reload(time : float, switch : bool):
+	if(switch):
+		AudioManager.play_sfx("Woosh")
+	else:
+		AudioManager.play_sfx("TongueClick")
 	active = false
 	reload_active = true;
 	%Timer.start(time)
