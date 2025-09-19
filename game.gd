@@ -19,7 +19,7 @@ func _ready():
 
 func spawn_mob():
 	%PathFollow2D.progress_ratio = randf()
-	var new_mob = preload("res://characters/mob.tscn").instantiate()
+	var new_mob = preload("res://NPCs/Enemies/mob.tscn").instantiate()
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
 	new_mob.connect("died", _on_died)
@@ -39,7 +39,7 @@ func init_spawn_trees():
 	# better to do so off screen, make bounding box bigger?
 	# possible problem, no trees show up near player
 	for i in range(forest_size):
-		var new_tree = preload("res://trees/pine_tree.tscn").instantiate()
+		var new_tree = preload("res://Environment/pine_tree.tscn").instantiate()
 		new_tree.global_position = find_child("Player").global_position + \
 									Vector2(randf_range(-1920,1920),randf_range(-1080,1080))
 		add_child(new_tree)
