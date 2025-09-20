@@ -38,7 +38,7 @@ Passthrough Bullets and Tree Generation: ~0.75hrs
    - need a pause screen where exchanges can be made (Time Est: ~3hrs) [Don't like this, interrupts gameplay!]
    - need to balance availability with difficulty (Time Est: ~2hrs)
    - Stretch: bullet go through (Time: ~0.5hrs), bullet explode, and bullet ricochet bonuses (Time Est: ~2hrs)
-5. Juice
-   - SoundFX play script (Time Est: ~1.25hrs)
-   - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time Est: ~1.25hrs)
-   - Screenshake and when to use it.. (Time Est: ~1hr)
+5. Juice (Time: ~4hrs)
+   - SoundFX play script (Time: ~0.5hrs)
+   - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time: ~2.75hrs)
+   - Screenshake and when to use it.. (Time: ~0.75hr)
