@@ -4,7 +4,7 @@ https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=y
 
 
 ## Time Breakdown
-Total: ~13.25hrs\
+Total: ~21.75hrs\
 <br/>
 Tutorial: ~2hrs  
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
@@ -19,7 +19,9 @@ Updating UI to Reflect Changes: ~0.75hrs
 Level Gates for Guns and Power Ups: ~2hrs  
 New Enemies and Ramping Difficulty: ~2hrs  
 UI Improvement + Ammo Tracking Bar: ~3.5hrs  
-Passthrough Bullets and Tree Generation: ~0.75hrs  
+Passthrough Bullets and Tree Generation: ~1hrs  
+SoundFX and Screen Shake Scripts: ~1.25hrs  
+Making Sound Effects for the Game: ~2.75hrs  
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
@@ -34,11 +36,11 @@ Passthrough Bullets and Tree Generation: ~0.75hrs
    - experience gained by killing enemies (Time: ~0.5hrs)
    - certain gun types unlocked at higher levels (Time: ~0.75hrs)
    - Stretch: add strong enemies for bonus XP (Time: ~2hrs)
-4. Game Economy: spend experience on powerups (Time Est: ~5hrs)
+4. Game Economy: spend experience on powerups (Time Est: ~5hrs) [probably nixing this because I don't want to interrupt gameplay]
    - need a pause screen where exchanges can be made (Time Est: ~3hrs) [Don't like this, interrupts gameplay!]
    - need to balance availability with difficulty (Time Est: ~2hrs)
-   - Stretch: bullet go through (Time: ~0.5hrs), bullet explode, and bullet ricochet bonuses (Time Est: ~2hrs)
-5. Juice
-   - SoundFX play script (Time Est: ~1.25hrs)
-   - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time Est: ~1.25hrs)
-   - Screenshake and when to use it.. (Time Est: ~1hr)
+   - Stretch: bullet go through (Time: ~0.75hrs), bullet explode, and bullet ricochet bonuses (Time Est: ~2hrs)
+5. Juice (Time: ~4hrs)
+   - SoundFX play script (Time: ~0.5hrs)
+   - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time: ~2.75hrs)
+   - Screenshake and when to use it.. (Time: ~0.75hr)
