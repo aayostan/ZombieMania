@@ -36,7 +36,7 @@ Making Sound Effects for the Game: ~2.75hrs
    - experience gained by killing enemies (Time: ~0.5hrs)
    - certain gun types unlocked at higher levels (Time: ~0.75hrs)
    - Stretch: add strong enemies for bonus XP (Time: ~2hrs)
-4. Game Economy: spend experience on powerups (Time Est: ~5hrs)
+4. Game Economy: spend experience on powerups (Time Est: ~5hrs) [probably nixing this because I don't want to interrupt gameplay]
    - need a pause screen where exchanges can be made (Time Est: ~3hrs) [Don't like this, interrupts gameplay!]
    - need to balance availability with difficulty (Time Est: ~2hrs)
    - Stretch: bullet go through (Time: ~0.75hrs), bullet explode, and bullet ricochet bonuses (Time Est: ~2hrs)
