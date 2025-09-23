@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2f4if5kkfo4i"]
+
+[ext_resource type="Script" uid="uid://duc6jdf2r52ia" path="res://Pickups/pickup.gd" id="1_8qb0r"]
+[ext_resource type="Texture2D" uid="uid://bbon11blvk4e0" path="res://Pickups/sandwhich.png" id="2_vx7qd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8qb0r"]
+
+[node name="Pickup" type="Area2D"]
+script = ExtResource("1_8qb0r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_vx7qd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2.4, 4.52)
+shape = SubResource("RectangleShape2D_8qb0r")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

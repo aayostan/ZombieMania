@@ -10,3 +10,8 @@ res://NPCs/Enemies/smoke_explosion/smoke_explosion.tscn
 res://NPCs/Enemies/smoke_explosion/smoke_explosion.gdshader
 res://Pickups/pickup.gd
 res://Player/Gun/bullet_2d.gd
+res://Player/player.tscn
+res://Environment/pine_tree.tscn
+res://NPCs/Enemies/mob.tscn
+res://game.gd
+res://Pickups/pickup.tscn

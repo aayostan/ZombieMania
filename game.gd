@@ -30,9 +30,9 @@ func init_spawn_trees():
 	# Get bounding box
 	var bounds = get_viewport_rect()
 	# Create trees at random in bounding box
-	print(bounds.position)
-	print(bounds.end)
-	print(bounds.size)
+	#print(bounds.position)
+	#print(bounds.end)
+	#print(bounds.size)
 	
 	# In each tree have a function that dequeue's it after character leaves
 	# Create trees in bounding box initially
@@ -88,4 +88,23 @@ func show_endgame(scoreText):
 	%PlayTimer.stop()
 	%FinalScore.text = scoreText
 	%GameOver.show()
-	
+
+
+func _on_pickup_cooldown(param: Dictionary):
+	# Did i make it here?
+	print("I made it to the cooldown signal")
+	if(param["stat"] == "speed"):
+		if(param["modifier"] == "add"):
+			Stats.player_speed -= param["value"]
+		else:
+			Stats.player_speed /= param["value"]
+	elif(param["stat"] == "health"):
+		if(param["modifier"] == "add"):
+			Stats.player_health -= param["value"]
+		else:
+			Stats.player_health /= param["value"]
+	elif(param["stat"] == "health"):
+		if(param["modifier"] == "add"):
+			Stats.player_health -= param["value"]
+		else:
+			Stats.player_health /= param["value"]

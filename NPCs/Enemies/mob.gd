@@ -9,7 +9,7 @@ var base_mob = {
 	"health" = 3,
 	"experience" = 100,
 	"sfx" = ["Ow"],
-	"pickupprob" = %Stats.pickup_probability
+	"pickupprob" = Stats.pickup_probability
 }
 
 var fast_mob = {
@@ -88,13 +88,14 @@ func take_damage(amount : int):
 func queue_scene(scene : String):
 		var the_scene = load(scene)
 		var the_obj = the_scene.instantiate()
-		get_parent().add_child(the_obj)
+		var game = get_parent()
+		game.add_child(the_obj)
 		the_obj.global_position = global_position
 
 func pickup_drop():
 	var rand = randf()
 	if(rand < mob_type['pickupprob']):
-		queue_scene("res://Pickups/caffeine.tscn")
+		queue_scene("res://Pickups/pickup.tscn")
 		
 
 func _on_game_endgame():

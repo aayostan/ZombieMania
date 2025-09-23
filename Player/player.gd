@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 signal health_depleted
 
-var health = 100.0
+#var health = Stats.player_health
 var active = true
 var level = 0
 
@@ -22,7 +22,7 @@ func _ready():
 
 func _physics_process(delta):
 	if(active):
-		var SPEED = %Stats.player_speed
+		var SPEED = Stats.player_speed
 		var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 		velocity = direction * SPEED
 		
@@ -34,11 +34,11 @@ func _physics_process(delta):
 			%HappyBoo.play_idle_animation()
 		
 		# Taking damage
-		var DAMAGE_RATE = %Stats.enemy_damage
+		var DAMAGE_RATE = Stats.enemy_damage
 		var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 		if overlapping_mobs:
-			health -= DAMAGE_RATE * overlapping_mobs.size() * delta
-			%HealthBar.value = health
+			Stats.player_health -= DAMAGE_RATE * overlapping_mobs.size() * delta
+			%HealthBar.value = Stats.player_health
 			
 			# SoundFX
 			AudioManager.play_sfx("Ow", 0, false, false, true)
@@ -47,7 +47,7 @@ func _physics_process(delta):
 			trauma = min(trauma + (DAMAGE_RATE * overlapping_mobs.size()) / 1000, 1.2)
 			shake()
 			
-			if health <= 0.0:
+			if Stats.player_health <= 0.0:
 				AudioManager.play_sfx("Death")
 				health_depleted.emit()
 		

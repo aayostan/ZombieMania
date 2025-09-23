@@ -256,8 +256,8 @@ vertical_alignment = 1
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [connection signal="endgame" from="." to="Player" method="_on_game_endgame"]
-[connection signal="level_up" from="." to="Player" method="_on_level_up"]
 [connection signal="level_up" from="." to="Player" method="_on_game_level_up"]
+[connection signal="level_up" from="." to="Player" method="_on_level_up"]
 [connection signal="timeout" from="Spawn_Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="PlayTimer" to="." method="_on_timer_2_timeout"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
