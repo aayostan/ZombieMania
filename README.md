@@ -22,6 +22,7 @@ UI Improvement + Ammo Tracking Bar: ~3.5hrs
 Passthrough Bullets and Tree Generation: ~1hrs  
 SoundFX and Screen Shake Scripts: ~1.25hrs  
 Making Sound Effects for the Game: ~2.75hrs  
+Added Mob Drops/Pickups to Game: ~4hrs  
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
@@ -40,7 +41,8 @@ Making Sound Effects for the Game: ~2.75hrs
    - need a pause screen where exchanges can be made (Time Est: ~3hrs) [Don't like this, interrupts gameplay!]
    - need to balance availability with difficulty (Time Est: ~2hrs)
    - Stretch: bullet go through (Time: ~0.75hrs), bullet explode, and bullet ricochet bonuses (Time Est: ~2hrs)
-5. Juice (Time: ~4hrs)
+5. (4b : did this instead of 4) Added pickups which change the player's stats (Time: ~4hrs)
+6. Juice (Time: ~4hrs)
    - SoundFX play script (Time: ~0.5hrs)
    - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time: ~2.75hrs)
    - Screenshake and when to use it.. (Time: ~0.75hr)
