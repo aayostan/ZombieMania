@@ -1,3 +1,12 @@
 res://Audio/AudioManager.tscn
 res://Player/player.gd
 res://ZombieMania.tscn
+res://Pickups/CaffeinePickUp.tscn
+res://Pickups/Pickup.gd
+res://Pickups/caffeine.tscn
+res://Globals/Stats.gd
+res://NPCs/Enemies/mob.gd
+res://NPCs/Enemies/smoke_explosion/smoke_explosion.tscn
+res://NPCs/Enemies/smoke_explosion/smoke_explosion.gdshader
+res://Pickups/pickup.gd
+res://Player/Gun/bullet_2d.gd

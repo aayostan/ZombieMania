@@ -8,22 +8,24 @@ var base_mob = {
  	"speed" = randf_range(225, 300),
 	"health" = 3,
 	"experience" = 100,
-	"sfx" = ["Ow"]
+	"sfx" = ["Ow"],
+	"pickupprob" = %Stats.pickup_probability
 }
 
 var fast_mob = {
  	"speed" = base_mob["speed"] * 2.25,
 	"health" = base_mob['health'] - 1,
 	"experience" = base_mob['experience'] + 50,
-	"sfx" = ["OwHi"]
-	
+	"sfx" = ["OwHi"],
+	"pickupprob" = base_mob['pickupprob'] * 0.9
 }
 
 var big_mob = {
  	"speed" = base_mob["speed"] - 50,
 	"health" = base_mob['health'] * 15,
 	"experience" = base_mob['experience'] * 10,
-	"sfx" = ["OwLo"]
+	"sfx" = ["OwLo"],
+	"pickupprob" = base_mob['pickupprob'] * 1.5
 }
 
 @onready var player = get_node("/root/Game/Player")
@@ -77,14 +79,23 @@ func take_damage(amount : int):
 	%Slime.play_hurt()
 	mob_type['health'] -= amount
 	
-	if mob_type['health'] <= 0:
-		#AudioManager.play_sfx(mob_type['sfx'].pick_random())
+	if mob_type['health'] <= 0: # Dead condition met
 		died.emit(mob_type['experience'])
-		var smoke_scene = preload("res://NPCs/Enemies/smoke_explosion/smoke_explosion.tscn")
-		var smoke = smoke_scene.instantiate()
-		get_parent().add_child(smoke)
-		smoke.global_position = global_position
+		queue_scene("res://NPCs/Enemies/smoke_explosion/smoke_explosion.tscn")
+		pickup_drop()
 		queue_free()
+
+func queue_scene(scene : String):
+		var the_scene = load(scene)
+		var the_obj = the_scene.instantiate()
+		get_parent().add_child(the_obj)
+		the_obj.global_position = global_position
+
+func pickup_drop():
+	var rand = randf()
+	if(rand < mob_type['pickupprob']):
+		queue_scene("res://Pickups/caffeine.tscn")
+		
 
 func _on_game_endgame():
 	queue_free()

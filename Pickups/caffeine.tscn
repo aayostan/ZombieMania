@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2f4if5kkfo4i"]
+
+[ext_resource type="Script" uid="uid://duc6jdf2r52ia" path="res://Pickups/pickup.gd" id="1_8qb0r"]
+[ext_resource type="Texture2D" uid="uid://gr1msdd1q8gh" path="res://Pickups/soda-can-clipart-xl.png" id="2_d808l"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f5ije"]
+radius = 13.587
+height = 36.0294
+
+[node name="Caffeine" type="Area2D"]
+script = ExtResource("1_8qb0r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_d808l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.84, 2.72)
+shape = SubResource("CapsuleShape2D_f5ije")

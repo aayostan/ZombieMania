@@ -82,6 +82,7 @@ config/icon="res://icon.png"
 [autoload]
 
 AudioManager="*res://Audio/AudioManager.tscn"
+Stats="*res://Globals/Stats.gd"
 
 [display]
 
