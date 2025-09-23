@@ -17,7 +17,8 @@ const PICKUP_PARAMS = [
 		"cooldown" = 12,
 		"spritepath" = "res://Pickups/soda_can.png",
 		"scale" = Vector2(0.05,0.05),
-		"sfx" = "PUSo"
+		"sfx" = "PUSo",
+		"lifetime" = 5
 	}, 
 	{
 		"stat" = "health",
@@ -26,7 +27,8 @@ const PICKUP_PARAMS = [
 		"cooldown" = 0,
 		"spritepath" = "res://Pickups/sandwhich.png",
 		"scale" = Vector2(0.1,0.1),
-		"sfx" = "PUSa"
+		"sfx" = "PUSa",
+		"lifetime" = 10
 	},
 	{
 		"stat" = "n/a",
@@ -44,14 +46,13 @@ enum pickup {
 var param
 
 func _ready():
+	# Choose random pickup and change visuals
 	var p = pickup.keys()[randi() % pickup.size()]
-	%Sprite2D.texture = load(PICKUP_PARAMS[pickup[p]]["spritepath"])
-	%Sprite2D.scale = PICKUP_PARAMS[pickup[p]]["scale"]
 	param = PICKUP_PARAMS[pickup[p]]
+	%Sprite2D.texture = load(param["spritepath"])
+	%Sprite2D.scale = param["scale"]
+	get_tree().create_timer(param['lifetime']).timeout.connect(_on_lifetime_end)
 	
-	# One option for location of choosing the type of pickup
-	# Setup here
-	pass
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -81,3 +82,7 @@ func update_stat():
 			Stats.player_health += param["value"]
 		else:
 			Stats.player_health *= param["value"]
+
+
+func _on_lifetime_end():
+	queue_free()

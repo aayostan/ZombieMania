@@ -16,3 +16,4 @@ res://NPCs/Enemies/mob.tscn
 res://game.gd
 res://Pickups/pickup.tscn
 res://Audio/audio_manager.gd
+res://Environment/pine_tree.gd

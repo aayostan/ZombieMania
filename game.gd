@@ -72,7 +72,7 @@ func _on_timer_2_timeout() -> void:
 	show_endgame("Score = " + str(score))
 
 
-func _process(delta : float) -> void:
+func _process(_delta : float) -> void:
 	%TimeBar.value = remap(%PlayTimer.time_left, 0, %PlayTimer.wait_time, 0, 100)
 	if(player_level > 0):
 		%ExpBar.value = remap(player_experience, level[player_level-1], level[player_level], 0, 100)

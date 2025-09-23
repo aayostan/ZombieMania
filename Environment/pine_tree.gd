@@ -2,12 +2,12 @@ extends StaticBody2D
 
 @onready var player = get_node("/root/Game/Player")
 
-var r1 = range(-1920*1.5,-1920/2)
-var r2 = range(-1080*1.5, -1080/2)
+var r1 = range(-1920*1.5,-1920/2.0)
+var r2 = range(-1080*1.5, -1080/2.0)
 
 func _ready():
-	r1.append_array(range(1920/2,1920*1.5))
-	r2.append_array(range(1080/2, 1080*1.5))
+	r1.append_array(range(1920/2.0,1920*1.5))
+	r2.append_array(range(1080/2.0, 1080*1.5))
 
 func _process(_delta : float):
 	if(player.global_position.distance_to(global_position) > Vector2(1920, 1080).length()):
