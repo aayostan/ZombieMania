@@ -28,7 +28,7 @@ func spawn_mob():
 
 func init_spawn_trees():
 	# Get bounding box
-	var bounds = get_viewport_rect()
+	#var bounds = get_viewport_rect()
 	# Create trees at random in bounding box
 	#print(bounds.position)
 	#print(bounds.end)
@@ -51,6 +51,8 @@ func _on_timer_timeout():
 
 
 func _on_player_health_depleted():
+	AudioManager.stop_all_sfx()
+	AudioManager.play_sfx("Death")
 	show_endgame(%Score.text)
 
 
@@ -70,7 +72,7 @@ func _on_timer_2_timeout() -> void:
 	show_endgame("Score = " + str(score))
 
 
-func _process(delta: float) -> void:
+func _process(delta : float) -> void:
 	%TimeBar.value = remap(%PlayTimer.time_left, 0, %PlayTimer.wait_time, 0, 100)
 	if(player_level > 0):
 		%ExpBar.value = remap(player_experience, level[player_level-1], level[player_level], 0, 100)
@@ -92,17 +94,13 @@ func show_endgame(scoreText):
 
 func _on_pickup_cooldown(param: Dictionary):
 	# Did i make it here?
-	print("I made it to the cooldown signal")
+	#print("I made it to the cooldown signal")
+	
 	if(param["stat"] == "speed"):
 		if(param["modifier"] == "add"):
 			Stats.player_speed -= param["value"]
 		else:
 			Stats.player_speed /= param["value"]
-	elif(param["stat"] == "health"):
-		if(param["modifier"] == "add"):
-			Stats.player_health -= param["value"]
-		else:
-			Stats.player_health /= param["value"]
 	elif(param["stat"] == "health"):
 		if(param["modifier"] == "add"):
 			Stats.player_health -= param["value"]

@@ -48,7 +48,6 @@ func _physics_process(delta):
 			shake()
 			
 			if Stats.player_health <= 0.0:
-				AudioManager.play_sfx("Death")
 				health_depleted.emit()
 		
 		else:

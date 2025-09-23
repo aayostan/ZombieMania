@@ -85,12 +85,16 @@ func take_damage(amount : int):
 		pickup_drop()
 		queue_free()
 
+
 func queue_scene(scene : String):
 		var the_scene = load(scene)
 		var the_obj = the_scene.instantiate()
+		# these throw an error whenn calling from pickup_drop()
+		# don't see a problem in the game yet
 		var game = get_parent()
-		game.add_child(the_obj)
+		game.call_deferred("add_child", the_obj)
 		the_obj.global_position = global_position
+
 
 func pickup_drop():
 	var rand = randf()

@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://byguda1krby1"]
+[gd_scene load_steps=15 format=3 uid="uid://byguda1krby1"]
 
 [ext_resource type="Script" uid="uid://dbdd4tsmihyip" path="res://Audio/audio_manager.gd" id="1_l0aok"]
 [ext_resource type="AudioStream" uid="uid://dvi562if8kevk" path="res://Audio/SoundFX/MachineGun.wav" id="2_5m6nf"]
+[ext_resource type="AudioStream" uid="uid://cpeyjbdow82v" path="res://Audio/SoundFX/PUSa.wav" id="2_v3dh4"]
 [ext_resource type="AudioStream" uid="uid://ctg4runcjhbfn" path="res://Audio/SoundFX/Reload.wav" id="3_2l8vh"]
+[ext_resource type="AudioStream" uid="uid://cpkkoup5dbvw2" path="res://Audio/SoundFX/PUSo.wav" id="3_ipxi7"]
 [ext_resource type="AudioStream" uid="uid://bh7dgimf5x7sd" path="res://Audio/SoundFX/Ow.wav" id="4_c0pm0"]
 [ext_resource type="AudioStream" uid="uid://bcdq7fj48khpm" path="res://Audio/SoundFX/Shotgun.wav" id="5_nmk5h"]
 [ext_resource type="AudioStream" uid="uid://cd82w87x0lsla" path="res://Audio/SoundFX/OwHi.wav" id="5_ym8mb"]
@@ -21,6 +23,12 @@ unique_name_in_owner = true
 
 [node name="Sfx" type="Node" parent="."]
 unique_name_in_owner = true
+
+[node name="PUSa" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("2_v3dh4")
+
+[node name="PUSo" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("3_ipxi7")
 
 [node name="Ow" type="AudioStreamPlayer" parent="Sfx"]
 stream = ExtResource("4_c0pm0")

@@ -9,16 +9,15 @@ extends Area2D
 # Each pickup has it's own sound
 	# Need to create and define, easy global access.
 
-signal pick_up(param : Dictionary)
-
 const PICKUP_PARAMS = [
 	{
 		"stat" = "speed",
 		"modifier" = "multiply",
 		"value" = 1.5,
-		"cooldown" = 1,
+		"cooldown" = 12,
 		"spritepath" = "res://Pickups/soda_can.png",
-		"scale" = Vector2(0.05,0.05)
+		"scale" = Vector2(0.05,0.05),
+		"sfx" = "PUSo"
 	}, 
 	{
 		"stat" = "health",
@@ -26,7 +25,8 @@ const PICKUP_PARAMS = [
 		"value" = 10,
 		"cooldown" = 0,
 		"spritepath" = "res://Pickups/sandwhich.png",
-		"scale" = Vector2(0.1,0.1)
+		"scale" = Vector2(0.1,0.1),
+		"sfx" = "PUSa"
 	},
 	{
 		"stat" = "n/a",
@@ -53,8 +53,10 @@ func _ready():
 	# Setup here
 	pass
 
+
 func _on_body_entered(body: Node2D) -> void:
 	if(body.name == "Player"):
+		AudioManager.play_sfx(param['sfx'],0,true)
 		create_connect()
 		update_stat()
 		queue_free()

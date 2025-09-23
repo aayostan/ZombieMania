@@ -3,6 +3,8 @@ extends Node
 var active_music: AudioStreamPlayer
 var active_sfx : AudioStreamPlayer
 
+var sfx_playing = []
+
 func _ready():
 	#play_music("Main")
 	pass
@@ -25,6 +27,7 @@ func play_sfx(clip_name: String,
 	if(active_sfx):
 		if !active_sfx.playing or playMultiple:
 			active_sfx.play(position)
+			sfx_playing.append(active_sfx)
 			if(scale_pitch):
 				active_sfx.pitch_scale = pitch_array[xp_index]
 				xp_index += 1
@@ -32,3 +35,7 @@ func play_sfx(clip_name: String,
 					xp_index = 0
 			elif(rand_pitch):
 					active_sfx.pitch_scale = pitch_array[randi() % 5]
+
+func stop_all_sfx():
+	for sfx in  sfx_playing:
+		sfx.stop()
