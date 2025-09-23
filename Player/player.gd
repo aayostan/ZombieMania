@@ -78,6 +78,7 @@ func _on_game_endgame() -> void:
 
 
 func _on_game_level_up() -> void:
+	AudioManager.play_sfx("LevelUp")
 	level += 1
 	%LevelLabel.text = "L" + str(level)
 	var gun = find_child("Gun")
