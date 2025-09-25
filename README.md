@@ -4,7 +4,7 @@ https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=y
 
 
 ## Time Breakdown
-Total: ~21.75hrs\
+Total: ~25.75hrs\
 <br/>
 Tutorial: ~2hrs  
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
