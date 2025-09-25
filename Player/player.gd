@@ -20,6 +20,7 @@ func _ready():
 	%LevelLabel.text = "L" + str(level)
 	camera = get_viewport().get_camera_2d()
 
+
 func _physics_process(delta):
 	if(active):
 		var SPEED = Stats.player_speed
@@ -111,3 +112,10 @@ func _on_game_level_up() -> void:
 	%Unlock_Gun.show()
 	await get_tree().create_timer(3).timeout
 	%Unlock_Gun.hide()
+
+
+func create_gun():
+	var new_gun = preload("res://Player/Gun/gun.tscn")
+	var new_obj = new_gun.instantiate()
+	call_deferred("add_child", new_obj)
+	Stats.guns.append(new_obj)

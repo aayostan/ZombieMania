@@ -3,9 +3,11 @@ extends Area2D
 
 var travelled_distance = 0
 var damage = 1
+var gun_num
 
 func _ready():
-	damage = find_parent("Gun").bullet_damage
+	# Ineloquent solution
+	damage = get_parent().get_parent().get_parent().get_parent().bullet_damage
 
 func _physics_process(delta):
 	const SPEED = 1000

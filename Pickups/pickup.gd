@@ -31,16 +31,21 @@ const PICKUP_PARAMS = [
 		"lifetime" = 10
 	},
 	{
-		"stat" = "n/a",
-		"modifier" = "n/a",
+		"stat" = "gun",
+		"modifier" = "add",
 		"value" = 1,
-		"cooldown" = 0
+		"cooldown" = 15,
+		"spritepath" = "res://Player/Gun/pistol.png",
+		"scale" = Vector2(1,1),
+		"sfx" = "N/A",
+		"lifetime" = 8
 	}
 ]
 
 enum pickup {
 	CAFFEINE,
-	SANDWHICH
+	SANDWHICH,
+	GUN
 }
 
 var param
@@ -56,7 +61,7 @@ var bi = 0
 
 func _ready():
 	# Choose random pickup and change visuals
-	var p = pickup.keys()[randi() % pickup.size()]
+	var p = "GUN"#pickup.keys()[randi() % pickup.size()]
 	param = PICKUP_PARAMS[pickup[p]]
 	%Sprite2D.texture = load(param["spritepath"])
 	%Sprite2D.scale = param["scale"]
@@ -65,7 +70,7 @@ func _ready():
 
 func _process(delta : float) -> void:
 	if(bouncing):
-		bounce(delta)
+		bouncer(delta)
 	else:
 		# Turn collision detection back on after bouncing
 		# and create timer for lifetime of pickup
@@ -97,7 +102,7 @@ func setup_bounce():
 	pf2d.progress_ratio = 0
 
 
-func bounce(delta : float):
+func bouncer(delta : float):
 	# Let's start with just going left and right with inverted parabola
 	# then maybe I can figure out how to change it's scale
 	# I can do a radius which defines a point on a circle around the mob destroyed location
@@ -187,7 +192,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if(body.name == "Player"):
 		AudioManager.play_sfx(param['sfx'],0,true)
 		create_connect()
-		update_stat()
+		update_stat(body)
 		queue_free()
 
 
@@ -199,7 +204,7 @@ func create_connect():
 		timer.timeout.connect(game._on_pickup_cooldown.bind(param))
 
 
-func update_stat():
+func update_stat(body):
 	if(param["stat"] == "speed"):
 		if(param["modifier"] == "add"):
 			Stats.player_speed += param["value"]
@@ -210,6 +215,10 @@ func update_stat():
 			Stats.player_health += param["value"]
 		else:
 			Stats.player_health *= param["value"]
+	elif(param["stat"] == "gun"):
+		if(param["modifier"] == "add"):
+			body.create_gun()
+			Stats.two_guns = true
 
 
 func _on_lifetime_end():

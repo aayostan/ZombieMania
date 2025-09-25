@@ -6,35 +6,30 @@ var gun_type = null
 var ammo = 0
 var reload_time = 0
 var bullet_damage = 1
+var gun_num : int = 1
 
-var pistol = { 
-	"name" = "Pistol",
-	"max_ammo" = 12,
-	"reload_time" = 1, #seconds
-	"fire_type" = "single"
-}
+@export var guns = [
+	{ 
+		"name" = "Pistol",
+		"max_ammo" = 12,
+		"reload_time" = 1, #seconds
+		"fire_type" = "single"
+	},
+	{
+		"name" = "Shotgun",
+		"max_ammo" = 8,
+		"reload_time" = 1.5, #seconds
+		"fire_type" = "spread"
+	},
+	{ 
+		"name" = "Machine Gun",
+		"max_ammo" = 30,
+		"reload_time" = 1.25, #seconds
+		"fire_type" = "burst"
+	}
+]
 
-var shotgun = { 
-	"name" = "Shotgun",
-	"max_ammo" = 8,
-	"reload_time" = 1.75, #seconds
-	"fire_type" = "spread"
-}
-
-var machine_gun = { 
-	"name" = "Machine Gun",
-	"max_ammo" = 30,
-	"reload_time" = 1.5, #seconds
-	"fire_type" = "burst"
-}
-
-enum GUN_TYPE {
-	PISTOL,
-	SHOTGUN,
-	MACHINE_GUN
-}
-
-var guns = [pistol, shotgun, machine_gun]
+enum GUN_TYPE {PISTOL, SHOTGUN, MACHINE_GUN}
 
 var ammo_label
 var gun_type_label
@@ -66,8 +61,12 @@ func _ready() -> void:
 
 func _process(_delta):
 	
-	# Point Gun at mouse cursor 
-	look_at(get_global_mouse_position())
+	# Point Gun at mouse cursor
+	if(gun_num > 1):
+		rotation = (global_position - get_global_mouse_position()).angle()
+	else:
+		look_at(get_global_mouse_position())
+	
 	
 	# Reload Countdown Bar
 	if(reload_active):

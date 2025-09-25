@@ -106,3 +106,7 @@ func _on_pickup_cooldown(param: Dictionary):
 			Stats.player_health -= param["value"]
 		else:
 			Stats.player_health /= param["value"]
+	elif(param["stat"] == "gun"):
+		if(param["modifier"] == "add"):
+			if(Stats.guns.size() > 0):
+				Stats.guns.pop_back().queue_free()
