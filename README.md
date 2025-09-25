@@ -23,6 +23,7 @@ Passthrough Bullets and Tree Generation: ~1hrs
 SoundFX and Screen Shake Scripts: ~1.25hrs  
 Making Sound Effects for the Game: ~2.75hrs  
 Added Mob Drops/Pickups to Game: ~4hrs  
+Made Mod Drops/Pickups Launch and Bounce: ~4hrs  
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
@@ -46,3 +47,12 @@ Added Mob Drops/Pickups to Game: ~4hrs
    - SoundFX play script (Time: ~0.5hrs)
    - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time: ~2.75hrs)
    - Screenshake and when to use it.. (Time: ~0.75hr)
+
+## Credit
+Soda Can ClipArt: https://clipart-library.com/clipart/blue-can-cliparts-9.htm  
+Sandwhich ClipArt: https://toppng.com/show_download/79387/sandwich  
+Screen Shake Code: https://github.com/QuebleGameDev/Godot-Screen-Shake/blob/main/shake_camera/shake_camera.gd  
+Audio Manager Code: https://github.com/cu-jonas/cozy_cook/tree/main/audio  
+Error Explanation: https://forum.godotengine.org/t/what-does-the-cant-change-this-state-while-flushing-queries-error-mean/25559  
+Random Inside Unit Circle Code: https://www.reddit.com/r/godot/comments/vjge0n/could_anyone_share_some_code_for_finding_a/ @angelonit  
+
