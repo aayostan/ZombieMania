@@ -47,13 +47,12 @@ var param
 
 # Has to start as true to bounce at all
 var bouncing
-var radius
-var curr_pos
-var p2d
 var pf2d
-var y = 0
-var x = 0
-var growth_scale = 0.1
+var bi = 0
+
+@export var growth_scale : float = 0.1 
+@export var radius_range : Vector2 = Vector2(1080/2.0, 1920/2.0)
+@export var min_speed : float = 1
 
 func _ready():
 	# Choose random pickup and change visuals
@@ -61,7 +60,6 @@ func _ready():
 	param = PICKUP_PARAMS[pickup[p]]
 	%Sprite2D.texture = load(param["spritepath"])
 	%Sprite2D.scale = param["scale"]
-	get_tree().create_timer(param['lifetime']).timeout.connect(_on_lifetime_end)
 	setup_bounce()
 
 
@@ -70,20 +68,24 @@ func _process(delta : float) -> void:
 		bounce(delta)
 	else:
 		# Turn collision detection back on after bouncing
+		# and create timer for lifetime of pickup
+		# release path resources
 		if(monitoring == false):
 			monitoring = true
+			get_tree().create_timer(param['lifetime']).timeout.connect(_on_lifetime_end)
+			pf2d.get_parent().queue_free()
+	
 
 
 func setup_bounce():
-	radius = randf_range(100,1000)
 	bouncing = true
-	curr_pos = global_position
+	var radius = randf_range(radius_range.x, radius_range.y)
 	
 	# This should turn off collision detection while bouncing
 	monitoring = false
 	
 	# Create Path2D
-	p2d = Path2D.new()
+	var p2d = Path2D.new()
 	get_parent().add_child(p2d)
 	p2d.curve = Curve2D.new()
 	p2d.curve.add_point(global_position)
@@ -112,8 +114,38 @@ func bounce(delta : float):
 	# The output for pathfollow can be from 0 to 1 where 0 is path start and 1 is path end
 	# It's behavior should be parabolic, reaching the valley at 0.5
 	# The ouput for scale should be a parabola (when path = 0.5, parabola should be at it's peak)
-	var prev_pr : float = pf2d.progress_ratio
-	var new_pr : float = prev_pr + delta * _parabola(prev_pr, 0.5, 2, 1)
+	
+	var bounce = [
+		{ # 1
+			"height" = 1,
+			"width" = 3,
+			"disp" = 1,
+			"speed" = 0.5
+		}, 
+		{ # 2
+			"height" = 0.35,
+			"width" = 4,
+			"disp" = 3.25,
+			"speed" = 1 - 0.35
+		}
+	]
+	
+	var bounce_p
+	var prev_pr : float
+	var new_pr : float 
+	var growth : float 
+	var growth_v : Vector2
+
+	if(bi >= bounce.size()):
+		new_pr = 1
+		growth = -1
+	else:
+		bounce_p = bounce[bi]
+		prev_pr = pf2d.progress_ratio
+		new_pr = prev_pr + delta * _parabola(prev_pr, bounce_p['speed'], bounce_p['width'], bounce_p['disp'])
+		growth = growth_scale * _parabola(prev_pr, bounce_p['height'], bounce_p['width'], bounce_p['disp'], true)
+		growth_v = Vector2(growth, growth)
+
 	# the rate of change of pr should change over time
 	if(new_pr >= 1):
 		pf2d.progress_ratio = 1
@@ -122,9 +154,12 @@ func bounce(delta : float):
 		pf2d.progress_ratio = new_pr
 	
 	global_position = pf2d.global_position 
-		
-	%Sprite2D.scale = Vector2(param['scale'].x + (growth_scale * _parabola(prev_pr, 1, 2, 1, true)),\
-							 param['scale'].y + (growth_scale * _parabola(prev_pr, 1, 2, 1, true))) 
+	
+	if(growth < 0):
+		%Sprite2D.scale = param['scale']
+		bi += 1
+	else:
+		%Sprite2D.scale = param['scale'] + growth_v
 
 
 func _random_inside_circle(radius: float) -> Vector2:
