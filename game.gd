@@ -68,19 +68,22 @@ func _on_died(experience : int):
 
 
 func _on_timer_2_timeout() -> void:
-	var score = death_count + round(find_child("Player").health)
+	var score = death_count + round(Stats.player_health)
 	show_endgame("Score = " + str(score))
 
 
 func _process(_delta : float) -> void:
 	%TimeBar.value = remap(%PlayTimer.time_left, 0, %PlayTimer.wait_time, 0, 100)
-	if(player_level > 0):
-		%ExpBar.value = remap(player_experience, level[player_level-1], level[player_level], 0, 100)
-	elif(player_level < 1):
-		%ExpBar.value = remap(player_experience, 0, level[player_level], 0, 100)
+	if(player_level < level.size()):
+		if(player_level > 0):
+			%ExpBar.value = remap(player_experience, level[player_level-1], level[player_level], 0, 100)
+		elif(player_level < 1):
+			%ExpBar.value = remap(player_experience, 0, level[player_level], 0, 100)
 
 
 func _on_button_pressed() -> void:
+	Stats._player_health = 100.0
+	Stats.gun_type = 0
 	get_tree().reload_current_scene()
 
 
@@ -110,3 +113,4 @@ func _on_pickup_cooldown(param: Dictionary):
 		if(param["modifier"] == "add"):
 			if(Stats.guns.size() > 0):
 				Stats.guns.pop_back().queue_free()
+				find_child("Player").gun_count -= 1

@@ -61,5 +61,3 @@ show_percentage = false
 unique_name_in_owner = true
 wait_time = 0.353
 one_shot = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

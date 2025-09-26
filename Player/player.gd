@@ -5,6 +5,7 @@ signal health_depleted
 #var health = Stats.player_health
 var active = true
 var level = 0
+var arms = 2
 
 # Camera shake stuff
 var camera : Camera2D
@@ -15,6 +16,8 @@ var camera : Camera2D
 
 var trauma : float = 0.0 # Current shake strength
 var trauma_power : int = 2 # Trauma exponent. Increase for more extreme shaking
+
+var gun_count = 1
 
 func _ready():
 	%LevelLabel.text = "L" + str(level)
@@ -115,7 +118,9 @@ func _on_game_level_up() -> void:
 
 
 func create_gun():
+	gun_count += 1
 	var new_gun = preload("res://Player/Gun/gun.tscn")
 	var new_obj = new_gun.instantiate()
 	call_deferred("add_child", new_obj)
 	Stats.guns.append(new_obj)
+	new_obj.gun_num = gun_count

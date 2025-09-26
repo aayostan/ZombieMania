@@ -1,14 +1,14 @@
 extends Node
 
-var _player_health : int = 100.0
-var player_health: int:
+var _player_health : float = 100.0
+var player_health: float:
 	get:
 		return _player_health
 	set(value):
 		_player_health = clamp(value, 0, 100) # Ensure health stays between 0 and 100
 
-var _player_speed = 600.0
-var player_speed: int:
+var _player_speed : float = 600.0
+var player_speed: float:
 	get:
 		return _player_speed
 	set(value):
@@ -16,6 +16,7 @@ var player_speed: int:
 
 var two_guns : bool = false
 var guns : Array = []
+var gun_type = 0 # Originally pistol
 #var _gun_count : int = 1
 #var gun_count: int:
 	#get:

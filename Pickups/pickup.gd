@@ -90,7 +90,7 @@ func setup_bounce():
 	var radius = randf_range(radius_range.x, radius_range.y)
 	
 	# This should turn off collision detection while bouncing
-	monitoring = false
+	#ddsmonitoring = false
 	
 	# Create Path2D
 	var p2d = Path2D.new()
