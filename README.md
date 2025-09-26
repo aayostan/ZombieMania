@@ -41,21 +41,22 @@ Made Mod Drops/Pickups Launch and Bounce: ~4hrs
    - Stretch: add strong enemies for bonus XP (Time: ~2hrs)
 4. Added pickups which change the player's stats (Time: ~4.75hrs)
    - bullet go through (Time: ~0.75hrs)
-6. Juice (Time: ~4hrs)
+5. Juice (Time: ~4hrs)
    - SoundFX play script (Time: ~0.5hrs)
    - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time: ~2.75hrs)
    - Screenshake and when to use it.. (Time: ~0.75hr)
-7. Army (Time Est.: ~12hrs)
+6. Army (Time Est.: ~12hrs)
    - Equip multiple guns (Time: ~3hrs)
    - Recruit Multiple Soldiers (Time Est.: ~4hrs)
      - NPC Soldiers auto-fire (Time Est.: ~1hr)
      - NPC Soldiers follow-player (Time Est.: ~1hr)
      - NPC Enemies kill soldiers instead of player (Time Est.: ~2hrs)
    - Gun and Bullet Econonmy from mob drops (Time Est.: ~5hrs)
-8. Balance (Time Est.: ~8hrs)
+7. Balance (Time Est.: ~3hrs)
    - Limit total number of mobs and cull by distance to player (Time Est.: ~1.5hrs)
    - Limit powerups by difficulty of mob kill (Time Est.: ~1.5hrs)
-   - Add Boss Rounds to introduce new mobs (Time Est.: ~5hrs)
+8. Levels (Time Est.: ~12hrs)
+   - Add Boss Rounds to introduce new mobs 
      - Reusable Boss Round
        - Clear Enemies
        - Boss Health Bar
