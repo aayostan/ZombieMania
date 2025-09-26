@@ -47,6 +47,17 @@ Made Mod Drops/Pickups Launch and Bounce: ~4hrs
    - SoundFX play script (Time: ~0.5hrs)
    - Find SoundFX: Gunshots, reloading, gun switching, damage dealt, level-up... (Time: ~2.75hrs)
    - Screenshake and when to use it.. (Time: ~0.75hr)
+7. Army
+   - Equip multiple guns (Time: ~3hrs)
+   - Recruit Multiple Soldiers (Time Est.: ~4hrs)
+     - NPC Soldiers auto-fire (Time Est.: ~1.25hrs)
+     - NPC Soldiers follow-player (Time Est.: ~0.75hrs)
+     - NPC Enemies kill soldiers instead of player (Time Est.: ~2hrs)
+   - Gun and Bullet Econonmy from mob drops (Time Est.: ~5hrs)
+8. Balance
+   - Limit total number of mobs and cull by distance to player (Time Est.: ~1.5hrs)
+   - Limit powerups by difficulty of mob kill (Time Est.: ~1.5hrs)
+   - Add Boss Rounds (Time Est.: ~5hrs)
 
 ## Credit
 Soda Can ClipArt: https://clipart-library.com/clipart/blue-can-cliparts-9.htm  
