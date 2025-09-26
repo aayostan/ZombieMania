@@ -17,6 +17,7 @@ const PICKUP_PARAMS = [
 		"cooldown" = 12,
 		"spritepath" = "res://Pickups/soda_can.png",
 		"scale" = Vector2(0.05,0.05),
+		"g_mod" = 0.05,
 		"sfx" = "PUSo",
 		"lifetime" = 5
 	}, 
@@ -27,6 +28,7 @@ const PICKUP_PARAMS = [
 		"cooldown" = 0,
 		"spritepath" = "res://Pickups/sandwhich.png",
 		"scale" = Vector2(0.1,0.1),
+		"g_mod" = 0.1,
 		"sfx" = "PUSa",
 		"lifetime" = 10
 	},
@@ -37,6 +39,7 @@ const PICKUP_PARAMS = [
 		"cooldown" = 15,
 		"spritepath" = "res://Player/Gun/pistol.png",
 		"scale" = Vector2(1,1),
+		"g_mod" = 1,
 		"sfx" = "N/A",
 		"lifetime" = 8
 	}
@@ -61,7 +64,7 @@ var bi = 0
 
 func _ready():
 	# Choose random pickup and change visuals
-	var p = "GUN"#pickup.keys()[randi() % pickup.size()]
+	var p = pickup.keys()[randi() % pickup.size()]
 	param = PICKUP_PARAMS[pickup[p]]
 	%Sprite2D.texture = load(param["spritepath"])
 	%Sprite2D.scale = param["scale"]
@@ -148,7 +151,7 @@ func bouncer(delta : float):
 		bounce_p = bounce[bi]
 		prev_pr = pf2d.progress_ratio
 		new_pr = prev_pr + delta * _parabola(prev_pr, bounce_p['speed'], bounce_p['width'], bounce_p['disp'])
-		growth = growth_scale * _parabola(prev_pr, bounce_p['height'], bounce_p['width'], bounce_p['disp'], true)
+		growth = param["g_mod"] * _parabola(prev_pr, bounce_p['height'], bounce_p['width'], bounce_p['disp'], true)
 		growth_v = Vector2(growth, growth)
 
 	# the rate of change of pr should change over time
