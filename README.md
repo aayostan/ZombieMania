@@ -80,4 +80,5 @@ Screen Shake Code: https://github.com/QuebleGameDev/Godot-Screen-Shake/blob/main
 Audio Manager Code: https://github.com/cu-jonas/cozy_cook/tree/main/audio  
 Error Explanation: https://forum.godotengine.org/t/what-does-the-cant-change-this-state-while-flushing-queries-error-mean/25559  
 Random Inside Unit Circle Code: https://www.reddit.com/r/godot/comments/vjge0n/could_anyone_share_some_code_for_finding_a/ @angelonit  
+Inverse of look_at(): https://www.reddit.com/r/godot/comments/lzlvyv/how_to_get_the_inverse_of_look_at/ @trickm8
 
