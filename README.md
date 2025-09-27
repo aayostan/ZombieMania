@@ -4,9 +4,8 @@ https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=y
 
 
 ## Time Breakdown
-Total: ~26.25hrs\
+Total: ~24.25hrs\
 <br/>
-Tutorial: ~2hrs  
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
 Add Progression (num bullets fired linked to kills): ~1.5hrs  
 Create score tracking and timer: ~1hrs  
