@@ -14,3 +14,5 @@ res://game.gd
 res://Player/player.gd
 res://Player/Gun/bullet_2d.gd
 res://NPCs/Enemies/mob.gd
+res://Environment/pine_tree.gd
+res://NPCs/Enemies/slime.tscn

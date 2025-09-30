@@ -5,7 +5,7 @@ var player_health: float:
 	get:
 		return _player_health
 	set(value):
-		_player_health = clamp(value, 0, 100) # Ensure health stays between 0 and 100
+		_player_health = clampf(value, 0, 100) # Ensure health stays between 0 and 100
 
 var _player_speed : float = 600.0
 var player_speed: float:
@@ -24,6 +24,6 @@ var gun_type = 0 # Originally pistol
 	#set(value):
 		#_gun_count = clamp(value, 1, 2) # Ensure gun_count stays between 1 and 4
 
-
+var game_round : int = 1
 @export var enemy_damage = 10.0
 @export var pickup_probability = 1

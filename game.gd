@@ -1,53 +1,59 @@
 extends Node2D
 
+# Constants
+const MAX_LEVEL : int = 20
+const FOREST_SIZE : int = 100
+
+# Signals used to communicate with other classes
 signal level_up
 signal endgame
-var active = true
+signal bossround
 
-var death_count = 0
-var player_experience = 0
-var player_level = 0
+# Counter variables
+var kill_count : int = 0
+var player_experience : int = 0
+var player_level : int = 0
+var round_count : int = 1
 
-var level = range(1, 11).map(func(n): return n**2*1000)
+# flags
+var active : bool = true
+var spawn_boss : bool = false
 
-var forest_size = 40
+# Resoures
+var level : Array = range(1, MAX_LEVEL).map(func(n): return n**2*1000)
 
 
+
+# Built in functions
 func _ready():
-	init_spawn_trees()
+	spawn_trees()
 
 
-func spawn_mob():
-	%PathFollow2D.progress_ratio = randf()
-	var new_mob = preload("res://NPCs/Enemies/mob.tscn").instantiate()
-	new_mob.global_position = %PathFollow2D.global_position
-	add_child(new_mob)
-	new_mob.connect("died", _on_died)
-	connect("endgame", new_mob._on_game_endgame)
+func _process(_delta : float) -> void:
+	%TimeBar.value = remap(%PlayTimer.time_left, 0, %PlayTimer.wait_time, 0, 100)
+	update_exp_UI()
 
 
-func init_spawn_trees():
-	# Get bounding box
-	#var bounds = get_viewport_rect()
-	# Create trees at random in bounding box
-	#print(bounds.position)
-	#print(bounds.end)
-	#print(bounds.size)
-	
-	# In each tree have a function that dequeue's it after character leaves
-	# Create trees in bounding box initially
-	# better to do so off screen, make bounding box bigger?
-	# possible problem, no trees show up near player
-	for i in range(forest_size):
-		var new_tree = preload("res://Environment/pine_tree.tscn").instantiate()
-		new_tree.global_position = find_child("Player").global_position + \
-									Vector2(randf_range(-1920,1920),randf_range(-1080,1080))
-		add_child(new_tree)
 
-
-func _on_timer_timeout():
+# Events
+func _on_spawntimer_timeout() -> void:
 	if(active):
 		spawn_mob()
+
+
+func _on_playtimer_timeout() -> void:
+	# Run Boss Fight
+	bossround.emit() # Remove all enemies
+	%BossOverlay.show() # Show Boss Overlay
+	%SpawnTimer.stop() # Stop Spawning enemies
+	
+	# Spawn boss enemy
+	spawn_boss = true
+	spawn_mob()
+	spawn_boss = false
+	
+	#var score = kill_count + round_count(Stats.player_health)
+	#show_endgame("Score = " + str(score))
 
 
 func _on_player_health_depleted():
@@ -56,29 +62,23 @@ func _on_player_health_depleted():
 	show_endgame(%Score.text)
 
 
-func _on_died(experience : int):
-	death_count += 1
+func _on_mob_died(experience : int, is_boss : bool):
+	# Respond to killing boss
+	if(is_boss):
+		round_count += 1
+		%BossOverlay.hide() # Show Boss Overlay
+		%SpawnTimer.start() # Stop Spawning enemies
+		%PlayTimer.start() # Restart playtimer
+		return
+	
+	kill_count += 1
 	var temp = player_experience + experience
 	for i in range(level.size()):
 		if(player_experience < level[i] and temp >= level[i]):
 			level_up.emit()
 			player_level += 1
 	player_experience = temp
-	%Score.text = "Kills: " + str(death_count)
-
-
-func _on_timer_2_timeout() -> void:
-	var score = death_count + round(Stats.player_health)
-	show_endgame("Score = " + str(score))
-
-
-func _process(_delta : float) -> void:
-	%TimeBar.value = remap(%PlayTimer.time_left, 0, %PlayTimer.wait_time, 0, 100)
-	if(player_level < level.size()):
-		if(player_level > 0):
-			%ExpBar.value = remap(player_experience, level[player_level-1], level[player_level], 0, 100)
-		elif(player_level < 1):
-			%ExpBar.value = remap(player_experience, 0, level[player_level], 0, 100)
+	%Score.text = "Kills: " + str(kill_count)
 
 
 func _on_button_pressed() -> void:
@@ -87,17 +87,13 @@ func _on_button_pressed() -> void:
 	get_tree().reload_current_scene()
 
 
-func show_endgame(scoreText):
-	active = false
-	endgame.emit()
-	%PlayTimer.stop()
-	%FinalScore.text = scoreText
-	%GameOver.show()
-
-
 func _on_pickup_cooldown(param: Dictionary):
+# This function nullifies the pickup effect after the pickup cooldown
+
 	# Did i make it here?
 	#print("I made it to the cooldown signal")
+	
+	# There are definitely still some synchronization issues here!
 	
 	if(param["stat"] == "speed"):
 		if(param["modifier"] == "add"):
@@ -114,3 +110,55 @@ func _on_pickup_cooldown(param: Dictionary):
 			if(Stats.guns.size() > 0):
 				Stats.guns.pop_back().queue_free()
 				find_child("Player").gun_count -= 1
+
+
+
+# Helpers
+func spawn_trees():
+	# Get bounding box
+	var bounds = get_viewport_rect()
+	var boundX = bounds.size.x
+	var boundY = bounds.size.y
+	
+	# Repeat X times
+	for i in range(FOREST_SIZE):
+		# Randomization
+		var randV2 = Vector2(randf_range(-boundX, boundX),randf_range(-boundY, boundY))
+		
+		# Object instantiation
+		var new_tree = preload("res://Environment/pine_tree.tscn").instantiate()
+		new_tree.global_position = find_child("Player").global_position + randV2
+		add_child(new_tree)
+
+
+func spawn_mob():
+	# ranomization
+	%PathFollow2D.progress_ratio = randf()
+	
+	# object instantiation
+	var new_mob = preload("res://NPCs/Enemies/mob.tscn").instantiate()
+	new_mob.global_position = %PathFollow2D.global_position
+	add_child(new_mob)
+	
+	# connect signals
+	new_mob.connect("mob_died", _on_mob_died)
+	connect("endgame", new_mob._on_game_endgame)
+	connect("bossround", new_mob._on_game_bossround)
+
+
+func show_endgame(scoreText):
+	active = false
+	endgame.emit()
+	%PlayTimer.stop()
+	%FinalScore.text = scoreText
+	%GameOver.show()
+
+
+func update_exp_UI():
+	if(player_level < level.size()):
+		if(player_level > 0):
+			%ExpBar.value = remap(player_experience, level[player_level-1], level[player_level], 0, 100)
+		elif(player_level < 1):
+			%ExpBar.value = remap(player_experience, 0, level[player_level], 0, 100)
+	else:
+		%ExpBar.value = 100

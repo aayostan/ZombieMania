@@ -239,7 +239,7 @@ offset_left = -840.0
 offset_right = 960.0
 offset_bottom = 60.0
 grow_horizontal = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_3louf")
+theme_override_styles/background = SubResource("StyleBoxFlat_3louf")
 value = 100.0
 show_percentage = false
 

@@ -4,7 +4,7 @@ signal health_depleted
 
 #var health = Stats.player_health
 var active = true
-var level = 0
+var level = 3
 var arms = 2
 
 # Camera shake stuff
@@ -58,14 +58,7 @@ func _physics_process(delta):
 			trauma = 0.3
 
 
-func shake() -> void:
-	#? Set the camera's rotation and offset based on the shake strength
-	var amount = pow(trauma, trauma_power)
-	camera.rotation = max_roll * amount * randf_range(-1, 1)
-	camera.offset.x = max_offset.x * amount * randf_range(-1, 1)
-	camera.offset.y = max_offset.y * amount * randf_range(-1, 1)
-
-
+# Events
 func _on_game_endgame() -> void:
 	# Deactivate player  movement
 	active = false
@@ -117,6 +110,8 @@ func _on_game_level_up() -> void:
 	%Unlock_Gun.hide()
 
 
+
+# Helpers
 func create_gun():
 	gun_count += 1
 	var new_gun = preload("res://Player/Gun/gun.tscn")
@@ -124,3 +119,11 @@ func create_gun():
 	call_deferred("add_child", new_obj)
 	Stats.guns.append(new_obj)
 	new_obj.gun_num = gun_count
+
+
+func shake() -> void:
+	#? Set the camera's rotation and offset based on the shake strength
+	var amount = pow(trauma, trauma_power)
+	camera.rotation = max_roll * amount * randf_range(-1, 1)
+	camera.offset.x = max_offset.x * amount * randf_range(-1, 1)
+	camera.offset.y = max_offset.y * amount * randf_range(-1, 1)
