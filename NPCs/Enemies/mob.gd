@@ -38,11 +38,19 @@ var big_mob = {
 	"pickupprob" = base_mob['pickupprob'] * 1.5
 }
 
-var boss_mob = {
+var big_mob_boss = {
  	"speed" = big_mob['speed'] - 50,
 	"health" = big_mob['health'] * 5,
 	"experience" = big_mob['experience'] * 10,
 	"sfx" = ["OwLo"],
+	"pickupprob" = 1
+}
+
+var fast_mob_boss = {
+ 	"speed" = fast_mob["speed"] * 2.25,
+	"health" = fast_mob['health'] * 10,
+	"experience" = fast_mob['experience'] * 5,
+	"sfx" = ["OwHi"],
 	"pickupprob" = 1
 }
 
@@ -91,16 +99,21 @@ func _on_game_bossround():
 # Helpers
 func choose_mob():
 	if(boss):
-		mob_type = boss_mob
-		scale = Vector2(5, 5) # Make big
-		ignore_trees = true
+		if(round_count % 2 == 1):
+			mob_type = big_mob_boss
+			scale = Vector2(5, 5) # Make big
+			ignore_trees = true
+		elif(round_count % 2 == 0): # Every Other Round
+			mob_type = fast_mob_boss
+			scale = Vector2(0.8, 0.8)
+			%Slime.find_child("SlimeBody").modulate = Color(255, 0, 0, 255)
 		return
 	
 	# Randomization
 	var rand = randf()
 	
 	# Decision Tree
-	if(round_count == 1):
+	if(round_count <= 1):
 		mob_type = base_mob
 	elif(round_count == 2):
 		if(rand < base_mob_prob):
@@ -113,6 +126,7 @@ func choose_mob():
 			mob_type = base_mob
 		elif(rand >= base_mob_prob and rand < (base_mob_prob + fast_mob_prob)):
 			mob_type = fast_mob
+			scale = Vector2(0.8, 0.8)
 			%Slime.find_child("SlimeBody").modulate = Color(255, 0, 0, 255)
 		else:
 			mob_type = big_mob
