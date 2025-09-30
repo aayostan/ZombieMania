@@ -40,7 +40,7 @@ var big_mob = {
 
 var boss_mob = {
  	"speed" = big_mob['speed'] - 50,
-	"health" = big_mob['health'] * 1,
+	"health" = big_mob['health'] * 5,
 	"experience" = big_mob['experience'] * 10,
 	"sfx" = ["OwLo"],
 	"pickupprob" = 1

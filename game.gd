@@ -22,6 +22,9 @@ var spawn_boss : bool = false
 # Resoures
 var level : Array = range(1, MAX_LEVEL).map(func(n): return n**2*1000)
 
+# Placholders
+var spawn_time
+
 
 
 # Built in functions
@@ -52,6 +55,9 @@ func _on_playtimer_timeout() -> void:
 	spawn_mob()
 	spawn_boss = false
 	
+	# Reconfigure SpawnTimer
+	%SpawnTimer.wait_time = 5
+	%SpawnTimer.start()
 	#var score = kill_count + round_count(Stats.player_health)
 	#show_endgame("Score = " + str(score))
 
@@ -66,8 +72,9 @@ func _on_mob_died(experience : int, is_boss : bool):
 	# Respond to killing boss
 	if(is_boss):
 		round_count += 1
+		print(round_count)
 		%BossOverlay.hide() # Show Boss Overlay
-		%SpawnTimer.start() # Stop Spawning enemies
+		%SpawnTimer.wait_time = 0.3
 		%PlayTimer.start() # Restart playtimer
 		return
 	

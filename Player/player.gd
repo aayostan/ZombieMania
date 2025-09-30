@@ -4,7 +4,7 @@ signal health_depleted
 
 #var health = Stats.player_health
 var active = true
-var level = 3
+var level = 0
 var arms = 2
 
 # Camera shake stuff
@@ -90,18 +90,18 @@ func _on_game_level_up() -> void:
 	elif(level == 4):
 		%Gun_Unlocked.text = "Times two to bullet damage\nAnd Big Enemies!"
 		find_child("Gun").bullet_damage = b_dam * 2
-	elif(level == 5 or level == 6):
-		%Gun_Unlocked.text = "Double Ammo + Half Reload Time\nFaster Enemy Spawn"
-		for g in gun.guns:
-			g['max_ammo'] *= 2
-			g['reload_time'] /= 2
-		%Spawn_Timer.wait_time -= 0.1
-	elif(level == 7):
-		%Gun_Unlocked.text = "ARMAGEDDON: UNLIMITED Ammo\nSuper Fast Enemy Spawn"
-		for g in gun.guns:
-			g['max_ammo'] *= 10**7
-		gun.gun_switch_time = 0
-		%Spawn_Timer.wait_time = 0.05
+	#elif(level == 5 or level == 6):
+		#%Gun_Unlocked.text = "Double Ammo + Half Reload Time\nFaster Enemy Spawn"
+		#for g in gun.guns:
+			#g['max_ammo'] *= 2
+			#g['reload_time'] /= 2
+		#%SpawnTimer.wait_time -= 0.1
+	#elif(level == 7):
+		#%Gun_Unlocked.text = "ARMAGEDDON: UNLIMITED Ammo\nSuper Fast Enemy Spawn"
+		#for g in gun.guns:
+			#g['max_ammo'] *= 10**7
+		#gun.gun_switch_time = 0
+		#%SpawnTimer.wait_time = 0.05
 	else:
 		return
 		

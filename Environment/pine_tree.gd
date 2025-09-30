@@ -17,7 +17,7 @@ func _process(_delta : float):
 	# could do completely differently by creating queue
 	# of trees which randomly generate as player approaches new area
 	if(player.global_position.distance_to(global_position) > Vector2(1920, 1080).length()):
-		global_position = player.global_position + Vector2(r1.pick_random(),r2.pick_random())
+		move_tree()
 
 
 func _physics_process(_delta: float) -> void:
@@ -25,8 +25,7 @@ func _physics_process(_delta: float) -> void:
 	if(overlapping_mobs):
 		for m in overlapping_mobs:
 			if(m.boss):
-				# Move tree
-				global_position = player.global_position + Vector2(r1.pick_random(),r2.pick_random())
+				move_tree()
 
 
 
@@ -40,4 +39,16 @@ func rand4bounds(b, b2, b3 , b4) -> float:
 	else:
 		return n
 
-	
+
+func move_tree():
+	global_position = player.global_position + rand_out_bounds()
+
+
+func rand_out_bounds() -> Vector2:
+	var randx = randf_range(-1920 * 1.5, 1920 * 1.5)
+	var randy
+	if(randx < -1920/2.0 or randx > 1920/2.0):
+		randy = randf_range(-1080 * 1.5, 1080 * 1.5)
+	else:
+		randy = r2.pick_random()
+	return Vector2(randx, randy)
