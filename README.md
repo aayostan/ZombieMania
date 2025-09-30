@@ -4,7 +4,7 @@ https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=y
 
 
 ## Time Breakdown
-Total: ~24.25hrs\
+Total: ~32.25hrs\
 <br/>
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
 Add Progression (num bullets fired linked to kills): ~1.5hrs  
@@ -23,7 +23,7 @@ SoundFX and Screen Shake Scripts: ~1.25hrs
 Making Sound Effects for the Game: ~2.75hrs  
 Added Mob Drops/Pickups to Game: ~4hrs  
 Made Mod Drops/Pickups Launch and Bounce: ~4hrs  
-
+Game Level Design (Rounds + Bosses + Env): ~4hrs
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
@@ -51,16 +51,17 @@ Made Mod Drops/Pickups Launch and Bounce: ~4hrs
      - NPC Soldiers follow-player (Time Est.: ~1hr)
      - NPC Enemies kill soldiers instead of player (Time Est.: ~2hrs)
    - Gun and Bullet Econonmy from mob drops (Time Est.: ~5hrs)
-7. Balance (Time Est.: ~3hrs)
+7. Balance (Time Est.: ~5.5hrs)
    - Limit total number of mobs and cull by distance to player (Time Est.: ~1.5hrs)
    - Limit powerups by difficulty of mob kill (Time Est.: ~1.5hrs)
+   - Add Inventory for powerup pickups (Time Est.: ~2.5hrs)
 8. Levels (Time Est.: ~12hrs)
    - Add Boss Rounds to introduce new mobs 
-     - Reusable Boss Round
+     - Reusable Boss Round (Time: ~0.75hrs)
        - Clear Enemies
        - Boss Health Bar
        - Periodic mob spawn
-     - First Boss: Big Mob
+     - First Boss: Big Mob (Time: ~2.25hrs)
        - Move through trees
        - Move slowly toward player
        - Huge Health
