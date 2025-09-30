@@ -54,6 +54,14 @@ var fast_mob_boss = {
 	"pickupprob" = 1
 }
 
+var big_fast_mob_boss = {
+ 	"speed" = fast_mob["speed"],
+	"health" = big_mob['health'] * 5,
+	"experience" = big_mob['experience'] * 5,
+	"sfx" = ["OwHi"],
+	"pickupprob" = 1
+}
+
 # Probabilities
 var base_mob_prob = 0.65
 var fast_mob_prob = 0.175
@@ -99,13 +107,18 @@ func _on_game_bossround():
 # Helpers
 func choose_mob():
 	if(boss):
-		if(round_count % 2 == 1):
+		if(round_count % 3 == 1):
 			mob_type = big_mob_boss
 			scale = Vector2(5, 5) # Make big
 			ignore_trees = true
-		elif(round_count % 2 == 0): # Every Other Round
+		elif(round_count % 3 == 2): # Every Other Round
 			mob_type = fast_mob_boss
 			scale = Vector2(0.8, 0.8)
+			%Slime.find_child("SlimeBody").modulate = Color(255, 0, 0, 255)
+		elif(round_count % 3 == 0):
+			mob_type = big_fast_mob_boss
+			scale = Vector2(4, 4) # Make big
+			ignore_trees = true
 			%Slime.find_child("SlimeBody").modulate = Color(255, 0, 0, 255)
 		return
 	
@@ -121,6 +134,7 @@ func choose_mob():
 		else:
 			mob_type = big_mob
 			scale = Vector2(2, 2)
+			ignore_trees = true
 	else:
 		if(rand < base_mob_prob):
 			mob_type = base_mob
@@ -131,6 +145,7 @@ func choose_mob():
 		else:
 			mob_type = big_mob
 			scale = Vector2(2, 2)
+			ignore_trees = true
 
 
 func take_damage(amount : int):

@@ -53,17 +53,21 @@ enum pickup {
 
 var param
 
-# Has to start as true to bounce at all
-var bouncing
-var pf2d
-var bi = 0
-
 @export var growth_scale : float = 0.1 
 @export var radius_range : Vector2 = Vector2(1080/2.0, 1920/2.0)
 @export var min_speed : float = 1
 
+
+# Placeholders
+var bouncing : bool
+var pf2d : PathFollow2D
+var bounce_end : bool = false
+var bi = 0
+
+
 func _ready():
 	# Choose random pickup and change visuals
+	#print("pickup generated")
 	var p = pickup.keys()[randi() % pickup.size()]
 	param = PICKUP_PARAMS[pickup[p]]
 	%Sprite2D.texture = load(param["spritepath"])
@@ -80,6 +84,9 @@ func _process(delta : float) -> void:
 		# release path resources
 		if(monitoring == false):
 			monitoring = true
+			
+		if(bounce_end == true):
+			bounce_end = false
 			get_tree().create_timer(param['lifetime']).timeout.connect(_on_lifetime_end)
 			pf2d.get_parent().queue_free()
 	
@@ -89,8 +96,8 @@ func setup_bounce():
 	bouncing = true
 	var radius = randf_range(radius_range.x, radius_range.y)
 	
-	# This should turn off collision detection while bouncing
-	#ddsmonitoring = false
+	# This should turn off collision detection while bouncing (not necessary)
+	# monitoring = false
 	
 	# Create Path2D
 	var p2d = Path2D.new()
@@ -158,6 +165,7 @@ func bouncer(delta : float):
 	if(new_pr >= 1):
 		pf2d.progress_ratio = 1
 		bouncing = false
+		bounce_end = true
 	else:
 		pf2d.progress_ratio = new_pr
 	
@@ -225,4 +233,5 @@ func update_stat(body):
 
 
 func _on_lifetime_end():
+	#print("Lifetime ended")
 	queue_free()

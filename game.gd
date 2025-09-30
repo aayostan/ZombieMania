@@ -48,7 +48,6 @@ func _on_playtimer_timeout() -> void:
 	# Run Boss Fight
 	bossround.emit() # Remove all enemies
 	%SpawnTimer.stop() # Stop Spawning enemies
-	%BossOverlay.show() # Show Boss Overlay
 	
 	# Notify Player of boss round
 	%Gun_Unlocked.text = "Round " + str(round_count) + " Boss!"
@@ -60,12 +59,11 @@ func _on_playtimer_timeout() -> void:
 	spawn_boss = true
 	spawn_mob()
 	spawn_boss = false
+	%BossOverlay.show() # Show Boss Overlay
 	
 	# Reconfigure SpawnTimer
-	%SpawnTimer.wait_time = 1
+	%SpawnTimer.wait_time = 2
 	%SpawnTimer.start()
-	#var score = kill_count + round_count(Stats.player_health)
-	#show_endgame("Score = " + str(score))
 
 
 func _on_player_health_depleted():
@@ -78,10 +76,13 @@ func _on_mob_died(experience : int, is_boss : bool):
 	# Respond to killing boss
 	if(is_boss):
 		round_count += 1
-		print(round_count)
+		if(round_count > 3):
+			var score = kill_count + round(Stats.player_health)
+			show_endgame("Score = " + str(score))
+			return
 		%BossOverlay.hide() # Show Boss Overlay
 		%SpawnTimer.wait_time = 0.3
-		%PlayTimer.start() # Restart playtimer
+		%PlayTimer.start(30) # Restart playtimer
 		return
 	
 	kill_count += 1

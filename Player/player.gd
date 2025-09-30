@@ -4,7 +4,7 @@ signal health_depleted
 
 #var health = Stats.player_health
 var active = true
-var level = 0
+var level = 2
 var arms = 2
 
 # Camera shake stuff
@@ -85,10 +85,10 @@ func _on_game_level_up() -> void:
 	elif(level == 2):
 		%Gun_Unlocked.text = "Unlocked: Machine Gun\n(Press E to switch)"
 	elif(level == 3):
-		%Gun_Unlocked.text = "Plus one to bullet damage\nAnd Fast Enemies!"
+		%Gun_Unlocked.text = "Plus one to bullet damage"
 		find_child("Gun").bullet_damage = b_dam + 1
 	elif(level == 4):
-		%Gun_Unlocked.text = "Times two to bullet damage\nAnd Big Enemies!"
+		%Gun_Unlocked.text = "Times two to bullet damage"
 		find_child("Gun").bullet_damage = b_dam * 2
 	#elif(level == 5 or level == 6):
 		#%Gun_Unlocked.text = "Double Ammo + Half Reload Time\nFaster Enemy Spawn"

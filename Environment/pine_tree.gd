@@ -22,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 	var overlapping_mobs = %DetectionBox.get_overlapping_bodies()
 	if(overlapping_mobs):
 		for m in overlapping_mobs:
-			if(m.boss):
+			if(m.ignore_trees):
 				move_tree()
 
 

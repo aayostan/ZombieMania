@@ -26,4 +26,4 @@ var gun_type = 0 # Originally pistol
 
 var game_round : int = 1
 @export var enemy_damage = 10.0
-@export var pickup_probability = 0.33
+@export var pickup_probability = 0.15
