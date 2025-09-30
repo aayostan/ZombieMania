@@ -13,3 +13,4 @@ res://Globals/Stats.gd
 res://game.gd
 res://Player/player.gd
 res://Player/Gun/bullet_2d.gd
+res://NPCs/Enemies/mob.gd
