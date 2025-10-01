@@ -204,19 +204,15 @@ func _parabola(curr_x : float, height : float, width : float, disp : float, inve
 
 func _on_body_entered(body: Node2D) -> void:
 	if(body.name == "Player"):
-		#AudioManager.play_sfx(param['sfx'],0,true)
-		#create_connect()
-		#update_stat(body)
-		AudioManager.play_sfx("Pickup",0,false,false,true)
-		update_inventory()
+		if(body.level > 0):
+			AudioManager.play_sfx("Pickup",0,false,false,true)
+			get_parent().update_inventory(param['name'])
+		else:
+			AudioManager.play_sfx(param['sfx'],0,true)
+			update_stat(body)
+			if(param['cooldown'] > 0):
+				get_tree().create_timer(param['cooldown']).timeout.connect(body._on_pickup_cooldown.bind(param))
 		queue_free()
-
-
-func update_inventory():
-	var game = get_parent()
-	game.update_inventory(param['name'])
-	
-
 
 
 func update_stat(body):

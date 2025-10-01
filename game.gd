@@ -83,12 +83,11 @@ func _on_mob_died(experience : int, is_boss : bool):
 	if(is_boss):
 		round_count += 1
 		if(round_count > 3):
-			var score = kill_count + round(Stats.player_health)
-			show_endgame("Score = " + str(score))
+			show_endgame(%Score.text)
 			return
 		%BossOverlay.hide() # Show Boss Overlay
 		%SpawnTimer.wait_time = 0.3
-		%PlayTimer.start(30) # Restart playtimer
+		%PlayTimer.start() # Restart playtimer
 		return
 	
 	kill_count += 1
@@ -101,7 +100,7 @@ func _on_mob_died(experience : int, is_boss : bool):
 	%Score.text = "Kills: " + str(kill_count)
 
 
-func _on_button_pressed() -> void:
+func _on_restartbutton_pressed() -> void:
 	Stats._player_health = 100.0
 	Stats.gun_type = 0
 	get_tree().reload_current_scene()
@@ -160,6 +159,10 @@ func update_exp_UI():
 
 
 func update_inventory(item : String, increment : bool = true, amount : int = 1) -> bool:
+	# Check Player Reach Level 1
+	#if(player_level < 1):
+	#	return false
+	
 	# Update back_end
 	if increment:
 		inventory[item] = min(inventory[item] + amount, ITEM_CAP)

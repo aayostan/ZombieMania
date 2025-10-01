@@ -11,3 +11,4 @@ res://NPCs/Enemies/slime.tscn
 res://Pickups/pickup.tscn
 res://Player/player.gd
 res://Globals/GlobalFun.gd
+res://Player/Gun/gun.gd

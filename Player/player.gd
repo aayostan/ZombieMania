@@ -1,38 +1,37 @@
 extends CharacterBody2D
 
 signal health_depleted
+signal accuracy_changed(multiplier : float)
 
 var health = 100.0
 var active = true
-var level = 2
+var level = 0
 var arms = 2
+var accuracy : float = 1.0
+
 
 # Camera shake stuff
 var camera : Camera2D
 
-@export var decay : float = 0.8 # Time it takes to reach 0% of trauma
-@export var max_offset : Vector2 = Vector2(100, 75) # Max hor/ver shake in pixels
+@export var decay : float = 0.6 # Time it takes to reach 0% of trauma
+@export var max_offset : Vector2 = Vector2(50, 50) # Max hor/ver shake in pixels
 @export var max_roll : float = 0.1 # Maximum rotation in radians (use sparingly)
 
 var trauma : float = 0.0 # Current shake strength
-var trauma_power : int = 2 # Trauma exponent. Increase for more extreme shaking
+var trauma_power : float = 1.5 # Trauma exponent. Increase for more extreme shaking
 
+
+@onready var gun = find_child("Gun") 
 var gun_count = 1
 
+
+
+# Built-in Functions
 func _ready():
 	%LevelLabel.text = "L" + str(level)
 	camera = get_viewport().get_camera_2d()
+	connect("accuracy_changed", gun._on_accuracy_changed)
 
-
-func _input(event):
-	if(active):
-		if event.is_action_pressed("use_item_1"):
-			use_item("Sandwhich")
-		elif event.is_action_pressed("use_item_2"):
-			use_item("Soda")
-		elif event.is_action_pressed("use_item_3"):
-			use_item("Gun")
-	
 
 func _physics_process(delta):
 	if(active):
@@ -68,6 +67,17 @@ func _physics_process(delta):
 			trauma = 0.3
 
 
+func _input(event):
+	if(active):
+		if event.is_action_pressed("use_item_1"):
+			use_item("Sandwhich")
+		elif event.is_action_pressed("use_item_2"):
+			use_item("Soda")
+		elif event.is_action_pressed("use_item_3"):
+			use_item("Gun")
+
+
+
 # Events
 func _on_game_endgame() -> void:
 	# Deactivate player  movement
@@ -87,31 +97,41 @@ func _on_game_level_up() -> void:
 	AudioManager.play_sfx("LevelUp")
 	level += 1
 	%LevelLabel.text = "L" + str(level)
-	var gun = find_child("Gun")
-	var b_dam = gun.bullet_damage
 	
 	if(level == 1):
-		%Gun_Unlocked.text = "Unlocked: Shotgun\n(Press E to switch)"
+		%Gun_Unlocked.text = "Unlocked: Backpack\n(Press 1 for food\n2 for Soda\n and 3 for gun)"
+		var game = get_parent()
+		if(game):
+			game.update_inventory("Sandwhich")
+			game.update_inventory("Soda")
+			game.update_inventory("Gun")
+		Stats.pickup_probability = 0.15
 	elif(level == 2):
-		%Gun_Unlocked.text = "Unlocked: Machine Gun\n(Press E to switch)"
+		%Gun_Unlocked.text = "Unlocked: Shotgun\n(Press E to switch)"
+		Stats.pickup_probability = 0.1
 	elif(level == 3):
-		%Gun_Unlocked.text = "Plus one to bullet damage"
-		find_child("Gun").bullet_damage = b_dam + 1
+		%Gun_Unlocked.text = "Increased Accuracy\ndamage X accuracy"
+		accuracy += 1
+		accuracy_changed.emit(accuracy)
 	elif(level == 4):
-		%Gun_Unlocked.text = "Times two to bullet damage"
-		find_child("Gun").bullet_damage = b_dam * 2
-	#elif(level == 5 or level == 6):
-		#%Gun_Unlocked.text = "Double Ammo + Half Reload Time\nFaster Enemy Spawn"
-		#for g in gun.guns:
-			#g['max_ammo'] *= 2
-			#g['reload_time'] /= 2
-		#%SpawnTimer.wait_time -= 0.1
-	#elif(level == 7):
-		#%Gun_Unlocked.text = "ARMAGEDDON: UNLIMITED Ammo\nSuper Fast Enemy Spawn"
-		#for g in gun.guns:
-			#g['max_ammo'] *= 10**7
-		#gun.gun_switch_time = 0
-		#%SpawnTimer.wait_time = 0.05
+		%Gun_Unlocked.text = "Unlocked Machine Gun"
+	elif(level == 5 or level == 6):
+		%Gun_Unlocked.text = "Increased Accuracy"
+		accuracy += 0.75
+		accuracy_changed.emit(accuracy)
+	elif(level == 7):
+		%Gun_Unlocked.text = ""
+		for g in gun.guns:
+			g['max_ammo'] *= 10**7
+		gun.gun_switch_time = 0
+		%SpawnTimer.wait_time = 0.2
+	elif(level == 8):
+		pass
+	elif(level == 9):
+		pass
+	elif(level == 10):
+		%SpawnTimer.wait_time = 0.05
+		pass
 	else:
 		return
 		
@@ -127,6 +147,7 @@ func create_gun():
 	var new_gun = preload("res://Player/Gun/gun.tscn")
 	var new_obj = new_gun.instantiate()
 	call_deferred("add_child", new_obj)
+	connect("accuracy_changed", new_obj._on_accuracy_changed)
 	Stats.guns.append(new_obj)
 	new_obj.gun_num = gun_count
 

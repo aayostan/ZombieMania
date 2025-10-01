@@ -40,6 +40,8 @@ var num_shots : int = 1
 var bullet_damage = 1
 
 
+
+# Built-in Functions
 func _ready() -> void:
 	# Set base gun type
 	ammo = guns[Stats.gun_type]["max_ammo"]
@@ -54,6 +56,7 @@ func _ready() -> void:
 	
 	# Grab a reference to the player level
 	player_level = find_parent("Player").level
+	bullet_damage = find_parent("Player").accuracy
 	
 	# For Shotgun bulllet pattern
 	spread_arr = [%ShootingPoint, %ShootingPoint2, %ShootingPoint3]
@@ -77,6 +80,9 @@ func _process(_delta):
 	# Auto Reload
 	if(ammo <= 0 and not reload_active):
 		reload(guns[Stats.gun_type]['reload_time'], false)
+	
+	# Debug
+	#print(name, bullet_damage)
 
 
 func _input(event):
@@ -89,6 +95,14 @@ func _input(event):
 			if(gun_num == 1): change_gun()
 
 
+
+# Events
+func _on_accuracy_changed(multiplier : float):
+	bullet_damage = multiplier
+
+
+
+# Helpers
 func shoot():
 	if(ammo > 0):
 		if(guns[Stats.gun_type]['fire_type'] == "single"): 
@@ -145,13 +159,13 @@ func change_gun(debug : bool = false):
 		print("Gun Start: " + str(Stats.gun_type))
 	
 	# Branch actions based on player level
-	if(player_level < 1):
+	if(player_level < 2):
 		return
-	elif(Stats.gun_type == GUN_TYPE.PISTOL and player_level >= 1):
+	elif(Stats.gun_type == GUN_TYPE.PISTOL and player_level >= 2):
 		Stats.gun_type = GUN_TYPE.SHOTGUN
-	elif(Stats.gun_type == GUN_TYPE.SHOTGUN and player_level < 2):
+	elif(Stats.gun_type == GUN_TYPE.SHOTGUN and player_level < 4):
 		Stats.gun_type = GUN_TYPE.PISTOL
-	elif(Stats.gun_type == GUN_TYPE.SHOTGUN and player_level >= 2):
+	elif(Stats.gun_type == GUN_TYPE.SHOTGUN and player_level >= 4):
 		Stats.gun_type = GUN_TYPE.MACHINE_GUN
 	elif(Stats.gun_type == GUN_TYPE.MACHINE_GUN):
 		Stats.gun_type = GUN_TYPE.PISTOL
