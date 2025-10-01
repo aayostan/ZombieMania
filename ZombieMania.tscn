@@ -140,7 +140,7 @@ theme_override_font_sizes/font_size = 45
 text = "Level"
 
 [node name="Inventory" type="HBoxContainer" parent="UI"]
-visible = false
+unique_name_in_owner = true
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -168,7 +168,7 @@ expand_mode = 3
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
-text = "X 1"
+text = "X 0"
 
 [node name="Soda" type="HSplitContainer" parent="UI/Inventory"]
 visible = false
@@ -183,7 +183,7 @@ expand_mode = 3
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
-text = "X 1"
+text = "X 0"
 
 [node name="Gun" type="HSplitContainer" parent="UI/Inventory"]
 visible = false
@@ -327,8 +327,8 @@ text = "Boss Health"
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [connection signal="endgame" from="." to="Player" method="_on_game_endgame"]
-[connection signal="level_up" from="." to="Player" method="_on_level_up"]
 [connection signal="level_up" from="." to="Player" method="_on_game_level_up"]
+[connection signal="level_up" from="." to="Player" method="_on_level_up"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawntimer_timeout"]
 [connection signal="timeout" from="PlayTimer" to="." method="_on_playtimer_timeout"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]

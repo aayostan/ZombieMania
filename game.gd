@@ -3,6 +3,7 @@ extends Node2D
 # Constants
 const MAX_LEVEL : int = 20
 const FOREST_SIZE : int = 100
+const ITEM_CAP : int = 5
 
 # Signals used to communicate with other classes
 signal level_up
@@ -14,6 +15,11 @@ var kill_count : int = 0
 var player_experience : int = 0
 var player_level : int = 0
 var round_count : int = 1
+var inventory : Dictionary = {
+	"Sandwhich" = 0,
+	"Soda" = 0,
+	"Gun" = 0
+}
 
 # flags
 var active : bool = true
@@ -22,7 +28,7 @@ var spawn_boss : bool = false
 # Resoures
 var level : Array = range(1, MAX_LEVEL).map(func(n): return n**2*1000)
 
-# Placholders
+# Placeholders
 var spawn_time
 
 
@@ -101,31 +107,6 @@ func _on_button_pressed() -> void:
 	get_tree().reload_current_scene()
 
 
-func _on_pickup_cooldown(param: Dictionary):
-# This function nullifies the pickup effect after the pickup cooldown
-
-	# Did i make it here?
-	#print("I made it to the cooldown signal")
-	
-	# There are definitely still some synchronization issues here!
-	
-	if(param["stat"] == "speed"):
-		if(param["modifier"] == "add"):
-			Stats.player_speed -= param["value"]
-		else:
-			Stats.player_speed /= param["value"]
-	elif(param["stat"] == "health"):
-		if(param["modifier"] == "add"):
-			Stats.player_health -= param["value"]
-		else:
-			Stats.player_health /= param["value"]
-	elif(param["stat"] == "gun"):
-		if(param["modifier"] == "add"):
-			if(Stats.guns.size() > 0):
-				Stats.guns.pop_back().queue_free()
-				find_child("Player").gun_count -= 1
-
-
 
 # Helpers
 func spawn_trees():
@@ -176,3 +157,25 @@ func update_exp_UI():
 			%ExpBar.value = remap(player_experience, 0, level[player_level], 0, 100)
 	else:
 		%ExpBar.value = 100
+
+
+func update_inventory(item : String, increment : bool = true, amount : int = 1) -> bool:
+	# Update back_end
+	if increment:
+		inventory[item] = min(inventory[item] + amount, ITEM_CAP)
+	else:
+		if(inventory[item] == 0):
+			return false
+		inventory[item] = inventory[item] - amount
+	
+	# Update front-end
+	var entry = %Inventory.find_child(item)
+	var label = entry.find_child("Count")
+	label.text = " X " + str(inventory[item])
+	
+	if(inventory[item] == 0):
+		entry.hide() # Change to invisible if empty
+	else:
+		entry.show()
+
+	return true

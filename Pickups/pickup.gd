@@ -11,6 +11,7 @@ extends Area2D
 
 const PICKUP_PARAMS = [
 	{
+		"name" = "Soda",
 		"stat" = "speed",
 		"modifier" = "multiply",
 		"value" = 1.5,
@@ -22,6 +23,7 @@ const PICKUP_PARAMS = [
 		"lifetime" = 5
 	}, 
 	{
+		"name" = "Sandwhich",
 		"stat" = "health",
 		"modifier" = "add",
 		"value" = 10,
@@ -33,6 +35,7 @@ const PICKUP_PARAMS = [
 		"lifetime" = 10
 	},
 	{
+		"name" = "Gun",
 		"stat" = "gun",
 		"modifier" = "add",
 		"value" = 1,
@@ -201,18 +204,19 @@ func _parabola(curr_x : float, height : float, width : float, disp : float, inve
 
 func _on_body_entered(body: Node2D) -> void:
 	if(body.name == "Player"):
-		AudioManager.play_sfx(param['sfx'],0,true)
-		create_connect()
-		update_stat(body)
+		#AudioManager.play_sfx(param['sfx'],0,true)
+		#create_connect()
+		#update_stat(body)
+		AudioManager.play_sfx("Pickup",0,false,false,true)
+		update_inventory()
 		queue_free()
 
 
-func create_connect():
-	var tree = get_tree()
-	if(param['cooldown'] > 0):
-		var timer = tree.create_timer(param['cooldown'])
-		var game = get_parent()
-		timer.timeout.connect(game._on_pickup_cooldown.bind(param))
+func update_inventory():
+	var game = get_parent()
+	game.update_inventory(param['name'])
+	
+
 
 
 func update_stat(body):

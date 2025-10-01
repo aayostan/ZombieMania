@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 signal health_depleted
 
-#var health = Stats.player_health
+var health = 100.0
 var active = true
 var level = 2
 var arms = 2
@@ -24,6 +24,16 @@ func _ready():
 	camera = get_viewport().get_camera_2d()
 
 
+func _input(event):
+	if(active):
+		if event.is_action_pressed("use_item_1"):
+			use_item("Sandwhich")
+		elif event.is_action_pressed("use_item_2"):
+			use_item("Soda")
+		elif event.is_action_pressed("use_item_3"):
+			use_item("Gun")
+	
+
 func _physics_process(delta):
 	if(active):
 		var SPEED = Stats.player_speed
@@ -41,8 +51,8 @@ func _physics_process(delta):
 		var DAMAGE_RATE = Stats.enemy_damage
 		var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 		if overlapping_mobs:
-			Stats.player_health -= DAMAGE_RATE * overlapping_mobs.size() * delta
-			%HealthBar.value = Stats.player_health
+			health -= DAMAGE_RATE * overlapping_mobs.size() * delta
+			%HealthBar.value = health
 			
 			# SoundFX
 			AudioManager.play_sfx("Ow", 0, false, false, true)
@@ -51,7 +61,7 @@ func _physics_process(delta):
 			trauma = min(trauma + (DAMAGE_RATE * overlapping_mobs.size()) / 1000, 1.2)
 			shake()
 			
-			if Stats.player_health <= 0.0:
+			if health <= 0.0:
 				health_depleted.emit()
 		
 		else:
@@ -127,3 +137,68 @@ func shake() -> void:
 	camera.rotation = max_roll * amount * randf_range(-1, 1)
 	camera.offset.x = max_offset.x * amount * randf_range(-1, 1)
 	camera.offset.y = max_offset.y * amount * randf_range(-1, 1)
+
+
+func use_item(item : String):
+	var game = get_parent()
+	var used = false
+	used = game.update_inventory(item, false)
+	
+	if used:
+		# Find Params
+		var param = GlobalFun.search_params(Stats.PICKUP_PARAMS, item)
+		if(param.is_empty()): 
+			return
+		
+		# Consume Pickup
+		AudioManager.play_sfx(param["sfx"],0,true)
+		update_stat(param)
+		if(param['cooldown'] > 0):
+			get_tree().create_timer(param['cooldown']).timeout.connect(_on_pickup_cooldown.bind(param))
+		
+
+
+func update_stat(param : Dictionary):
+	
+	if(param["stat"] == "speed"):
+		if(param["modifier"] == "add"):
+			Stats.player_speed += param["value"]
+		else:
+			Stats.player_speed *= param["value"]
+	elif(param["stat"] == "health"):
+		if(param["modifier"] == "add"):
+			health += param["value"]
+		else:
+			health *= param["value"]
+		%HealthBar.value = health
+	elif(param["stat"] == "gun"):
+		if(param["modifier"] == "add"):
+			create_gun()
+			Stats.two_guns = true
+
+
+
+func _on_pickup_cooldown(param: Dictionary):
+# This function nullifies the pickup effect after the pickup cooldown
+
+	# Did i make it here?
+	#print("I made it to the cooldown signal")
+	
+	# There are definitely still some synchronization issues here!
+	
+	if(param["stat"] == "speed"):
+		if(param["modifier"] == "add"):
+			Stats.player_speed -= param["value"]
+		else:
+			Stats.player_speed /= param["value"]
+	elif(param["stat"] == "health"):
+		if(param["modifier"] == "add"):
+			health -= param["value"]
+		else:
+			health /= param["value"]
+		%HealthBar.value = health
+	elif(param["stat"] == "gun"):
+		if(param["modifier"] == "add"):
+			if(Stats.guns.size() > 0):
+				Stats.guns.pop_back().queue_free()
+				gun_count -= 1

@@ -26,4 +26,45 @@ var gun_type = 0 # Originally pistol
 
 var game_round : int = 1
 @export var enemy_damage = 10.0
-@export var pickup_probability = 0.15
+@export var pickup_probability = 1# 0.15
+
+
+# Resources
+const PICKUP_PARAMS = [
+	{
+		"name" = "Soda",
+		"stat" = "speed",
+		"modifier" = "multiply",
+		"value" = 1.5,
+		"cooldown" = 12,
+		"spritepath" = "res://Pickups/soda_can.png",
+		"scale" = Vector2(0.05,0.05),
+		"g_mod" = 0.05,
+		"sfx" = "PUSo",
+		"lifetime" = 5
+	}, 
+	{
+		"name" = "Sandwhich",
+		"stat" = "health",
+		"modifier" = "add",
+		"value" = 10,
+		"cooldown" = 0,
+		"spritepath" = "res://Pickups/sandwhich.png",
+		"scale" = Vector2(0.1,0.1),
+		"g_mod" = 0.1,
+		"sfx" = "PUSa",
+		"lifetime" = 10
+	},
+	{
+		"name" = "Gun",
+		"stat" = "gun",
+		"modifier" = "add",
+		"value" = 1,
+		"cooldown" = 15,
+		"spritepath" = "res://Player/Gun/pistol.png",
+		"scale" = Vector2(1,1),
+		"g_mod" = 1,
+		"sfx" = "N/A",
+		"lifetime" = 8
+	}
+]

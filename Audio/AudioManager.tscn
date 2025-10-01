@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://byguda1krby1"]
+[gd_scene load_steps=16 format=3 uid="uid://byguda1krby1"]
 
 [ext_resource type="Script" uid="uid://dbdd4tsmihyip" path="res://Audio/audio_manager.gd" id="1_l0aok"]
 [ext_resource type="AudioStream" uid="uid://dvi562if8kevk" path="res://Audio/SoundFX/MachineGun.wav" id="2_5m6nf"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://cpuohjf4keiw3" path="res://Audio/SoundFX/GunSwitch.wav" id="10_glf7e"]
 [ext_resource type="AudioStream" uid="uid://bynweqrrakpxw" path="res://Audio/SoundFX/Death.wav" id="11_c0pm0"]
 [ext_resource type="AudioStream" uid="uid://brjfvo2bpngwo" path="res://Audio/SoundFX/LevelUp.wav" id="12_ym8mb"]
+[ext_resource type="AudioStream" uid="uid://b4lmc73n8y7mc" path="res://Audio/SoundFX/Pickup.wav" id="15_ipxi7"]
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_l0aok")
@@ -62,3 +63,6 @@ stream = ExtResource("11_c0pm0")
 
 [node name="LevelUp" type="AudioStreamPlayer" parent="Sfx"]
 stream = ExtResource("12_ym8mb")
+
+[node name="Pickup" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("15_ipxi7")
