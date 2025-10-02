@@ -4,7 +4,7 @@ https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=y
 
 
 ## Time Breakdown
-Total: ~32.25hrs\
+Total: ~35.75hrs\
 <br/>
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
 Add Progression (num bullets fired linked to kills): ~1.5hrs  
@@ -23,7 +23,8 @@ SoundFX and Screen Shake Scripts: ~1.25hrs
 Making Sound Effects for the Game: ~2.75hrs  
 Added Mob Drops/Pickups to Game: ~4hrs  
 Made Mod Drops/Pickups Launch and Bounce: ~4hrs  
-Game Level Design (Rounds + Bosses + Env): ~4hrs
+Game Level Design (Rounds + Bosses + Env): ~4hrs  
+Added Inventory to Store and Use Items: ~3.5hrs  
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
@@ -54,25 +55,41 @@ Game Level Design (Rounds + Bosses + Env): ~4hrs
 7. Balance (Time Est.: ~5.5hrs)
    - Limit total number of mobs and cull by distance to player (Time Est.: ~1.5hrs)
    - Limit powerups by difficulty of mob kill (Time Est.: ~1.5hrs)
-   - Add Inventory for powerup pickups (Time Est.: ~2.5hrs)
+   - Add Inventory for powerup pickups (Time Est.: ~2.5hrs) (Time: ~3.5hrs)
 8. Levels (Time Est.: ~12hrs)
    - Add Boss Rounds to introduce new mobs 
      - Reusable Boss Round (Time: ~0.75hrs)
        - Clear Enemies
        - Boss Health Bar
        - Periodic mob spawn
-     - First Boss: Big Mob (Time: ~2.25hrs)
+     - First Boss: Uber Zombie (Time: ~2.25hrs)
        - Move through trees
        - Move slowly toward player
        - Huge Health
-     - Second Boss: Fast Mob
+       - Intro: large zombies that destroy trees
+     - Second Boss: Fast Zombie Mob ([Still Working] Time: ~0.25hrs)
        - Stopped by trees
-       - Move quickly in straight line, Pause and aim at player    
-       - Low Health
-     - Third Boss: Big, Fast Mob
+       - Runs quickly at player
+       - Large number with low health
+       - Intro: fast zombies
+     - Third Boss: Fast Uber Zombie ([Still Working] Time: ~0.1hrs)
        - Move through trees
-       - Move quickly in straight line, Pause and aim at player    
-       - Mid-Health
+       - Runs quickly at the player    
+       - Spawns groups of fast zombies with low health and has Huge-Health
+       - Intro: Large fast zombies that destroy trees
+     - Fourth Boss: Gun Handling Zombie (Time Est.: ~3hrs)
+       - Stopped by Trees
+       - Moves regular speed toward player, stops when close, shoots at player
+       - Large number with regular health
+       - Intro: regular size zombies that fire on the player
+9. Accessability (Time Est.: ~3hrs)
+   - Lanuage (Time Est.: ~1hr)
+   - Control Mapping (Time Est.: ~1hr)
+   - Toggle Auto-shoot (Time Est.: ~1hr)
+10. Menus
+    - Restart Menu (Pretty much done)
+      - want to add scoreboard (Time Est.: ~2hrs)
+    - Start Menu (necessary?)
 
 ## Credit
 Soda Can ClipArt: https://clipart-library.com/clipart/blue-can-cliparts-9.htm  
