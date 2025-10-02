@@ -62,18 +62,26 @@ Added Inventory to Store and Use Items: ~3.5hrs
        - Clear Enemies
        - Boss Health Bar
        - Periodic mob spawn
-     - First Boss: Big Mob (Time: ~2.25hrs)
+     - First Boss: Uber Zombie (Time: ~2.25hrs)
        - Move through trees
        - Move slowly toward player
        - Huge Health
-     - Second Boss: Fast Mob ([Still Working] Time: ~0.25hrs)
+       - Intro: large zombies that destroy trees
+     - Second Boss: Fast Zombie Mob ([Still Working] Time: ~0.25hrs)
        - Stopped by trees
-       - Move quickly in straight line, Pause and aim at player    
-       - Low Health
-     - Third Boss: Big, Fast Mob ([Still Working] Time: ~0.1hrs)
+       - Runs quickly at player
+       - Large number with low health
+       - Intro: fast zombies
+     - Third Boss: Fast Uber Zombie ([Still Working] Time: ~0.1hrs)
        - Move through trees
-       - Move quickly in straight line, Pause and aim at player    
-       - Mid-Health
+       - Runs quickly at the player    
+       - Spawns groups of fast zombies with low health and has Huge-Health
+       - Intro: Large fast zombies that destroy trees
+     - Fourth Boss: Gun Handling Zombie (Time Est.: ~3hrs)
+       - Stopped by Trees
+       - Moves regular speed toward player, stops when close, shoots at player
+       - Large number with regular health
+       - Intro: regular size zombies that fire on the player
 9. Accessability (Time Est.: ~3hrs)
    - Lanuage (Time Est.: ~1hr)
    - Control Mapping (Time Est.: ~1hr)
