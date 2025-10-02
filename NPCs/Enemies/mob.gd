@@ -126,7 +126,7 @@ func choose_mob():
 	var rand = randf()
 	
 	# Decision Tree
-	if(round_count <= 1):
+	if(round_count == 1):
 		mob_type = base_mob
 	elif(round_count == 2):
 		if(rand < base_mob_prob):

@@ -80,14 +80,14 @@ func _physics_process(delta):
 
 func _input(event):
 	if(active):
-		if event.is_action("select_left"):
+		if event.is_action_pressed("select_left"):
 			print("Select Left")
 			select()
-		elif event.is_action("select_right"):
+		elif event.is_action_pressed("select_right"):
 			print("Select Right")
 			select(false)
 		elif event.is_action_pressed("use_item"):
-			print("Using item")
+			#print("Using item")
 			use_item(items[item_choice])
 		#if event.is_action_pressed("use_item_1"):
 			#use_item("Sandwhich")
@@ -200,6 +200,7 @@ func select(left : bool = true):
 	if game.find_active_item() != "None":
 		var not_switch = true
 		game.inventory_selector(items[item_choice], false)
+		print("Change from ", items[item_choice])
 		while(not_switch):
 			if left:
 				if item_choice > 0:
@@ -214,7 +215,9 @@ func select(left : bool = true):
 			if(game.check_active(items[item_choice])):
 				game.inventory_selector(items[item_choice])
 				not_switch = false
-	
+		print("Change to ", items[item_choice], "\n")
+	else:
+		print("No active items")
 
 
 func update_stat(param : Dictionary):

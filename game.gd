@@ -87,12 +87,29 @@ func _on_player_health_depleted():
 
 func _on_mob_died(experience : int, is_boss : bool):
 	# Respond to killing boss
-	if(is_boss):
+	if(is_boss):	
+		# Notify Player of boss round end
+		%Gun_Unlocked.text = "Round " + str(round_count) + " Boss\nDefeated!"
+		%Unlock_Gun.show()
+		await get_tree().create_timer(3).timeout
+		%Unlock_Gun.hide()
+		
+		print("\nRoundcount: ")
+		print(round_count)
 		round_count += 1
 		if(round_count > 3):
 			show_endgame(%Score.text)
 			return
-		%BossOverlay.hide() # Show Boss Overlay
+		print(round_count)
+		print("\n")
+		
+		# Notify Player of next round start
+		%Gun_Unlocked.text = "Round " + str(round_count) + " Start!"
+		%Unlock_Gun.show()
+		await get_tree().create_timer(3).timeout
+		%Unlock_Gun.hide()
+		
+		%BossOverlay.hide() # hide Boss Overlay
 		%SpawnTimer.wait_time = 0.3
 		%PlayTimer.start() # Restart playtimer
 		return
@@ -173,6 +190,8 @@ func update_inventory(item : String, increment : bool = true, amount : int = 1) 
 		inventory[item] = min(inventory[item] + amount, ITEM_CAP)
 		if(empty_inv): 
 			inventory_selector(item)
+			var player = find_child("Player")
+			player.item_choice = player.items.rfind(item)
 			empty_inv = false
 	else:
 		if(inventory[item] == 0):
@@ -192,8 +211,6 @@ func update_inventory(item : String, increment : bool = true, amount : int = 1) 
 			inventory_selector(next_active)
 			var player = find_child("Player")
 			player.item_choice = player.items.rfind(next_active)
-			print(next_active)
-			print(player.item_choice)
 	else:
 		entry.show()
 
@@ -206,6 +223,7 @@ func inventory_selector(item : String, select : bool = true):
 	var stylebox = StyleBoxFlat.new()
 	stylebox.bg_color = Color(0, 0, 0, 0)
 	if select:
+		print("Selecting ", item)
 		stylebox.border_width_bottom = 5
 		stylebox.border_width_left = 5
 		stylebox.border_width_right = 5
