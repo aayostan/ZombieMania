@@ -146,9 +146,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -229.5
+offset_left = -255.0
 offset_top = -99.0
-offset_right = 229.5
+offset_right = 255.0
 offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -156,13 +156,12 @@ theme_override_constants/separation = 40
 alignment = 1
 
 [node name="Sandwhich" type="HSplitContainer" parent="UI/Inventory"]
-visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Sandwhich"]
 layout_mode = 2
 texture = ExtResource("3_4mm5m")
-expand_mode = 3
+expand_mode = 2
 
 [node name="Count" type="Label" parent="UI/Inventory/Sandwhich"]
 layout_mode = 2
@@ -171,13 +170,12 @@ theme_override_font_sizes/font_size = 50
 text = "X 0"
 
 [node name="Soda" type="HSplitContainer" parent="UI/Inventory"]
-visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Soda"]
 layout_mode = 2
 texture = ExtResource("4_3ds3e")
-expand_mode = 3
+expand_mode = 2
 
 [node name="Count" type="Label" parent="UI/Inventory/Soda"]
 layout_mode = 2
@@ -186,13 +184,13 @@ theme_override_font_sizes/font_size = 50
 text = "X 0"
 
 [node name="Gun" type="HSplitContainer" parent="UI/Inventory"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Gun"]
 layout_mode = 2
 texture = ExtResource("3_nr0af")
+expand_mode = 2
 
 [node name="Count" type="Label" parent="UI/Inventory/Gun"]
 layout_mode = 2
@@ -327,8 +325,8 @@ text = "Boss Health"
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [connection signal="endgame" from="." to="Player" method="_on_game_endgame"]
-[connection signal="level_up" from="." to="Player" method="_on_game_level_up"]
 [connection signal="level_up" from="." to="Player" method="_on_level_up"]
+[connection signal="level_up" from="." to="Player" method="_on_game_level_up"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawntimer_timeout"]
 [connection signal="timeout" from="PlayTimer" to="." method="_on_playtimer_timeout"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
