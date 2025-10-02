@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ogik4s70pgwl"]
+[gd_scene load_steps=11 format=3 uid="uid://ogik4s70pgwl"]
 
 [ext_resource type="Texture2D" uid="uid://dvgfmy6vtvjji" path="res://NPCs/Enemies/slime/slime_body.png" id="1_3j35h"]
 [ext_resource type="Script" uid="uid://dweyy5u57ev5w" path="res://NPCs/Enemies/slime.gd" id="1_87y5x"]
 [ext_resource type="Texture2D" uid="uid://b7rhtttevhxtj" path="res://Player/happy_boo/ground_shadow.png" id="1_cq7ej"]
 [ext_resource type="Texture2D" uid="uid://c078jrp2yvc4s" path="res://NPCs/Enemies/slime/slime_face.png" id="2_ygydt"]
-[ext_resource type="Texture2D" uid="uid://btbxea1f3vwot" path="res://NPCs/Enemies/slime/slime_body_hurt.png" id="4_0qu0c"]
 [ext_resource type="Texture2D" uid="uid://cai2ijnbypqtr" path="res://NPCs/Enemies/slime/slime_hurt_eyes.png" id="4_hi70h"]
 
 [sub_resource type="Animation" id="Animation_y4lve"]
@@ -69,10 +68,22 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Anchor/SlimeBody:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_lu163"]
 resource_name = "hurt"
-length = 0.2
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -112,14 +123,14 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Anchor/SlimeBody/SlimeBodyHurt:modulate:a")
+tracks/3/path = NodePath("Anchor/SlimeBody:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, -2, 1),
+"times": PackedFloat32Array(0, 0.24),
+"transitions": PackedFloat32Array(64.9801, 1),
 "update": 0,
-"values": [0.0, 1.0, 0.0]
+"values": [Color(1, 0, 0, 1), Color(0, 1, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_71vdi"]
@@ -224,12 +235,8 @@ texture = ExtResource("1_cq7ej")
 [node name="Anchor" type="Marker2D" parent="."]
 
 [node name="SlimeBody" type="Sprite2D" parent="Anchor"]
+modulate = Color(0, 1, 1, 1)
 texture = ExtResource("1_3j35h")
-offset = Vector2(0, -36)
-
-[node name="SlimeBodyHurt" type="Sprite2D" parent="Anchor/SlimeBody"]
-modulate = Color(1, 1, 1, 0)
-texture = ExtResource("4_0qu0c")
 offset = Vector2(0, -36)
 
 [node name="Face" type="Marker2D" parent="Anchor"]

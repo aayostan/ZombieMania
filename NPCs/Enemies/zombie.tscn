@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://d2m608gyssept"]
 
-[ext_resource type="Script" uid="uid://d1npa8ymvov28" path="res://NPCs/Enemies/mob.gd" id="1_xhyow"]
-[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://NPCs/Enemies/slime.tscn" id="3_n2uyc"]
+[ext_resource type="Script" uid="uid://d1npa8ymvov28" path="res://NPCs/Enemies/zombie.gd" id="1_eax81"]
+[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://NPCs/Enemies/slime.tscn" id="2_pq1ic"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ypitm"]
-radius = 67.0
+radius = 50.0
 
-[node name="Mob" type="CharacterBody2D"]
+[node name="Zombie" type="CharacterBody2D"]
 collision_layer = 2
-script = ExtResource("1_xhyow")
+script = ExtResource("1_eax81")
 
-[node name="Slime" parent="." instance=ExtResource("3_n2uyc")]
+[node name="Slime" parent="." instance=ExtResource("2_pq1ic")]
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

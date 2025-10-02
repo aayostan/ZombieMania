@@ -5,17 +5,17 @@ const MAX_LEVEL : int = 20
 const FOREST_SIZE : int = 100
 const MIN_DIST_TREE_TO_PLAYER : int = 175
 const ITEM_CAP : int = 5
+const MAX_ROUNDS : int = 3
 
 # Signals used to communicate with other classes
 signal level_up
-signal endgame
-signal bossround
+signal clear_board
 
 # Counter variables
 var kill_count : int = 0
 var player_experience : int = 0
 var player_level : int = 0
-var round_count : int = 1
+var round_count : int = 3
 var inventory : Dictionary = {
 	"Sandwhich" = 0,
 	"Soda" = 0,
@@ -24,9 +24,9 @@ var inventory : Dictionary = {
 
 # flags
 var active : bool = true
-var spawn_boss : bool = false
-var run_tests : bool = false
+var run_tests : bool = true
 var empty_inv : bool = true
+var boss : bool = false
 
 # Resoures
 var level : Array = range(1, MAX_LEVEL).map(func(n): return n**2*1000)
@@ -43,6 +43,8 @@ func _ready():
 	# Uncomment tests you want to run
 	if(run_tests):
 		#test_inventory_selector()
+		active = false
+		spawn_zombie()
 		pass
 
 
@@ -55,29 +57,14 @@ func _process(_delta : float) -> void:
 # Events
 func _on_spawntimer_timeout() -> void:
 	if(active):
-		spawn_mob()
+		spawn_zombie(boss)
 
 
 func _on_playtimer_timeout() -> void:
-	# Run Boss Fight
-	bossround.emit() # Remove all enemies
-	%SpawnTimer.stop() # Stop Spawning enemies
-	
-	# Notify Player of boss round
-	%Gun_Unlocked.text = "Round " + str(round_count) + " Boss!"
-	%Unlock_Gun.show()
-	await get_tree().create_timer(3).timeout
-	%Unlock_Gun.hide()
-	
-	# Spawn boss enemy
-	spawn_boss = true
-	spawn_mob()
-	spawn_boss = false
-	%BossOverlay.show() # Show Boss Overlay
-	
-	# Reconfigure SpawnTimer
-	%SpawnTimer.wait_time = 2
-	%SpawnTimer.start()
+	if(round_count > 3):
+		show_endgame(%Score.text) #Note: Change score calculation
+	else:
+		spawn_boss()
 
 
 func _on_player_health_depleted():
@@ -86,7 +73,8 @@ func _on_player_health_depleted():
 	show_endgame(%Score.text)
 
 
-func _on_mob_died(experience : int, is_boss : bool):
+
+func _on_zombie_death(experience : int, is_boss : bool):
 	# Respond to killing boss
 	if(is_boss):	
 		# Notify Player of boss round end
@@ -95,14 +83,8 @@ func _on_mob_died(experience : int, is_boss : bool):
 		await get_tree().create_timer(3).timeout
 		%Unlock_Gun.hide()
 		
-		print("\nRoundcount: ")
-		print(round_count)
+		# Update round_count
 		round_count += 1
-		if(round_count > 3):
-			show_endgame(%Score.text)
-			return
-		print(round_count)
-		print("\n")
 		
 		# Notify Player of next round start
 		%Gun_Unlocked.text = "Round " + str(round_count) + " Start!"
@@ -110,9 +92,11 @@ func _on_mob_died(experience : int, is_boss : bool):
 		await get_tree().create_timer(3).timeout
 		%Unlock_Gun.hide()
 		
+		# Reset Timers and UI
 		%BossOverlay.hide() # hide Boss Overlay
-		%SpawnTimer.wait_time = 0.3
+		%SpawnTimer.wait_time = 0.3 # Reset spawntimer
 		%PlayTimer.start() # Restart playtimer
+		
 		return
 	
 	kill_count += 1
@@ -123,12 +107,9 @@ func _on_mob_died(experience : int, is_boss : bool):
 			player_level += 1
 	player_experience = temp
 	%Score.text = "Kills: " + str(kill_count)
-
-
-func _on_restartbutton_pressed() -> void:
-	Stats._player_health = 100.0
-	Stats.gun_type = 0
-	get_tree().reload_current_scene()
+	
+	if(run_tests):
+		spawn_zombie()
 
 
 
@@ -152,29 +133,59 @@ func spawn_trees():
 		add_child(new_tree)
 
 
-func spawn_mob():
+func spawn_zombie(boss : bool = false, mob : bool = false):
 	# randomization
 	%PathFollow2D.progress_ratio = randf()
 	
 	# object instantiation
-	var new_mob = preload("res://NPCs/Enemies/mob.tscn").instantiate()
-	new_mob.boss = spawn_boss
-	new_mob.round_count = round_count
-	new_mob.global_position = %PathFollow2D.global_position
-	add_child(new_mob)
+	var zombie_inst = preload("res://NPCs/Enemies/zombie.tscn").instantiate()
+	if(boss): zombie_inst.boss = true
+	zombie_inst.round_count = round_count
+	zombie_inst.global_position = %PathFollow2D.global_position
+	call_deferred("add_child", zombie_inst)
 	
 	# connect signals
-	new_mob.connect("mob_died", _on_mob_died)
-	connect("endgame", new_mob._on_game_endgame)
-	connect("bossround", new_mob._on_game_bossround)
+	zombie_inst.connect("death", _on_zombie_death)
+	connect("clear_board", zombie_inst._on_game_clear_board)
 
+
+func spawn_boss(r : int = 1):
+	# Run Boss Fight
+	clear_board.emit() # Remove all enemies
+	%SpawnTimer.stop() # Stop Spawning enemies
+	boss = true
+	
+	# Notify Player of boss round
+	%Gun_Unlocked.text = "Round " + str(round_count) + " Boss!"
+	%Unlock_Gun.show()
+	await get_tree().create_timer(3).timeout
+	%Unlock_Gun.hide()
+	
+	# Spawn boss enemy based on round
+	if(r == 1):
+		# Spawn one boss
+		spawn_zombie(boss)
+		boss = false
+		# Reset Spawn Timer
+		%SpawnTimer.wait_time = 2
+	elif(r == 2):
+		
+		%SpawnTimer.wait_time = 0.25
+	elif(r == 3):
+		spawn_zombie(boss)
+		boss = false
+		# Reset Spawn Timer
+		%SpawnTimer.wait_time = 2
+	
+	%BossOverlay.show() # Show Boss Overlay
+	%SpawnTimer.start() # Restart Spawn Timer
+	
 
 func show_endgame(scoreText):
-	active = false
-	endgame.emit()
-	%PlayTimer.stop()
-	%FinalScore.text = scoreText
-	%GameOver.show()
+	clear_board.emit() # remove zombies
+	%FinalScore.text = scoreText # update score text
+	%GameOver.show() # show gameover screen
+	get_tree().paused = true # pause tree
 
 
 func update_exp_UI():
@@ -250,6 +261,9 @@ func check_active(item : String) -> bool:
 	var entry = %Inventory.find_child(item)
 	if entry.visible: return true
 	else: return false
+
+
+
 
 
 # Test Suite

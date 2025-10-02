@@ -99,20 +99,6 @@ func _input(event):
 
 
 # Events
-func _on_game_endgame() -> void:
-	# Deactivate player  movement
-	active = false
-	
-	# Deactivate gun, account for reloading
-	var child_gun = find_child("Gun")
-	if(child_gun.active == true):
-		child_gun.active = false
-	else:
-		await get_tree().create_timer(child_gun.reload_time).timeout
-		child_gun.active = false
-		
-
-
 func _on_game_level_up() -> void:
 	AudioManager.play_sfx("LevelUp")
 	level += 1
