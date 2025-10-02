@@ -5,10 +5,7 @@ class_name mob
 # Run before _ready
 @onready var player = get_node("/root/Game/Player") # playerref
 @onready var game = get_parent() # gameref
-@onready var boss : bool = game.spawn_boss # bossround?
-@onready var round_count : int = game.round_count # roundnum
 @onready var player_level = player.level
-
 
 # Declare signals
 signal mob_died(experience : int, isboss : bool)
@@ -68,8 +65,10 @@ var fast_mob_prob = 0.175
 var big_mob_prob = 0.175
 
 # Placeholder
-var mob_type
-var curr_health 
+var mob_type : Dictionary
+var curr_health : float
+var boss : bool = false
+var round_count : int = 1
 
 # Flags
 var ignore_trees : bool = false
@@ -135,7 +134,7 @@ func choose_mob():
 			mob_type = big_mob
 			scale = Vector2(2, 2)
 			ignore_trees = true
-	else:
+	elif(round_count == 3):
 		if(rand < base_mob_prob):
 			mob_type = base_mob
 		elif(rand >= base_mob_prob and rand < (base_mob_prob + fast_mob_prob)):
@@ -146,6 +145,8 @@ func choose_mob():
 			mob_type = big_mob
 			scale = Vector2(2, 2)
 			ignore_trees = true
+	else:
+		printerr("round: ", round_count)
 
 
 func take_damage(amount : int):

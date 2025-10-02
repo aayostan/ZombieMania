@@ -337,7 +337,6 @@ text = "Boss Health"
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [connection signal="endgame" from="." to="Player" method="_on_game_endgame"]
-[connection signal="level_up" from="." to="Player" method="_on_level_up"]
 [connection signal="level_up" from="." to="Player" method="_on_game_level_up"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawntimer_timeout"]
 [connection signal="timeout" from="PlayTimer" to="." method="_on_playtimer_timeout"]

@@ -3,6 +3,7 @@ extends Node2D
 # Constants
 const MAX_LEVEL : int = 20
 const FOREST_SIZE : int = 100
+const MIN_DIST_TREE_TO_PLAYER : int = 175
 const ITEM_CAP : int = 5
 
 # Signals used to communicate with other classes
@@ -141,7 +142,9 @@ func spawn_trees():
 	# Repeat X times
 	for i in range(FOREST_SIZE):
 		# Randomization
-		var randV2 = Vector2(randf_range(-boundX, boundX),randf_range(-boundY, boundY))
+		var randV2 : Vector2 = Vector2(randf_range(-boundX, boundX),randf_range(-boundY, boundY))
+		while(randV2.length() < MIN_DIST_TREE_TO_PLAYER):
+			randV2 = Vector2(randf_range(-boundX, boundX),randf_range(-boundY, boundY))
 		
 		# Object instantiation
 		var new_tree = preload("res://Environment/pine_tree.tscn").instantiate()
@@ -150,11 +153,13 @@ func spawn_trees():
 
 
 func spawn_mob():
-	# ranomization
+	# randomization
 	%PathFollow2D.progress_ratio = randf()
 	
 	# object instantiation
 	var new_mob = preload("res://NPCs/Enemies/mob.tscn").instantiate()
+	new_mob.boss = spawn_boss
+	new_mob.round_count = round_count
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
 	
