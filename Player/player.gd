@@ -1,14 +1,24 @@
 extends CharacterBody2D
 
+# Signals
 signal health_depleted
 signal accuracy_changed(multiplier : float)
 
+# Stats
 var health = 100.0
 var active = true
 var level = 0
 var arms = 2
+var gun_count = 1
 var accuracy : float = 1.0
+var items = [
+	"Sandwhich",
+	"Soda",
+	"Gun"
+]
 
+# Placehoder
+var item_choice : int = 0
 
 # Camera shake stuff
 var camera : Camera2D
@@ -21,8 +31,9 @@ var trauma : float = 0.0 # Current shake strength
 var trauma_power : float = 1.5 # Trauma exponent. Increase for more extreme shaking
 
 
+# Run before _ready()
 @onready var gun = find_child("Gun") 
-var gun_count = 1
+@onready var game = get_parent()
 
 
 
@@ -69,12 +80,21 @@ func _physics_process(delta):
 
 func _input(event):
 	if(active):
-		if event.is_action_pressed("use_item_1"):
-			use_item("Sandwhich")
-		elif event.is_action_pressed("use_item_2"):
-			use_item("Soda")
-		elif event.is_action_pressed("use_item_3"):
-			use_item("Gun")
+		if event.is_action("select_left"):
+			print("Select Left")
+			select()
+		elif event.is_action("select_right"):
+			print("Select Right")
+			select(false)
+		elif event.is_action_pressed("use_item"):
+			print("Using item")
+			use_item(items[item_choice])
+		#if event.is_action_pressed("use_item_1"):
+			#use_item("Sandwhich")
+		#elif event.is_action_pressed("use_item_2"):
+			#use_item("Soda")
+		#elif event.is_action_pressed("use_item_3"):
+			#use_item("Gun")
 
 
 
@@ -99,8 +119,7 @@ func _on_game_level_up() -> void:
 	%LevelLabel.text = "L" + str(level)
 	
 	if(level == 1):
-		%Gun_Unlocked.text = "Unlocked: Backpack\n(Press 1 for food\n2 for Soda\n and 3 for gun)"
-		var game = get_parent()
+		%Gun_Unlocked.text = "Unlocked: Backpack\nScroll to Choose\nQ to Use"
 		if(game):
 			game.update_inventory("Sandwhich")
 			game.update_inventory("Soda")
@@ -161,7 +180,6 @@ func shake() -> void:
 
 
 func use_item(item : String):
-	var game = get_parent()
 	var used = false
 	used = game.update_inventory(item, false)
 	
@@ -176,7 +194,27 @@ func use_item(item : String):
 		update_stat(param)
 		if(param['cooldown'] > 0):
 			get_tree().create_timer(param['cooldown']).timeout.connect(_on_pickup_cooldown.bind(param))
-		
+
+
+func select(left : bool = true):
+	if game.find_active_item() != "None":
+		var not_switch = true
+		game.inventory_selector(items[item_choice], false)
+		while(not_switch):
+			if left:
+				if item_choice > 0:
+					item_choice -= 1
+				else:
+					item_choice = items.size() - 1
+			else:
+				if item_choice < (items.size() - 1):
+					item_choice += 1
+				else:
+					item_choice = 0
+			if(game.check_active(items[item_choice])):
+				game.inventory_selector(items[item_choice])
+				not_switch = false
+	
 
 
 func update_stat(param : Dictionary):

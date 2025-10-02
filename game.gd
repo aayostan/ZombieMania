@@ -24,6 +24,8 @@ var inventory : Dictionary = {
 # flags
 var active : bool = true
 var spawn_boss : bool = false
+var run_tests : bool = false
+var empty_inv : bool = true
 
 # Resoures
 var level : Array = range(1, MAX_LEVEL).map(func(n): return n**2*1000)
@@ -36,6 +38,11 @@ var spawn_time
 # Built in functions
 func _ready():
 	spawn_trees()
+	
+	# Uncomment tests you want to run
+	if(run_tests):
+		#test_inventory_selector()
+		pass
 
 
 func _process(_delta : float) -> void:
@@ -159,13 +166,14 @@ func update_exp_UI():
 
 
 func update_inventory(item : String, increment : bool = true, amount : int = 1) -> bool:
-	# Check Player Reach Level 1
-	#if(player_level < 1):
-	#	return false
-	
 	# Update back_end
 	if increment:
+		if(inventory[item] == 0):
+			inventory_selector(item,false) # Clear panel at start.
 		inventory[item] = min(inventory[item] + amount, ITEM_CAP)
+		if(empty_inv): 
+			inventory_selector(item)
+			empty_inv = false
 	else:
 		if(inventory[item] == 0):
 			return false
@@ -178,7 +186,60 @@ func update_inventory(item : String, increment : bool = true, amount : int = 1) 
 	
 	if(inventory[item] == 0):
 		entry.hide() # Change to invisible if empty
+		inventory_selector(item, false)
+		var next_active = find_active_item()
+		if(next_active != "None"):
+			inventory_selector(next_active)
+			var player = find_child("Player")
+			player.item_choice = player.items.rfind(next_active)
+			print(next_active)
+			print(player.item_choice)
 	else:
 		entry.show()
 
 	return true
+
+
+func inventory_selector(item : String, select : bool = true):
+	var entry = %Inventory.find_child(item)
+	var panel = entry.get_parent()
+	var stylebox = StyleBoxFlat.new()
+	stylebox.bg_color = Color(0, 0, 0, 0)
+	if select:
+		stylebox.border_width_bottom = 5
+		stylebox.border_width_left = 5
+		stylebox.border_width_right = 5
+		stylebox.border_width_top = 5
+		stylebox.border_color = Color(0, 0, 0)
+		stylebox.border_blend = true
+	panel.add_theme_stylebox_override("panel", stylebox)
+
+
+func find_active_item() -> String:
+	for k in inventory.keys():
+		if check_active(k):
+			return k
+	empty_inv = true
+	return "None"
+
+
+func check_active(item : String) -> bool:
+	var entry = %Inventory.find_child(item)
+	if entry.visible: return true
+	else: return false
+
+
+# Test Suite
+func test_inventory_selector():
+	inventory_selector("Sandwhich")
+	await get_tree().create_timer(1).timeout
+	inventory_selector("Soda")
+	await get_tree().create_timer(1).timeout
+	inventory_selector("Gun")
+	await get_tree().create_timer(1).timeout
+	
+	inventory_selector("Sandwhich", false)
+	await get_tree().create_timer(1).timeout
+	inventory_selector("Soda", false)
+	await get_tree().create_timer(1).timeout
+	inventory_selector("Gun", false)
