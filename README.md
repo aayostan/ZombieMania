@@ -1,6 +1,6 @@
 # Zombie Mania
 This is an assigment for ATLS 4140 which is being built off of the contents of this tutorial:  
-https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=youtu.be
+[https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=youtu.be](https://www.youtube.com/watch?v=GwCiGixlqiU)
 
 
 ## Time Breakdown
