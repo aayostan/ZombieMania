@@ -166,20 +166,24 @@ func choose_mob():
 			%Slime.find_child("SlimeBody").modulate = Color(255, 0, 0, 255)
 		return
 	
-	# Decision Tree'
+	# Slice zombie and probs arrays by round_count
 	reg_zombies_probs = reg_zombies_probs.slice(0, round_count)
 	reg_zombies = reg_zombies.slice(0, round_count)
+	# Choose a regular zombie at random based on probs
 	mob_type = GlobalFun._choose_random_w_probs(reg_zombies_probs, reg_zombies)
+	# Update zombie paramaters for scene
 	scale = mob_type['scale'] # Scale scene
 	ignore_trees = mob_type['ignore_trees'] # Flag ignore trees
-	
-	print(mob_type['name'])
-	print("modulate base: ", %Slime.find_child("SlimeBody").modulate)
-	print("zombie color: ", mob_type['color'])
-	%Slime.find_child("SlimeBody").modulate = mob_type['color'] # Modulate sprite
-	print("modulate after change: ", %Slime.find_child("SlimeBody").modulate)
-	
+	if(!Stats.run_tests): 
+		%Slime.find_child("SlimeBody").modulate = mob_type['color'] # Modulate sprite
+	else:
+		print(mob_type['name'])
+		print("modulate base: ", %Slime.find_child("SlimeBody").modulate)
+		print("zombie color: ", mob_type['color'])
+		%Slime.find_child("SlimeBody").modulate = mob_type['color'] # Modulate sprite
+		print("modulate after change: ", %Slime.find_child("SlimeBody").modulate)
 	update_animator()
+	
 
 
 func take_damage(amount : int):
@@ -212,8 +216,8 @@ func pickup_drop():
 		queue_scene("res://Pickups/pickup.tscn")
 
 
+# I used bing's AI to come up with this
 func update_animator():
-	
 	# Get the AnimationPlayer node
 	var animation_player = %Slime.find_child("AnimationPlayer")
 
@@ -245,4 +249,4 @@ func update_animator():
 			animation.track_set_key_value(track_index, 0, mob_type['hurt_color'])
 			animation.track_set_key_value(track_index, 1, mob_type['color'])
 	else:
-		print("Track not found!")
+		printerr("Track not found!")

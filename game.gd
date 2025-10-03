@@ -24,7 +24,7 @@ var inventory : Dictionary = {
 
 # flags
 var active : bool = true
-var run_tests : bool = true
+var run_tests : bool = Stats.run_tests
 var empty_inv : bool = true
 var boss : bool = false
 
@@ -57,7 +57,7 @@ func _process(_delta : float) -> void:
 # Events
 func _on_spawntimer_timeout() -> void:
 	if(active):
-		spawn_zombie(boss)
+		spawn_zombie()
 
 
 func _on_playtimer_timeout() -> void:
@@ -133,7 +133,8 @@ func spawn_trees():
 		add_child(new_tree)
 
 
-func spawn_zombie(boss : bool = false, mob : bool = false):
+func spawn_zombie():
+	#boss : bool = false, mob : bool = false):
 	# randomization
 	%PathFollow2D.progress_ratio = randf()
 	
@@ -164,7 +165,7 @@ func spawn_boss(r : int = 1):
 	# Spawn boss enemy based on round
 	if(r == 1):
 		# Spawn one boss
-		spawn_zombie(boss)
+		spawn_zombie()
 		boss = false
 		# Reset Spawn Timer
 		%SpawnTimer.wait_time = 2
@@ -172,7 +173,7 @@ func spawn_boss(r : int = 1):
 		
 		%SpawnTimer.wait_time = 0.25
 	elif(r == 3):
-		spawn_zombie(boss)
+		spawn_zombie()
 		boss = false
 		# Reset Spawn Timer
 		%SpawnTimer.wait_time = 2

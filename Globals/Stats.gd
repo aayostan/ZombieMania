@@ -1,5 +1,9 @@
 extends Node
 
+# Flags
+var run_tests = false
+
+
 var _player_health : float = 100.0
 var player_health: float:
 	get:
