@@ -6,8 +6,9 @@ func play_walk():
 
 
 func play_hurt():
-	print()
-	print("Playing hurt")
-	print("Base Modulate: ", find_child("SlimeBody").modulate)
+	if Stats.run_tests:
+		print()
+		print("Playing hurt")
+		print("Base Modulate: ", find_child("SlimeBody").modulate)
 	%AnimationPlayer.play("hurt")
 	%AnimationPlayer.queue("walk")

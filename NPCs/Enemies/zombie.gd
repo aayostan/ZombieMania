@@ -138,10 +138,11 @@ func _on_game_clear_board():
 
 
 func _on_animation_changed(old_name: StringName, new_name: StringName):
-	print("\nAnimation changed")
-	print("From: ",old_name)
-	print("To: ", new_name)
-	print("Modulate: ", %Slime.find_child("SlimeBody").modulate, "\n")
+	if Stats.run_tests:
+		("\nAnimation changed")
+		print("From: ",old_name)
+		print("To: ", new_name)
+		print("Modulate: ", %Slime.find_child("SlimeBody").modulate, "\n")
 	#%Slime.find_child("SlimeBody").modulate = mob_type['color']
 	
 
@@ -153,29 +154,22 @@ func choose_mob():
 	if(boss):
 		if(round_count == 1):
 			mob_type = big_mob_boss
-			scale = Vector2(5, 5) # Make big
-			ignore_trees = true
 		elif(round_count == 2): # Every Other Round
 			mob_type = fast_mob_boss
-			scale = Vector2(0.8, 0.8)
-			%Slime.find_child("SlimeBody").modulate = Color(255, 0, 0, 255)
 		elif(round_count == 3):
 			mob_type = big_fast_mob_boss
-			scale = Vector2(4, 4) # Make big
-			ignore_trees = true
-			%Slime.find_child("SlimeBody").modulate = Color(255, 0, 0, 255)
-		return
+	else:
+		# Slice zombie and probs arrays by round_count
+		reg_zombies_probs = reg_zombies_probs.slice(0, round_count)
+		reg_zombies = reg_zombies.slice(0, round_count)
+		# Choose a regular zombie at random based on probs
+		mob_type = GlobalFun._choose_random_w_probs(reg_zombies_probs, reg_zombies)
 	
-	# Slice zombie and probs arrays by round_count
-	reg_zombies_probs = reg_zombies_probs.slice(0, round_count)
-	reg_zombies = reg_zombies.slice(0, round_count)
-	# Choose a regular zombie at random based on probs
-	mob_type = GlobalFun._choose_random_w_probs(reg_zombies_probs, reg_zombies)
 	# Update zombie paramaters for scene
 	scale = mob_type['scale'] # Scale scene
 	ignore_trees = mob_type['ignore_trees'] # Flag ignore trees
 	if(!Stats.run_tests): 
-		%Slime.find_child("SlimeBody").modulate = mob_type['color'] # Modulate sprite
+		%Slime.find_child("SlimeBody").self_modulate = mob_type['color'] # Modulate sprite
 	else:
 		print(mob_type['name'])
 		print("modulate base: ", %Slime.find_child("SlimeBody").modulate)
@@ -218,6 +212,7 @@ func pickup_drop():
 
 # I used bing's AI to come up with this
 func update_animator():
+	return
 	# Get the AnimationPlayer node
 	var animation_player = %Slime.find_child("AnimationPlayer")
 

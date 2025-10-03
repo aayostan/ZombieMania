@@ -13,14 +13,14 @@ signal clear_board
 
 # Counter variables
 var kill_count : int = 0
-var player_experience : int = 0
-var player_level : int = 0
-var round_count : int = 3
+var player_level : int = Stats.PLAYER_LEVEL_START
+var round_count : int = Stats.GAME_ROUND_START
 var inventory : Dictionary = {
 	"Sandwhich" = 0,
 	"Soda" = 0,
 	"Gun" = 0
 }
+var spawn_limiter = 0
 
 # flags
 var active : bool = true
@@ -29,7 +29,8 @@ var empty_inv : bool = true
 var boss : bool = false
 
 # Resoures
-var level : Array = range(1, MAX_LEVEL).map(func(n): return n**2*1000)
+var level : Array = range(0, MAX_LEVEL).map(func(n): return n**2*1000)
+var player_experience : int = level[player_level]
 
 # Placeholders
 var spawn_time
@@ -45,6 +46,7 @@ func _ready():
 		#test_inventory_selector()
 		active = false
 		spawn_zombie()
+		
 		pass
 
 
@@ -76,7 +78,13 @@ func _on_player_health_depleted():
 
 func _on_zombie_death(experience : int, is_boss : bool):
 	# Respond to killing boss
-	if(is_boss):	
+	if(is_boss):
+		if(spawn_limiter > 0):
+			if run_tests:
+				print("_on_zombie_death/spawn_limiter: ",spawn_limiter)
+			spawn_zombie()
+			return
+		
 		# Notify Player of boss round end
 		%Gun_Unlocked.text = "Round " + str(round_count) + " Boss\nDefeated!"
 		%Unlock_Gun.show()
@@ -148,6 +156,9 @@ func spawn_zombie():
 	# connect signals
 	zombie_inst.connect("death", _on_zombie_death)
 	connect("clear_board", zombie_inst._on_game_clear_board)
+	
+	# Update spawn limiter
+	spawn_limiter = max(spawn_limiter - 1, 0)
 
 
 func spawn_boss(r : int = 1):
@@ -162,24 +173,30 @@ func spawn_boss(r : int = 1):
 	await get_tree().create_timer(3).timeout
 	%Unlock_Gun.hide()
 	
+	var timer : bool = true
+	
 	# Spawn boss enemy based on round
 	if(r == 1):
 		# Spawn one boss
 		spawn_zombie()
 		boss = false
-		# Reset Spawn Timer
-		%SpawnTimer.wait_time = 2
 	elif(r == 2):
-		
-		%SpawnTimer.wait_time = 0.25
+		# Need to set a total for zombie spawn
+		# Spawn those zombies on a timer
+		# Once those zombies are depleted, end round
+		# Can count them in the _on_zombie_death
+		# Can count them in the _on_spawntimer_timeout
+		# Can spawn new one after each kill instaed of on timer
+		spawn_limiter = 10
+		spawn_zombie()
+		timer = false
 	elif(r == 3):
 		spawn_zombie()
 		boss = false
-		# Reset Spawn Timer
-		%SpawnTimer.wait_time = 2
 	
+	%SpawnTimer.wait_time = 2 # Reset Spawn Timer
+	if timer: %SpawnTimer.start() # Restart Spawn Timer
 	%BossOverlay.show() # Show Boss Overlay
-	%SpawnTimer.start() # Restart Spawn Timer
 	
 
 func show_endgame(scoreText):
@@ -191,10 +208,7 @@ func show_endgame(scoreText):
 
 func update_exp_UI():
 	if(player_level < level.size()):
-		if(player_level > 0):
-			%ExpBar.value = remap(player_experience, level[player_level-1], level[player_level], 0, 100)
-		elif(player_level < 1):
-			%ExpBar.value = remap(player_experience, 0, level[player_level], 0, 100)
+		%ExpBar.value = remap(player_experience, level[player_level], level[player_level+1], 0, 100)
 	else:
 		%ExpBar.value = 100
 

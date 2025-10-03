@@ -36,7 +36,6 @@ unique_name_in_owner = true
 wait_time = 60.0
 one_shot = true
 autostart = true
-ignore_time_scale = true
 
 [node name="Player" parent="." instance=ExtResource("2_4mm5m")]
 

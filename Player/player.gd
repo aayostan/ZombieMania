@@ -7,7 +7,7 @@ signal accuracy_changed(multiplier : float)
 # Stats
 var health = 100.0
 var active = true
-var level = 0
+var level = Stats.PLAYER_LEVEL_START
 var arms = 2
 var gun_count = 1
 var accuracy : float = 1.0
