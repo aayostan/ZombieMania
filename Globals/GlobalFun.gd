@@ -40,7 +40,8 @@ func _choose_random_w_probs(probs : Array, items : Array):
 	for prob in probs:
 		run_sum += prob
 	if(not is_equal_approx(run_sum, 1.0)):
-		print("_choose_random_w_probs: probs sum != 1")
+		#print("_choose_random_w_probs: probs sum != 1")
+		pass
 	
 	# Choose item
 	var rand = randf_range(0,run_sum)

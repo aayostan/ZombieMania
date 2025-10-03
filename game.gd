@@ -6,6 +6,7 @@ const FOREST_SIZE : int = 100
 const MIN_DIST_TREE_TO_PLAYER : int = 175
 const ITEM_CAP : int = 5
 const MAX_ROUNDS : int = 3
+const HORDE_SIZE : int = 10
 
 # Signals used to communicate with other classes
 signal level_up
@@ -77,11 +78,11 @@ func _on_player_health_depleted():
 
 
 func _on_zombie_death(experience : int, is_boss : bool):
+	credit_player(experience)
+	
 	# Respond to killing boss
 	if(is_boss):
 		if(spawn_limiter > 0):
-			if run_tests:
-				print("_on_zombie_death/spawn_limiter: ",spawn_limiter)
 			spawn_zombie()
 			return
 		
@@ -103,18 +104,10 @@ func _on_zombie_death(experience : int, is_boss : bool):
 		# Reset Timers and UI
 		%BossOverlay.hide() # hide Boss Overlay
 		%SpawnTimer.wait_time = 0.3 # Reset spawntimer
+		%SpawnTimer.start()
 		%PlayTimer.start() # Restart playtimer
 		
 		return
-	
-	kill_count += 1
-	var temp = player_experience + experience
-	for i in range(level.size()):
-		if(player_experience < level[i] and temp >= level[i]):
-			level_up.emit()
-			player_level += 1
-	player_experience = temp
-	%Score.text = "Kills: " + str(kill_count)
 	
 	if(run_tests):
 		spawn_zombie()
@@ -158,10 +151,10 @@ func spawn_zombie():
 	connect("clear_board", zombie_inst._on_game_clear_board)
 	
 	# Update spawn limiter
-	spawn_limiter = max(spawn_limiter - 1, 0)
+	if boss: spawn_limiter = max(spawn_limiter - 1, 0)
 
 
-func spawn_boss(r : int = 1):
+func spawn_boss():
 	# Run Boss Fight
 	clear_board.emit() # Remove all enemies
 	%SpawnTimer.stop() # Stop Spawning enemies
@@ -176,21 +169,21 @@ func spawn_boss(r : int = 1):
 	var timer : bool = true
 	
 	# Spawn boss enemy based on round
-	if(r == 1):
+	if(round_count == 1):
 		# Spawn one boss
 		spawn_zombie()
 		boss = false
-	elif(r == 2):
+	elif(round_count == 2):
 		# Need to set a total for zombie spawn
 		# Spawn those zombies on a timer
 		# Once those zombies are depleted, end round
 		# Can count them in the _on_zombie_death
 		# Can count them in the _on_spawntimer_timeout
 		# Can spawn new one after each kill instaed of on timer
-		spawn_limiter = 10
+		spawn_limiter = HORDE_SIZE
 		spawn_zombie()
 		timer = false
-	elif(r == 3):
+	elif(round_count == 3):
 		spawn_zombie()
 		boss = false
 	
@@ -278,6 +271,15 @@ func check_active(item : String) -> bool:
 	else: return false
 
 
+func credit_player(experience : float):
+	kill_count += 1
+	var temp = player_experience + experience
+	for i in range(level.size()):
+		if(player_experience < level[i] and temp >= level[i]):
+			level_up.emit()
+			player_level += 1
+	player_experience = temp
+	%Score.text = "Kills: " + str(kill_count)
 
 
 

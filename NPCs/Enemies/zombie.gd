@@ -21,7 +21,7 @@ var base_mob = {
 	"pickupprob" = Stats.pickup_probability,
 	"scale" = Vector2(1, 1),
 	"color" = Color.GREEN,
-	"hurt_color" = Color.ORANGE_RED,
+	"hurt_color" = Color(Color.ORANGE, 0),
 	"ignore_trees" = false
 }
 
@@ -34,7 +34,7 @@ var fast_mob = {
 	"pickupprob" = base_mob['pickupprob'] * 0.9,
 	"scale" = Vector2(0.8, 0.8),
 	"color" = Color.RED,
-	"hurt_color" = Color.BLACK,
+	"hurt_color" = Color(Color.BLACK, 0),
 	"ignore_trees" = false
 }
 
@@ -46,8 +46,8 @@ var big_mob = {
 	"sfx" = ["OwLo"],
 	"pickupprob" = base_mob['pickupprob'] * 1.5,
 	"scale" = Vector2(2, 2),
-	"color" = Color.SEA_GREEN,
-	"hurt_color" = Color.DARK_RED,
+	"color" = Color.GREEN,
+	"hurt_color" = Color(Color.ORANGE, 0),
 	"ignore_trees" = true
 }
 
@@ -59,7 +59,7 @@ var big_mob_boss = {
 	"sfx" = ["OwLo"],
 	"pickupprob" = 1,
 	"scale" = Vector2(5, 5),
-	"color" = Color(Color.GREEN, 155),
+	"color" = Color.GREEN,
 	"hurt_color" = Color(Color.ORANGE, 0),
 	"ignore_trees" = true
 }
@@ -73,7 +73,7 @@ var fast_mob_boss = {
 	"pickupprob" = 1,
 	"scale" = Vector2(1, 1),
 	"color" = Color.RED,
-	"hurt_color" = Color(Color.GREEN, 0),
+	"hurt_color" = Color(Color.BLACK, 0),
 	"ignore_trees" = false
 }
 
@@ -85,7 +85,7 @@ var big_fast_mob_boss = {
 	"sfx" = ["OwHi"],
 	"pickupprob" = 1,
 	"scale" = Vector2(1, 1),
-	"color" = Color.RED,
+	"color" = Color.ORANGE_RED,
 	"hurt_color" = Color(Color.BLACK, 0),
 	"ignore_trees" = true
 }
@@ -125,12 +125,6 @@ func _physics_process(_delta):
 	#move_and_collide() here?
 
 
-func _process(_delta):
-	# Update boss health
-	if(boss):
-		get_parent().find_child("BossHealthBar").value = remap(curr_health, 0, mob_type['health'], 0, 100)
-
-
 
 # Events
 func _on_game_clear_board():
@@ -168,15 +162,8 @@ func choose_mob():
 	# Update zombie paramaters for scene
 	scale = mob_type['scale'] # Scale scene
 	ignore_trees = mob_type['ignore_trees'] # Flag ignore trees
-	if(!Stats.run_tests): 
-		%Slime.find_child("SlimeBody").self_modulate = mob_type['color'] # Modulate sprite
-	else:
-		print(mob_type['name'])
-		print("modulate base: ", %Slime.find_child("SlimeBody").modulate)
-		print("zombie color: ", mob_type['color'])
-		%Slime.find_child("SlimeBody").modulate = mob_type['color'] # Modulate sprite
-		print("modulate after change: ", %Slime.find_child("SlimeBody").modulate)
-	update_animator()
+	%Slime.find_child("SlimeBody").self_modulate = mob_type['color'] # Modulate sprite
+	%Slime.find_child("SlimeBodyHurt").modulate = mob_type['hurt_color']
 	
 
 
@@ -186,6 +173,14 @@ func take_damage(amount : int):
 	
 	%Slime.play_hurt()
 	curr_health -= amount
+	
+	# Update boss health
+	if(boss and round_count != 2):
+		get_parent().find_child("BossHealthBar").value = remap(curr_health, 0, mob_type['health'], 0, 100)
+	else:
+		get_parent().find_child("BossHealthBar").value = remap(\
+							curr_health + mob_type['health'] * (get_parent().spawn_limiter-1),\
+							0, mob_type['health'] * get_parent().HORDE_SIZE, 0, 100)
 	
 	if curr_health <= 0: # Dead condition met
 		death.emit(mob_type['experience'], boss)
