@@ -4,7 +4,7 @@ This is an assigment for ATLS 4140 which is being built off of the contents of t
 
 
 ## Time Breakdown
-Total: ~35.75hrs\
+Total: ~42.75hrs\
 <br/>
 Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
 Add Progression (num bullets fired linked to kills): ~1.5hrs  
@@ -25,6 +25,8 @@ Added Mob Drops/Pickups to Game: ~4hrs
 Made Mod Drops/Pickups Launch and Bounce: ~4hrs  
 Game Level Design (Rounds + Bosses + Env): ~4hrs  
 Added Inventory to Store and Use Items: ~3.5hrs  
+Enemy Color Variability + Boss Horde Mode: ~3hrs  
+Code Refactoring + Debugging + Ideation: ~4hrs  
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
