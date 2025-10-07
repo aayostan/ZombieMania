@@ -78,7 +78,7 @@ var fast_mob_boss = {
 }
 
 var big_fast_mob_boss = {
-	"name" = "uber_zombie_hoard",
+	"name" = "uber_zombie",
  	"speed" = fast_mob["speed"],
 	"health" = big_mob['health'] * 5,
 	"experience" = big_mob['experience'] * 5,
@@ -170,6 +170,7 @@ func choose_mob():
 func take_damage(amount : int):
 	if(amount < 0):
 		return
+	var prev_health = curr_health
 	
 	%Slime.play_hurt()
 	curr_health -= amount
@@ -182,7 +183,7 @@ func take_damage(amount : int):
 							curr_health + mob_type['health'] * (get_parent().spawn_limiter-1),\
 							0, mob_type['health'] * get_parent().HORDE_SIZE, 0, 100)
 	
-	if curr_health <= 0: # Dead condition met
+	if prev_health > 0 and curr_health <= 0: # Dead condition met
 		death.emit(mob_type['experience'], boss)
 		queue_scene("res://NPCs/Enemies/smoke_explosion/smoke_explosion.tscn")
 		pickup_drop()
