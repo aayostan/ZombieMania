@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dun1cpardk2xw"]
+[gd_scene load_steps=11 format=3 uid="uid://dun1cpardk2xw"]
 
 [ext_resource type="Script" uid="uid://b56o2gqw1kccx" path="res://game.gd" id="1_nr0af"]
 [ext_resource type="PackedScene" uid="uid://dsw8raqgacxsc" path="res://Player/player.tscn" id="2_4mm5m"]
 [ext_resource type="Texture2D" uid="uid://bbon11blvk4e0" path="res://Pickups/sandwhich.png" id="3_4mm5m"]
 [ext_resource type="Texture2D" uid="uid://cswb5do8rrj7q" path="res://Player/Gun/pistol.png" id="3_nr0af"]
 [ext_resource type="Texture2D" uid="uid://gr1msdd1q8gh" path="res://Pickups/soda_can.png" id="4_3ds3e"]
+[ext_resource type="Script" uid="uid://cirhslil5ylyy" path="res://game_over.gd" id="6_60bub"]
 
 [sub_resource type="Curve2D" id="Curve2D_cp6e5"]
 _data = {
@@ -35,7 +36,6 @@ unique_name_in_owner = true
 wait_time = 60.0
 one_shot = true
 autostart = true
-ignore_time_scale = true
 
 [node name="Player" parent="." instance=ExtResource("2_4mm5m")]
 
@@ -235,7 +235,9 @@ vertical_alignment = 1
 
 [node name="GameOver" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+process_mode = 3
 visible = false
+script = ExtResource("6_60bub")
 
 [node name="ColorRect" type="ColorRect" parent="GameOver"]
 anchors_preset = 15
@@ -336,9 +338,8 @@ text = "Boss Health"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[connection signal="endgame" from="." to="Player" method="_on_game_endgame"]
 [connection signal="level_up" from="." to="Player" method="_on_game_level_up"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawntimer_timeout"]
 [connection signal="timeout" from="PlayTimer" to="." method="_on_playtimer_timeout"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
-[connection signal="pressed" from="GameOver/ColorRect/Button" to="." method="_on_restartbutton_pressed"]
+[connection signal="pressed" from="GameOver/ColorRect/Button" to="GameOver" method="_on_restart_pressed"]

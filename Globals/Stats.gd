@@ -1,5 +1,13 @@
 extends Node
 
+
+const PLAYER_LEVEL_START : int = 4
+const GAME_ROUND_START : int = 3
+
+
+# Flags
+var run_tests = false
+
 var _player_health : float = 100.0
 var player_health: float:
 	get:

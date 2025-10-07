@@ -107,7 +107,7 @@ func setup_bounce():
 	get_parent().add_child(p2d)
 	p2d.curve = Curve2D.new()
 	p2d.curve.add_point(global_position)
-	p2d.curve.add_point(global_position + _random_inside_circle(radius))
+	p2d.curve.add_point(global_position + GlobalFun._random_inside_circle(radius))
 
 	# Create PathFollow2D
 	pf2d = PathFollow2D.new()
@@ -181,14 +181,6 @@ func bouncer(delta : float):
 		%Sprite2D.scale = param['scale'] + growth_v
 
 
-func _random_inside_circle(radius: float) -> Vector2:
-	return _random_inside_unit_circle() * radius
-
-
-# Courtesy of https://www.reddit.com/r/godot/comments/vjge0n/could_anyone_share_some_code_for_finding_a/ @angelonit
-func _random_inside_unit_circle() -> Vector2:
-	var theta : float = randf() * 2 * PI
-	return Vector2(cos(theta), sin(theta)) * sqrt(randf())
 
 
 func _inverted_parabola_from_origin(curr_x: float, disp : float, height : float) -> float:
