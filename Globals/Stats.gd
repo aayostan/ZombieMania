@@ -1,8 +1,8 @@
 extends Node
 
 
-const PLAYER_LEVEL_START : int = 4
-const GAME_ROUND_START : int = 3
+const PLAYER_LEVEL_START : int = 0
+const GAME_ROUND_START : int = 1
 
 
 # Flags
