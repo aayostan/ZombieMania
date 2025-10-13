@@ -81,11 +81,11 @@ func _physics_process(delta):
 func _input(event):
 	if(active):
 		if event.is_action_pressed("select_left"):
-			print("Select Left")
-			select()
-		elif event.is_action_pressed("select_right"):
-			print("Select Right")
+			#print("Select Left")
 			select(false)
+		elif event.is_action_pressed("select_right"):
+			#print("Select Right")
+			select()
 		elif event.is_action_pressed("use_item"):
 			#print("Using item")
 			use_item(items[item_choice])
