@@ -85,7 +85,9 @@ func _on_zombie_death(experience : int, is_boss : bool):
 		if(spawn_limiter > 0):
 			spawn_zombie()
 			return
+		boss = false
 		
+		# Need to queue these cutscenes as they don't run when their are conflicts!
 		# Notify Player of boss round end
 		%Gun_Unlocked.text = "Round " + str(round_count) + " Boss\nDefeated!"
 		%Unlock_Gun.show()

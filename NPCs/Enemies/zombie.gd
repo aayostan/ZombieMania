@@ -84,7 +84,7 @@ var big_fast_mob_boss = {
 	"experience" = big_mob['experience'] * 5,
 	"sfx" = ["OwHi"],
 	"pickupprob" = 1,
-	"scale" = Vector2(1, 1),
+	"scale" = Vector2(2, 2),
 	"color" = Color.ORANGE_RED,
 	"hurt_color" = Color(Color.BLACK, 0),
 	"ignore_trees" = true
@@ -156,9 +156,14 @@ func choose_mob():
 		# Slice zombie and probs arrays by round_count
 		reg_zombies_probs = reg_zombies_probs.slice(0, round_count)
 		reg_zombies = reg_zombies.slice(0, round_count)
+		print()
+		print(reg_zombies_probs)
+		print(reg_zombies)
+		print()
 		# Choose a regular zombie at random based on probs
 		mob_type = GlobalFun._choose_random_w_probs(reg_zombies_probs, reg_zombies)
-	
+	print(mob_type['name'])
+	print()
 	# Update zombie paramaters for scene
 	scale = mob_type['scale'] # Scale scene
 	ignore_trees = mob_type['ignore_trees'] # Flag ignore trees
