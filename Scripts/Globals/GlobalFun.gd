@@ -1,5 +1,12 @@
 extends Node
 
+
+
+# Helpers section
+func HELPERS():
+	pass
+
+
 func search_params(arr : Array, nam : String) -> Dictionary:
 	var has_name = false
 	for item in arr:
@@ -54,10 +61,12 @@ func _choose_random_w_probs(probs : Array, items : Array):
 		idx += 1
 
 
-# Input: time (X)
-# Process:
-	# global access + show label
-	# create timer and await timeout (local scope!)
-	# global access + hide label
-# Output: display label in game UI for X seconds
-#func display_label(time : float):
+func _inverted_parabola_from_origin(curr_x: float, disp : float, height : float) -> float:
+	return _parabola(curr_x, height, 1, disp + sqrt(height), true)
+
+
+func _parabola(curr_x : float, height : float, width : float, disp : float, inverted : bool = false) -> float:
+	if(inverted):
+		return -((width * curr_x) - disp)**2 + height
+	else:
+		return ((width * curr_x) - disp)**2 + height

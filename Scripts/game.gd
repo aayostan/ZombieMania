@@ -1,5 +1,12 @@
 extends Node2D
 
+
+
+# Resources section
+func RESOURCES():
+	pass
+
+
 # Constants
 const MAX_LEVEL : int = 20
 const FOREST_SIZE : int = 100
@@ -39,7 +46,11 @@ var text : String
 
 
 
-# Built in functions
+# Built-in section
+func BUILTINS():
+	pass
+
+
 func _ready():
 	spawn_trees()
 	
@@ -58,7 +69,11 @@ func _process(_delta : float) -> void:
 
 
 
-# Events
+# Events section
+func EVENTS():
+	pass
+
+
 func _on_spawntimer_timeout() -> void:
 	if(active):
 		spawn_zombie()
@@ -113,7 +128,11 @@ func _on_zombie_death(experience : int, is_boss : bool):
 
 
 
-# Helpers
+# Helpers section
+func HELPERS():
+	pass
+
+
 func spawn_trees():
 	# Get bounding box
 	var bounds = get_viewport_rect()

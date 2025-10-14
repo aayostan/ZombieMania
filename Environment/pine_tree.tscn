@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://c2qg1nuvfnd4q"]
 
 [ext_resource type="Texture2D" uid="uid://b7rhtttevhxtj" path="res://Player/happy_boo/ground_shadow.png" id="1_g7t2f"]
-[ext_resource type="Script" uid="uid://b0yss5fl6ysbu" path="res://Environment/pine_tree.gd" id="1_iuyp8"]
+[ext_resource type="Script" uid="uid://b0yss5fl6ysbu" path="res://Scripts/pine_tree.gd" id="1_iuyp8"]
 [ext_resource type="Texture2D" uid="uid://caqfk2xng5v5u" path="res://Environment/pine_tree.png" id="2_hd1ds"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_im3ph"]

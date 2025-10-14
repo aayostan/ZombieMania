@@ -2,6 +2,13 @@ extends CharacterBody2D
 
 class_name zombie
 
+
+
+# Resources section
+func RESOURCES():
+	pass
+
+
 # Run before _ready
 @onready var player = get_node("/root/Game/Player") # playerref
 @onready var game = get_parent() # gameref
@@ -126,13 +133,21 @@ func _physics_process(_delta):
 
 
 
-# Events
+# Event section
+func EVENTS():
+	pass
+
+
 func _on_game_clear_board():
 	queue_free()
 
 
 
-# Helpers
+# Helper section
+func HELPERS():
+	pass
+
+
 func choose_mob():
 	if(boss):
 		if(round_count == 1):
@@ -196,7 +211,11 @@ func pickup_drop():
 
 
 
-# Not used
+# Not used section
+func NOTINUSE():
+	pass
+
+
 func update_animator():
 	# Get the AnimationPlayer node
 	var animation_player = %Slime.find_child("AnimationPlayer")

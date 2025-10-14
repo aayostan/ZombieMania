@@ -1,8 +1,19 @@
 extends StaticBody2D
 
-@onready var player = get_node("/root/Game/Player")
 
+# Resource section
+func RESOURCES():
+	pass
+
+
+@onready var player = get_node("/root/Game/Player")
 var rY_exc = range(-1080*1.5, -1080/2.0)
+
+
+
+# Built-in section
+func BUILTINS():
+	pass
 
 
 func _ready():
@@ -27,7 +38,11 @@ func _physics_process(_delta: float) -> void:
 
 
 
-# Helpers
+# Helper section
+func HELPERS():
+	pass
+
+
 func move_tree():
 	global_position = player.global_position + rand_out_bounds()
 

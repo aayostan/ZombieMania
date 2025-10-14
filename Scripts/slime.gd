@@ -1,6 +1,11 @@
 extends Node2D
 
 
+# Helper Section
+func HELPERS():
+	pass
+
+
 func play_walk():
 	%AnimationPlayer.play("walk")
 

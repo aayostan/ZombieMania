@@ -1,5 +1,12 @@
 extends CharacterBody2D
 
+
+
+# Resources section
+func RESOURCES():
+	pass
+
+
 # Signals
 signal health_depleted
 signal accuracy_changed(multiplier : float)
@@ -31,14 +38,17 @@ var camera : Camera2D
 var trauma : float = 0.0 # Current shake strength
 var trauma_power : float = 1.5 # Trauma exponent. Increase for more extreme shaking
 
-
 # Run before _ready()
 @onready var gun = find_child("Gun") 
 @onready var game = get_parent()
 
 
 
-# Built-in Functions
+# Built-in section
+func BUILTINS():
+	pass
+
+
 func _ready():
 	%LevelLabel.text = "L" + str(level)
 	camera = get_viewport().get_camera_2d()
@@ -79,6 +89,12 @@ func _physics_process(delta):
 			trauma = 0.3
 
 
+
+# Events section
+func EVENTS():
+	pass
+
+
 func _input(event):
 	if(active):
 		if event.is_action_pressed("select_left"):
@@ -98,8 +114,6 @@ func _input(event):
 			#use_item("Gun")
 
 
-
-# Events
 func _on_game_level_up() -> void:
 	AudioManager.play_sfx("LevelUp")
 	level += 1
@@ -144,8 +158,38 @@ func _on_game_level_up() -> void:
 	%Display.queue_display_text(text)
 
 
+func _on_pickup_cooldown(param: Dictionary):
+# This function nullifies the pickup effect after the pickup cooldown
 
-# Helpers
+	# Did i make it here?
+	#print("I made it to the cooldown signal")
+	
+	# There are definitely still some synchronization issues here!
+	
+	if(param["stat"] == "speed"):
+		if(param["modifier"] == "add"):
+			Stats.player_speed -= param["value"]
+		else:
+			Stats.player_speed /= param["value"]
+	elif(param["stat"] == "health"):
+		if(param["modifier"] == "add"):
+			health -= param["value"]
+		else:
+			health /= param["value"]
+		%HealthBar.value = health
+	elif(param["stat"] == "gun"):
+		if(param["modifier"] == "add"):
+			if(Stats.guns.size() > 0):
+				Stats.guns.pop_back().queue_free()
+				gun_count -= 1
+
+
+
+# Helper section
+func HELPERS():
+	pass
+
+
 func create_gun():
 	gun_count += 1
 	var new_gun = preload("res://Player/Gun/gun.tscn")
@@ -223,30 +267,3 @@ func update_stat(param : Dictionary):
 		if(param["modifier"] == "add"):
 			create_gun()
 			Stats.two_guns = true
-
-
-
-func _on_pickup_cooldown(param: Dictionary):
-# This function nullifies the pickup effect after the pickup cooldown
-
-	# Did i make it here?
-	#print("I made it to the cooldown signal")
-	
-	# There are definitely still some synchronization issues here!
-	
-	if(param["stat"] == "speed"):
-		if(param["modifier"] == "add"):
-			Stats.player_speed -= param["value"]
-		else:
-			Stats.player_speed /= param["value"]
-	elif(param["stat"] == "health"):
-		if(param["modifier"] == "add"):
-			health -= param["value"]
-		else:
-			health /= param["value"]
-		%HealthBar.value = health
-	elif(param["stat"] == "gun"):
-		if(param["modifier"] == "add"):
-			if(Stats.guns.size() > 0):
-				Stats.guns.pop_back().queue_free()
-				gun_count -= 1

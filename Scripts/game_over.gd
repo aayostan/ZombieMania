@@ -1,5 +1,11 @@
 extends CanvasLayer
 
+
+# Events section
+func EVENTS():
+	pass
+
+
 func _on_restart_pressed() -> void:
 	var tree = get_tree()
 	tree.paused = false

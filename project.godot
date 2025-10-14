@@ -86,8 +86,8 @@ buses/default_bus_layout="res://Audio/default_bus_layout.tres"
 [autoload]
 
 AudioManager="*res://Audio/AudioManager.tscn"
-Stats="*res://Globals/Stats.gd"
-GlobalFun="*res://Globals/GlobalFun.gd"
+Stats="*res://Scripts/Globals/Stats.gd"
+GlobalFun="*res://Scripts/Globals/GlobalFun.gd"
 
 [display]
 

@@ -1,11 +1,15 @@
 extends Node
 
 
+
+# Resources section
+func RESOURCES():
+	pass
+
+
 const PLAYER_LEVEL_START : int = 2
 const GAME_ROUND_START : int = 1
-
 const DISPLAY_LABEL_TIME : float = 3.2
-
 
 # Flags
 var run_tests = false
@@ -38,8 +42,6 @@ var game_round : int = 1
 @export var enemy_damage = 10.0
 @export var pickup_probability = .5
 
-
-# Resources
 enum pickup {
 	SODA,
 	SANDWHICH,

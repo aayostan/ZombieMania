@@ -1,6 +1,11 @@
 extends Node2D
 
 
+# Helper section
+func HELPERS():
+	pass
+
+
 func play_idle_animation():
 	%AnimationPlayer.play("idle")
 

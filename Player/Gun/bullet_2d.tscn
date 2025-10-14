@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://br65mgv2n0bbd"]
 
-[ext_resource type="Script" uid="uid://cobx0ou5nkyau" path="res://Player/Gun/bullet_2d.gd" id="1_lg2ne"]
+[ext_resource type="Script" uid="uid://cobx0ou5nkyau" path="res://Scripts/bullet_2d.gd" id="1_lg2ne"]
 [ext_resource type="Texture2D" uid="uid://dftkbqwsfd68r" path="res://Player/Gun/projectile.png" id="2_q0pid"]
 [ext_resource type="Texture2D" uid="uid://brgpjilf7s2ul" path="res://Player/Gun/muzzle_flash/muzzle_flash.png" id="3_cq7x4"]
 

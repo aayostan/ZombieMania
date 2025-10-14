@@ -1,13 +1,35 @@
 extends Node
 
+
+
+# Resource section
+func RESOURCES():
+	pass
+
+
 var active_music: AudioStreamPlayer
 var active_sfx : AudioStreamPlayer
-
 var sfx_playing = []
+var xp_index := 0	
+var pitch_array := [ .8, .9, 1, 1.2, 1.3]
+
+
+
+# Built-in section
+func BUILTINS():
+	pass
+
 
 func _ready():
 	#play_music("Main")
 	pass
+
+
+
+# Helper section
+func HELPERS():
+	pass
+
 
 func play_music(clip_name: String, position: float = 0):
 	if active_music and active_music.playing:
@@ -15,8 +37,6 @@ func play_music(clip_name: String, position: float = 0):
 	active_music = %Music.get_node(clip_name)
 	active_music.play(position)
 
-var xp_index := 0	
-var pitch_array := [ .8, .9, 1, 1.2, 1.3]
 func play_sfx(clip_name: String, 
 				position: float = 0, 
 				playMultiple: bool = false, 

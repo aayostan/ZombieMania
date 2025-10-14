@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://byguda1krby1"]
 
-[ext_resource type="Script" uid="uid://dbdd4tsmihyip" path="res://Audio/audio_manager.gd" id="1_l0aok"]
+[ext_resource type="Script" uid="uid://dbdd4tsmihyip" path="res://Scripts/audio_manager.gd" id="1_l0aok"]
 [ext_resource type="AudioStream" uid="uid://dvi562if8kevk" path="res://Audio/SoundFX/MachineGun.wav" id="2_5m6nf"]
 [ext_resource type="AudioStream" uid="uid://cpeyjbdow82v" path="res://Audio/SoundFX/PUSa.wav" id="2_v3dh4"]
 [ext_resource type="AudioStream" uid="uid://ctg4runcjhbfn" path="res://Audio/SoundFX/Reload.wav" id="3_2l8vh"]

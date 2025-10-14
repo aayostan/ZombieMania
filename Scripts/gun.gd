@@ -1,5 +1,11 @@
 extends Area2D
 
+
+# Resource section
+func RESOURCES():
+	pass
+
+
 var active : bool = true
 var ammo = 0
 var reload_time = 0
@@ -41,7 +47,11 @@ var bullet_damage = 1
 
 
 
-# Built-in Functions
+# Built-in section
+func BUILTINS():
+	pass
+
+
 func _ready() -> void:
 	# Set base gun type
 	ammo = guns[Stats.gun_type]["max_ammo"]
@@ -85,6 +95,12 @@ func _process(_delta):
 	#print(name, bullet_damage)
 
 
+
+# Events section
+func EVENTS():
+	pass
+
+
 func _input(event):
 	if(active):
 		if event.is_action_pressed("shoot"):
@@ -95,14 +111,16 @@ func _input(event):
 			if(gun_num == 1): change_gun()
 
 
-
-# Events
 func _on_accuracy_changed(multiplier : float):
 	bullet_damage = multiplier
 
 
 
-# Helpers
+# Helper section
+func HELPERS():
+	pass
+
+
 func shoot():
 	if(ammo > 0):
 		if(guns[Stats.gun_type]['fire_type'] == "single"): 

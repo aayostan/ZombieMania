@@ -1,9 +1,21 @@
 extends Area2D
 
 
+# Resource section
+func RESOURCES():
+	pass
+
+
 var travelled_distance = 0
 var damage = 1
 var gun_num
+
+
+
+# Built-in section
+func BUILTINS():
+	pass
+
 
 func _ready():
 	# Ineloquent solution
@@ -18,6 +30,12 @@ func _physics_process(delta):
 	travelled_distance += SPEED * delta
 	if travelled_distance > RANGE:
 		queue_free()
+
+
+
+# Events section
+func EVENTS():
+	pass
 
 
 func _on_body_entered(body):

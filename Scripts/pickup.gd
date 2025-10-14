@@ -14,18 +14,29 @@ extends Area2D
 	#GUN
 #}
 
+
+# Resources section
+func RESOURCES():
+	pass
+
+
 var param
 
 @export var growth_scale : float = 0.1 
 @export var radius_range : Vector2 = Vector2(1080/2.0, 1920/2.0)
 @export var min_speed : float = 1
 
-
 # Placeholders
 var bouncing : bool
 var pf2d : PathFollow2D
 var bounce_end : bool = false
 var bi = 0
+
+
+
+# Built-in section
+func BUILTINS():
+	pass
 
 
 func _ready():
@@ -53,6 +64,35 @@ func _process(delta : float) -> void:
 			get_tree().create_timer(param['lifetime']).timeout.connect(_on_lifetime_end)
 			pf2d.get_parent().queue_free()
 	
+
+
+
+# Events section
+func EVENTS():
+	pass
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if(body.name == "Player"):
+		if(body.level > 0):
+			AudioManager.play_sfx("Pickup",0,false,false,true)
+			get_parent().update_inventory(param['name'])
+		else:
+			AudioManager.play_sfx(param['sfx'],0,true)
+			update_stat(body)
+			if(param['cooldown'] > 0):
+				get_tree().create_timer(param['cooldown']).timeout.connect(body._on_pickup_cooldown.bind(param))
+		queue_free()
+
+
+func _on_lifetime_end():
+	queue_free()
+
+
+
+# Helper section
+func HELPERS():
+	pass
 
 
 func setup_bounce():
@@ -120,8 +160,8 @@ func bouncer(delta : float):
 	else:
 		bounce_p = bounce[bi]
 		prev_pr = pf2d.progress_ratio
-		new_pr = prev_pr + delta * _parabola(prev_pr, bounce_p['speed'], bounce_p['width'], bounce_p['disp'])
-		growth = param["g_mod"] * _parabola(prev_pr, bounce_p['height'], bounce_p['width'], bounce_p['disp'], true)
+		new_pr = prev_pr + delta * GlobalFun._parabola(prev_pr, bounce_p['speed'], bounce_p['width'], bounce_p['disp'])
+		growth = param["g_mod"] * GlobalFun._parabola(prev_pr, bounce_p['height'], bounce_p['width'], bounce_p['disp'], true)
 		growth_v = Vector2(growth, growth)
 
 	# the rate of change of pr should change over time
@@ -141,32 +181,6 @@ func bouncer(delta : float):
 		%Sprite2D.scale = param['scale'] + growth_v
 
 
-
-
-func _inverted_parabola_from_origin(curr_x: float, disp : float, height : float) -> float:
-	return _parabola(curr_x, height, 1, disp + sqrt(height), true)
-
-
-func _parabola(curr_x : float, height : float, width : float, disp : float, inverted : bool = false) -> float:
-	if(inverted):
-		return -((width * curr_x) - disp)**2 + height
-	else:
-		return ((width * curr_x) - disp)**2 + height
-
-
-func _on_body_entered(body: Node2D) -> void:
-	if(body.name == "Player"):
-		if(body.level > 0):
-			AudioManager.play_sfx("Pickup",0,false,false,true)
-			get_parent().update_inventory(param['name'])
-		else:
-			AudioManager.play_sfx(param['sfx'],0,true)
-			update_stat(body)
-			if(param['cooldown'] > 0):
-				get_tree().create_timer(param['cooldown']).timeout.connect(body._on_pickup_cooldown.bind(param))
-		queue_free()
-
-
 func update_stat(body):
 	if(param["stat"] == "speed"):
 		if(param["modifier"] == "add"):
@@ -182,8 +196,3 @@ func update_stat(body):
 		if(param["modifier"] == "add"):
 			body.create_gun()
 			Stats.two_guns = true
-
-
-func _on_lifetime_end():
-	#print("Lifetime ended")
-	queue_free()
