@@ -4,14 +4,14 @@ This is an assigment for ATLS 4140 which is being built off of the contents of t
 
 
 ## Time Breakdown
-Total: ~42.75hrs\
+Total: ~47.75hrs\
 <br/>
-Change Gun Fire to Clicking Left Mouse Button and Fire in Direction of Cursor: ~0.35hrs  
+Code Refactoring + Debugging + Ideation: ~6hrs  
+Input Mouse Pressed - Fire at Cursor: ~0.25hrs  
 Add Progression (num bullets fired linked to kills): ~1.5hrs  
 Create score tracking and timer: ~1hrs  
 Add score and restart button to end screen: ~0.5hrs  
-Create Github Repo: ~0.25hrs  
-Ideation: ~0.9hrs  
+Create Github Repo: ~0.25hrs   
 Ammo Counter + Reload: ~1.5hrs  
 Firing Type Differentiation: ~1hrs  
 Updating UI to Reflect Changes: ~0.75hrs  
@@ -26,7 +26,8 @@ Made Mod Drops/Pickups Launch and Bounce: ~4hrs
 Game Level Design (Rounds + Bosses + Env): ~4hrs  
 Added Inventory to Store and Use Items: ~3.5hrs  
 Enemy Color Variability + Boss Horde Mode: ~3hrs  
-Code Refactoring + Debugging + Ideation: ~4hrs  
+Build + Deploy + Promotional Materials: ~2hrs  
+Start, Pause, and Display Screens: ~2hrs
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
