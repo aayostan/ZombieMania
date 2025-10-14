@@ -131,17 +131,6 @@ func _on_game_clear_board():
 	queue_free()
 
 
-func _on_animation_changed(old_name: StringName, new_name: StringName):
-	if Stats.run_tests:
-		("\nAnimation changed")
-		print("From: ",old_name)
-		print("To: ", new_name)
-		print("Modulate: ", %Slime.find_child("SlimeBody").modulate, "\n")
-	#%Slime.find_child("SlimeBody").modulate = mob_type['color']
-	
-
-
-
 
 # Helpers
 func choose_mob():
@@ -156,20 +145,13 @@ func choose_mob():
 		# Slice zombie and probs arrays by round_count
 		reg_zombies_probs = reg_zombies_probs.slice(0, round_count)
 		reg_zombies = reg_zombies.slice(0, round_count)
-		print()
-		print(reg_zombies_probs)
-		print(reg_zombies)
-		print()
 		# Choose a regular zombie at random based on probs
 		mob_type = GlobalFun._choose_random_w_probs(reg_zombies_probs, reg_zombies)
-	print(mob_type['name'])
-	print()
 	# Update zombie paramaters for scene
 	scale = mob_type['scale'] # Scale scene
 	ignore_trees = mob_type['ignore_trees'] # Flag ignore trees
 	%Slime.find_child("SlimeBody").self_modulate = mob_type['color'] # Modulate sprite
 	%Slime.find_child("SlimeBodyHurt").modulate = mob_type['hurt_color']
-	
 
 
 func take_damage(amount : int):
@@ -181,12 +163,14 @@ func take_damage(amount : int):
 	curr_health -= amount
 	
 	# Update boss health
-	if(boss and round_count != 2):
-		get_parent().find_child("BossHealthBar").value = remap(curr_health, 0, mob_type['health'], 0, 100)
-	else:
-		get_parent().find_child("BossHealthBar").value = remap(\
-							curr_health + mob_type['health'] * (get_parent().spawn_limiter-1),\
-							0, mob_type['health'] * get_parent().HORDE_SIZE, 0, 100)
+	if(boss):
+		print(mob_type['name'], " is boss")
+		if(round_count != 2):
+			get_parent().find_child("BossHealthBar").value = remap(curr_health, 0, mob_type['health'], 0, 100)
+		else:
+			get_parent().find_child("BossHealthBar").value = remap(\
+								curr_health + mob_type['health'] * (get_parent().spawn_limiter-1),\
+								0, mob_type['health'] * get_parent().HORDE_SIZE, 0, 100)
 	
 	if prev_health > 0 and curr_health <= 0: # Dead condition met
 		death.emit(mob_type['experience'], boss)
@@ -211,7 +195,17 @@ func pickup_drop():
 		queue_scene("res://Pickups/pickup.tscn")
 
 
-# I used bing's AI to come up with this
+
+# Not used
+func _on_animation_changed(old_name: StringName, new_name: StringName):
+	if Stats.run_tests:
+		("\nAnimation changed")
+		print("From: ",old_name)
+		print("To: ", new_name)
+		print("Modulate: ", %Slime.find_child("SlimeBody").modulate, "\n")
+	#%Slime.find_child("SlimeBody").modulate = mob_type['color']# I used bing's AI to come up with this
+
+
 func update_animator():
 	return
 	# Get the AnimationPlayer node
