@@ -31,10 +31,11 @@ var boss : bool = false
 
 # Resoures
 var level : Array = range(0, MAX_LEVEL).map(func(n): return n**2*1000)
-var player_experience : int = level[player_level]
+var player_experience : float = level[player_level]
 
 # Placeholders
-var spawn_time
+var spawn_time : float
+var text : String
 
 
 
@@ -89,19 +90,15 @@ func _on_zombie_death(experience : int, is_boss : bool):
 		
 		# Need to queue these cutscenes as they don't run when their are conflicts!
 		# Notify Player of boss round end
-		%Gun_Unlocked.text = "Round " + str(round_count) + " Boss\nDefeated!"
-		%Unlock_Gun.show()
-		await get_tree().create_timer(3).timeout
-		%Unlock_Gun.hide()
+		text = "Round " + str(round_count) + " Boss\nDefeated!"
+		%Display.queue_display_text(text)
 		
 		# Update round_count
 		round_count += 1
 		
 		# Notify Player of next round start
-		%Gun_Unlocked.text = "Round " + str(round_count) + " Start!"
-		%Unlock_Gun.show()
-		await get_tree().create_timer(3).timeout
-		%Unlock_Gun.hide()
+		text = "Round " + str(round_count) + " Start!"
+		%Display.queue_display_text(text)
 		
 		# Reset Timers and UI
 		%BossOverlay.hide() # hide Boss Overlay
@@ -163,10 +160,8 @@ func spawn_boss():
 	boss = true
 	
 	# Notify Player of boss round
-	%Gun_Unlocked.text = "Round " + str(round_count) + " Boss!"
-	%Unlock_Gun.show()
-	await get_tree().create_timer(3).timeout
-	%Unlock_Gun.hide()
+	text = "Round " + str(round_count) + " Boss!"
+	%Display.queue_display_text(text)
 	
 	var timer : bool = true
 	
@@ -249,7 +244,7 @@ func inventory_selector(item : String, select : bool = true):
 	var stylebox = StyleBoxFlat.new()
 	stylebox.bg_color = Color(0, 0, 0, 0)
 	if select:
-		print("Selecting ", item)
+		#print("Selecting ", item)
 		stylebox.border_width_bottom = 5
 		stylebox.border_width_left = 5
 		stylebox.border_width_right = 5
@@ -282,7 +277,6 @@ func credit_player(experience : float):
 			player_level += 1
 	player_experience = temp
 	%Score.text = "Kills: " + str(kill_count)
-
 
 
 # Test Suite

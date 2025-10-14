@@ -52,3 +52,12 @@ func _choose_random_w_probs(probs : Array, items : Array):
 			return items[idx]
 		run_sum += prob
 		idx += 1
+
+
+# Input: time (X)
+# Process:
+	# global access + show label
+	# create timer and await timeout (local scope!)
+	# global access + hide label
+# Output: display label in game UI for X seconds
+#func display_label(time : float):

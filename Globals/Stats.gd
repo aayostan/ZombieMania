@@ -1,8 +1,10 @@
 extends Node
 
 
-const PLAYER_LEVEL_START : int = 0
+const PLAYER_LEVEL_START : int = 2
 const GAME_ROUND_START : int = 1
+
+const DISPLAY_LABEL_TIME : float = 3.2
 
 
 # Flags
@@ -38,6 +40,12 @@ var game_round : int = 1
 
 
 # Resources
+enum pickup {
+	SODA,
+	SANDWHICH,
+	GUN
+}
+
 const PICKUP_PARAMS = [
 	{
 		"name" = "Soda",
@@ -72,7 +80,7 @@ const PICKUP_PARAMS = [
 		"spritepath" = "res://Player/Gun/pistol.png",
 		"scale" = Vector2(1,1),
 		"g_mod" = 1,
-		"sfx" = "N/A",
+		"sfx" = "GunSwitch",
 		"lifetime" = 8
 	}
 ]

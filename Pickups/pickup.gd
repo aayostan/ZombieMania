@@ -8,51 +8,11 @@ extends Area2D
 	# Need to define paramaters of instantiation in enemy
 # Each pickup has it's own sound
 	# Need to create and define, easy global access.
-
-const PICKUP_PARAMS = [
-	{
-		"name" = "Soda",
-		"stat" = "speed",
-		"modifier" = "multiply",
-		"value" = 1.5,
-		"cooldown" = 12,
-		"spritepath" = "res://Pickups/soda_can.png",
-		"scale" = Vector2(0.05,0.05),
-		"g_mod" = 0.05,
-		"sfx" = "PUSo",
-		"lifetime" = 5
-	}, 
-	{
-		"name" = "Sandwhich",
-		"stat" = "health",
-		"modifier" = "add",
-		"value" = 10,
-		"cooldown" = 0,
-		"spritepath" = "res://Pickups/sandwhich.png",
-		"scale" = Vector2(0.1,0.1),
-		"g_mod" = 0.1,
-		"sfx" = "PUSa",
-		"lifetime" = 10
-	},
-	{
-		"name" = "Gun",
-		"stat" = "gun",
-		"modifier" = "add",
-		"value" = 1,
-		"cooldown" = 15,
-		"spritepath" = "res://Player/Gun/pistol.png",
-		"scale" = Vector2(1,1),
-		"g_mod" = 1,
-		"sfx" = "N/A",
-		"lifetime" = 8
-	}
-]
-
-enum pickup {
-	CAFFEINE,
-	SANDWHICH,
-	GUN
-}
+#enum pickup {
+	#CAFFEINE,
+	#SANDWHICH,
+	#GUN
+#}
 
 var param
 
@@ -71,8 +31,8 @@ var bi = 0
 func _ready():
 	# Choose random pickup and change visuals
 	#print("pickup generated")
-	var p = pickup.keys()[randi() % pickup.size()]
-	param = PICKUP_PARAMS[pickup[p]]
+	var p = Stats.pickup.keys()[randi() % Stats.pickup.size()]
+	param = Stats.PICKUP_PARAMS[Stats.pickup[p]]
 	%Sprite2D.texture = load(param["spritepath"])
 	%Sprite2D.scale = param["scale"]
 	setup_bounce()

@@ -19,6 +19,7 @@ var items = [
 
 # Placehoder
 var item_choice : int = 0
+var text : String
 
 # Camera shake stuff
 var camera : Camera2D
@@ -105,27 +106,27 @@ func _on_game_level_up() -> void:
 	%LevelLabel.text = "L" + str(level)
 	
 	if(level == 1):
-		%Gun_Unlocked.text = "Unlocked: Backpack\nScroll to Choose\nQ to Use"
+		text = "Unlocked: Backpack\nScroll to Choose\nQ to Use"
 		if(game):
 			game.update_inventory("Sandwhich")
 			game.update_inventory("Soda")
 			game.update_inventory("Gun")
 		Stats.pickup_probability = 0.15
 	elif(level == 2):
-		%Gun_Unlocked.text = "Unlocked: Shotgun\n(Press E to switch)"
+		text = "Unlocked: Shotgun\n(Press E to switch)"
 		Stats.pickup_probability = 0.1
 	elif(level == 3):
-		%Gun_Unlocked.text = "Increased Accuracy\ndamage X accuracy"
+		text = "Increased Accuracy\ndamage X accuracy"
 		accuracy += 1
 		accuracy_changed.emit(accuracy)
 	elif(level == 4):
-		%Gun_Unlocked.text = "Unlocked Machine Gun"
+		text = "Unlocked Machine Gun"
 	elif(level == 5 or level == 6):
-		%Gun_Unlocked.text = "Increased Accuracy"
+		text = "Increased Accuracy"
 		accuracy += 0.75
 		accuracy_changed.emit(accuracy)
 	elif(level == 7):
-		%Gun_Unlocked.text = ""
+		text = ""
 		for g in gun.guns:
 			g['max_ammo'] *= 10**7
 		gun.gun_switch_time = 0
@@ -139,10 +140,8 @@ func _on_game_level_up() -> void:
 		pass
 	else:
 		return
-		
-	%Unlock_Gun.show()
-	await get_tree().create_timer(3).timeout
-	%Unlock_Gun.hide()
+	
+	%Display.queue_display_text(text)
 
 
 
@@ -186,7 +185,7 @@ func select(left : bool = true):
 	if game.find_active_item() != "None":
 		var not_switch = true
 		game.inventory_selector(items[item_choice], false)
-		print("Change from ", items[item_choice])
+		#print("Change from ", items[item_choice])
 		while(not_switch):
 			if left:
 				if item_choice > 0:
@@ -201,9 +200,10 @@ func select(left : bool = true):
 			if(game.check_active(items[item_choice])):
 				game.inventory_selector(items[item_choice])
 				not_switch = false
-		print("Change to ", items[item_choice], "\n")
+		#print("Change to ", items[item_choice], "\n")
 	else:
-		print("No active items")
+		pass
+		#print("No active items")
 
 
 func update_stat(param : Dictionary):

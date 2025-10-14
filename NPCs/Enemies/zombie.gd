@@ -164,7 +164,7 @@ func take_damage(amount : int):
 	
 	# Update boss health
 	if(boss):
-		print(mob_type['name'], " is boss")
+		#print(mob_type['name'], " is boss")
 		if(round_count != 2):
 			get_parent().find_child("BossHealthBar").value = remap(curr_health, 0, mob_type['health'], 0, 100)
 		else:
@@ -197,17 +197,7 @@ func pickup_drop():
 
 
 # Not used
-func _on_animation_changed(old_name: StringName, new_name: StringName):
-	if Stats.run_tests:
-		("\nAnimation changed")
-		print("From: ",old_name)
-		print("To: ", new_name)
-		print("Modulate: ", %Slime.find_child("SlimeBody").modulate, "\n")
-	#%Slime.find_child("SlimeBody").modulate = mob_type['color']# I used bing's AI to come up with this
-
-
 func update_animator():
-	return
 	# Get the AnimationPlayer node
 	var animation_player = %Slime.find_child("AnimationPlayer")
 
@@ -240,3 +230,10 @@ func update_animator():
 			animation.track_set_key_value(track_index, 1, mob_type['color'])
 	else:
 		printerr("Track not found!")
+func _on_animation_changed(old_name: StringName, new_name: StringName):
+	if Stats.run_tests:
+		("\nAnimation changed")
+		print("From: ",old_name)
+		print("To: ", new_name)
+		print("Modulate: ", %Slime.find_child("SlimeBody").modulate, "\n")
+	#%Slime.find_child("SlimeBody").modulate = mob_type['color']# I used bing's AI to come up with this
