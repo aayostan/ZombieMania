@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://b4lmc73n8y7mc" path="res://Audio/SoundFX/Pickup.wav" id="15_ipxi7"]
 
 [node name="AudioManager" type="Node"]
+process_mode = 3
 script = ExtResource("1_l0aok")
 
 [node name="Music" type="Node" parent="."]

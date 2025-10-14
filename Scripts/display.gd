@@ -17,10 +17,13 @@ func BUILTINS():
 
 func _process(_delta: float) -> void:
 	if(not paused and display_text.size() > 0):
+		if Stats.run_tests: print("\nDisplay:_process.display_text.size(): ", display_text.size())
 		var d_text = display_text.pop_front()
 		get_child(0).text = d_text
+		if Stats.run_tests: print("Display:_process.d_text: ", d_text)
 		show()
 		await pause_execution(Stats.DISPLAY_LABEL_TIME)
+		if Stats.run_tests: print("Display:_process.timeout\n")
 		hide()
 
 

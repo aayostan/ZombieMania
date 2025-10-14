@@ -211,6 +211,7 @@ func spawn_boss():
 func show_endgame(scoreText):
 	clear_board.emit() # remove zombies
 	%FinalScore.text = scoreText # update score text
+	%GameOver.state = %GameOver.states.END
 	%GameOver.show() # show gameover screen
 	get_tree().paused = true # pause tree
 

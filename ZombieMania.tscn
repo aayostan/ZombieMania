@@ -34,7 +34,7 @@ autostart = true
 
 [node name="PlayTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 20.0
+wait_time = 60.0
 one_shot = true
 autostart = true
 
@@ -237,7 +237,6 @@ vertical_alignment = 1
 [node name="GameOver" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 process_mode = 3
-visible = false
 script = ExtResource("6_60bub")
 
 [node name="ColorRect" type="ColorRect" parent="GameOver"]
@@ -343,4 +342,4 @@ text = "Boss Health"
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawntimer_timeout"]
 [connection signal="timeout" from="PlayTimer" to="." method="_on_playtimer_timeout"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
-[connection signal="pressed" from="GameOver/ColorRect/Button" to="GameOver" method="_on_restart_pressed"]
+[connection signal="pressed" from="GameOver/ColorRect/Button" to="GameOver" method="_on_button_pressed"]
