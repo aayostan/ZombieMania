@@ -189,25 +189,28 @@ func take_damage(amount : int):
 	
 	if prev_health > 0 and curr_health <= 0: # Dead condition met
 		death.emit(mob_type['experience'], boss)
-		queue_scene("res://NPCs/Enemies/smoke_explosion/smoke_explosion.tscn")
+		queue_scene("res://Scenes/smoke_explosion.tscn")
 		pickup_drop()
 		queue_free()
 
 
 func queue_scene(scene : String):
-		var the_scene = load(scene)
-		var the_obj = the_scene.instantiate()
-		# these throw an error whenn calling from pickup_drop()
-		# don't see a problem in the game yet
-		#var game = get_parent()
-		game.call_deferred("add_child", the_obj)
-		the_obj.global_position = global_position
+	if(not scene):
+		printerr("zombie.gd.queue_scene: scene does not exist")
+		return
+	var the_scene = load(scene)
+	var the_obj = the_scene.instantiate()
+	# these throw an error whenn calling from pickup_drop()
+	# don't see a problem in the game yet
+	#var game = get_parent()
+	game.call_deferred("add_child", the_obj)
+	the_obj.global_position = global_position
 
 
 func pickup_drop():
 	var rand = randf()
 	if(rand < mob_type['pickupprob']):
-		queue_scene("res://Pickups/pickup.tscn")
+		queue_scene("res://Scenes/pickup.tscn")
 
 
 

@@ -126,6 +126,11 @@ func _on_game_level_up() -> void:
 			game.update_inventory("Sandwhich")
 			game.update_inventory("Soda")
 			game.update_inventory("Gun")
+			
+			# Running test on additional guns
+			for i in range(3):
+				game.update_inventory("Gun")
+			
 		Stats.pickup_probability = 0.15
 	elif(level == 2):
 		text = "Unlocked: Shotgun\n(Press E to switch)"
@@ -160,6 +165,7 @@ func _on_game_level_up() -> void:
 
 
 func _on_pickup_cooldown(param: Dictionary):
+	#TEst:print(param['name'], " reached pickup cooldown with stat: ", param['stat'])
 # This function nullifies the pickup effect after the pickup cooldown
 
 	# Did i make it here?
@@ -180,9 +186,8 @@ func _on_pickup_cooldown(param: Dictionary):
 		%HealthBar.value = health
 	elif(param["stat"] == "gun"):
 		if(param["modifier"] == "add"):
-			if(Stats.guns.size() > 0):
-				Stats.guns.pop_back().queue_free()
-				gun_count -= 1
+			if(guns.size() > 0):
+				guns.pop_back().queue_free()
 
 
 
@@ -192,13 +197,13 @@ func HELPERS():
 
 
 func create_gun():
-	gun_count += 1
 	var new_gun = preload("res://Scenes/gun.tscn")
 	var new_obj = new_gun.instantiate()
 	call_deferred("add_child", new_obj)
 	connect("accuracy_changed", new_obj._on_accuracy_changed)
-	Stats.guns.append(new_obj)
-	new_obj.gun_num = gun_count
+	guns.append(new_obj)
+	new_obj.gun_num = guns.find(new_obj)
+	# Test: print("Created gun number: ", new_obj.gun_num)
 
 
 func shake() -> void:
@@ -223,6 +228,7 @@ func use_item(item : String):
 		AudioManager.play_sfx(param["sfx"],0,true)
 		update_stat(param)
 		if(param['cooldown'] > 0):
+			# TEst: print("Using item, ", param['name'], ": timer cooldown attached at ", param['cooldown'], " seconds.")
 			get_tree().create_timer(param['cooldown']).timeout.connect(_on_pickup_cooldown.bind(param))
 
 

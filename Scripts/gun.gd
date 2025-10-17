@@ -16,6 +16,9 @@ var spread_arr
 var player_level
 var reload_active = false;
 var gun_switch_time = 0.5
+var auto_fire : bool = false
+var fire_timer : SceneTreeTimer
+var fire_rate : float = 0.05
 
 # Class Param Definitions
 enum GUN_TYPE {PISTOL, SHOTGUN, MACHINE_GUN}
@@ -70,20 +73,26 @@ func _ready() -> void:
 	
 	# For Shotgun bulllet pattern
 	spread_arr = [%ShootingPoint, %ShootingPoint2, %ShootingPoint3]
+	
+	# Auto-fire setup
+	if(gun_num > 1): # 3rd extra gun auto-fires
+		auto_fire = true
+		fire_timer = get_tree().create_timer(fire_rate)
+		fire_timer.one_shot
 
 
 func _process(_delta):
-	
-	# Point Gun at mouse cursor
-	if(gun_num == 0):
-		rotation = (global_position - get_global_mouse_position()).angle()
-	elif(gun_num == -1):
+	if(gun_num == -1): # Init gun faces cursor
 		look_at(get_global_mouse_position())
-	else:
+	elif(gun_num == 0): # First extra gun face opposite cursor
+		rotation = (global_position - get_global_mouse_position()).angle()
+	elif(gun_num > 0): 
+		# Additional guns face at enemies
 		var enemies_in_range = get_overlapping_bodies()
 		if enemies_in_range.size() > 0:
 			var target_enemy = enemies_in_range.front()
 			look_at(target_enemy.global_position)
+			
 	
 	# Reload Countdown Bar
 	if(reload_active):
@@ -107,7 +116,7 @@ func EVENTS():
 
 func _input(event):
 	if(active):
-		if event.is_action_pressed("shoot"):
+		if event.is_action_pressed("shoot") and not auto_fire:
 				shoot()
 		elif event.is_action_pressed("reload"):
 			reload(guns[Stats.gun_type]["reload_time"], false)
