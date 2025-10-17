@@ -18,7 +18,7 @@ var reload_active = false;
 var gun_switch_time = 0.5
 var auto_fire : bool = false
 var fire_timer : Timer
-var fire_rate : float = 1
+var fire_rate : float = 0.33
 
 # Class Param Definitions
 enum GUN_TYPE {PISTOL, SHOTGUN, MACHINE_GUN}

@@ -224,6 +224,12 @@ func update_exp_UI():
 
 
 func update_inventory(item : String, increment : bool = true, amount : int = 1) -> bool:
+	var player = find_child("Player")
+	
+	if(item == "Gun" and player.guns.size() >= Stats.MAX_EXTRA_GUNS):
+		AudioManager.play_sfx("InvalidAction")
+		return false
+	
 	# Update back_end
 	if increment:
 		if(inventory[item] == 0):
@@ -231,7 +237,6 @@ func update_inventory(item : String, increment : bool = true, amount : int = 1) 
 		inventory[item] = min(inventory[item] + amount, ITEM_CAP)
 		if(empty_inv): 
 			inventory_selector(item)
-			var player = find_child("Player")
 			player.item_choice = player.items.rfind(item)
 			empty_inv = false
 	else:
@@ -250,7 +255,6 @@ func update_inventory(item : String, increment : bool = true, amount : int = 1) 
 		var next_active = find_active_item()
 		if(next_active != "None"):
 			inventory_selector(next_active)
-			var player = find_child("Player")
 			player.item_choice = player.items.rfind(next_active)
 	else:
 		entry.show()

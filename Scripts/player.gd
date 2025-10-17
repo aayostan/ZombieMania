@@ -128,7 +128,7 @@ func _on_game_level_up() -> void:
 			game.update_inventory("Gun")
 			
 			# Running test on additional guns
-			for i in range(3):
+			for i in range(4):
 				game.update_inventory("Gun")
 			
 		Stats.pickup_probability = 0.15

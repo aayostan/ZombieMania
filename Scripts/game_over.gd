@@ -41,6 +41,7 @@ func _on_button_pressed() -> void:
 	tree.paused = false
 	
 	if(state == states.START):
+		AudioManager.play_sfx("StartGame")
 		button.text = "Restart"
 		state = states.PAUSE
 		label.text = "Game Over"

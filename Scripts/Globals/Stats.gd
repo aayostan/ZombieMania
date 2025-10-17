@@ -10,6 +10,7 @@ func RESOURCES():
 const PLAYER_LEVEL_START : int = 0
 const GAME_ROUND_START : int = 1
 const DISPLAY_LABEL_TIME : float = 3.2
+const MAX_EXTRA_GUNS : int = 3
 
 # Flags
 var run_tests = false
