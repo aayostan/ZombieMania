@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://br65mgv2n0bbd"]
+
+[ext_resource type="Script" uid="uid://cobx0ou5nkyau" path="res://Scripts/bullet_2d.gd" id="1_lg2ne"]
+[ext_resource type="Texture2D" uid="uid://dftkbqwsfd68r" path="res://Resources/Player/Gun/projectile.png" id="2_q0pid"]
+[ext_resource type="Texture2D" uid="uid://brgpjilf7s2ul" path="res://Resources/Player/Gun/muzzle_flash/muzzle_flash.png" id="3_cq7x4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_naqkr"]
+radius = 15.0333
+
+[sub_resource type="Curve" id="Curve_cq7x4"]
+_limits = [0.0, 0.75, 0.0, 2.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.261364, 0.741573), 0.0, 0.0, 0, 0, Vector2(0.545455, 0), 0.0841501, 0.0841501, 0, 0, Vector2(0.772727, 0.75), 0.0, 0.0, 0, 0, Vector2(1, 0.337079), 0.0, 0.0, 0, 0, Vector2(1.23864, 0.75), 0.0, 0.0, 0, 0, Vector2(1.48864, 0), 0.0, 0.0, 0, 0, Vector2(1.72727, 0.75), 0.0, 0.0, 0, 0, Vector2(2, 0), 0.0, 0.0, 0, 0]
+point_count = 9
+
+[node name="Bullet2D" type="Area2D"]
+top_level = true
+collision_layer = 0
+collision_mask = 3
+monitorable = false
+script = ExtResource("1_lg2ne")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-11, -1)
+texture = ExtResource("2_q0pid")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_naqkr")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(-30, 0)
+amount = 12
+texture = ExtResource("3_cq7x4")
+lifetime = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(1, 5)
+direction = Vector2(-1, 0)
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 95.0
+initial_velocity_max = 100.0
+scale_amount_min = 0.25
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_cq7x4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

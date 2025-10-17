@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2m608gyssept"]
+
+[ext_resource type="Script" uid="uid://d1npa8ymvov28" path="res://Scripts/zombie.gd" id="1_eax81"]
+[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://Scenes/slime.tscn" id="2_pq1ic"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ypitm"]
+radius = 50.0
+
+[node name="Zombie" type="CharacterBody2D"]
+collision_layer = 2
+platform_floor_layers = 4294967040
+script = ExtResource("1_eax81")
+
+[node name="Slime" parent="." instance=ExtResource("2_pq1ic")]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_ypitm")
+debug_color = Color(0.701961, 0.282353, 0.352941, 0.419608)

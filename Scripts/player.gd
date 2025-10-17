@@ -27,6 +27,7 @@ var items = [
 # Placehoder
 var item_choice : int = 0
 var text : String
+var guns : Array = []
 
 # Camera shake stuff
 var camera : Camera2D
@@ -192,7 +193,7 @@ func HELPERS():
 
 func create_gun():
 	gun_count += 1
-	var new_gun = preload("res://Player/Gun/gun.tscn")
+	var new_gun = preload("res://Scenes/gun.tscn")
 	var new_obj = new_gun.instantiate()
 	call_deferred("add_child", new_obj)
 	connect("accuracy_changed", new_obj._on_accuracy_changed)

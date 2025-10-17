@@ -147,7 +147,7 @@ func spawn_trees():
 			randV2 = Vector2(randf_range(-boundX, boundX),randf_range(-boundY, boundY))
 		
 		# Object instantiation
-		var new_tree = preload("res://Environment/pine_tree.tscn").instantiate()
+		var new_tree = preload("res://Scenes/pine_tree.tscn").instantiate()
 		new_tree.global_position = find_child("Player").global_position + randV2
 		add_child(new_tree)
 
@@ -158,7 +158,7 @@ func spawn_zombie():
 	%PathFollow2D.progress_ratio = randf()
 	
 	# object instantiation
-	var zombie_inst = preload("res://NPCs/Enemies/zombie.tscn").instantiate()
+	var zombie_inst = preload("res://Scenes/zombie.tscn").instantiate()
 	if(boss): zombie_inst.boss = true
 	zombie_inst.round_count = round_count
 	zombie_inst.global_position = %PathFollow2D.global_position

@@ -9,7 +9,7 @@ func RESOURCES():
 var active : bool = true
 var ammo = 0
 var reload_time = 0
-var gun_num : int = 1
+var gun_num : int = -1
 var ammo_label
 var gun_type_label
 var spread_arr
@@ -56,7 +56,7 @@ func _ready() -> void:
 	# Set base gun type
 	ammo = guns[Stats.gun_type]["max_ammo"]
 	
-	# Grab the ammo label and update
+	# Grab the ammo label and update (deprecated)
 	ammo_label = find_parent("Game").find_child("Ammo")
 	ammo_label.text = "Ammo = " + str(ammo)
 	
@@ -75,11 +75,15 @@ func _ready() -> void:
 func _process(_delta):
 	
 	# Point Gun at mouse cursor
-	if(gun_num > 1):
+	if(gun_num == 0):
 		rotation = (global_position - get_global_mouse_position()).angle()
-	else:
+	elif(gun_num == -1):
 		look_at(get_global_mouse_position())
-	
+	else:
+		var enemies_in_range = get_overlapping_bodies()
+		if enemies_in_range.size() > 0:
+			var target_enemy = enemies_in_range.front()
+			look_at(target_enemy.global_position)
 	
 	# Reload Countdown Bar
 	if(reload_active):
@@ -144,7 +148,7 @@ func shoot():
 
 
 func inst_bullet(shooting_point : Marker2D):
-	const BULLET = preload("res://Player/Gun/bullet_2d.tscn")
+	const BULLET = preload("res://Scenes/bullet_2d.tscn")
 	var new_bullet = BULLET.instantiate()
 	new_bullet.global_transform = shooting_point.global_transform
 	shooting_point.add_child(new_bullet)
