@@ -46,6 +46,7 @@ func _on_button_pressed() -> void:
 		state = states.PAUSE
 		label.text = "Game Over"
 	else:
+		AudioManager.play_sfx("ButtonClick")
 		Stats.gun_type = 0
 		tree.reload_current_scene()
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://byguda1krby1"]
+[gd_scene load_steps=19 format=3 uid="uid://byguda1krby1"]
 
 [ext_resource type="Script" uid="uid://dbdd4tsmihyip" path="res://Scripts/audio_manager.gd" id="1_l0aok"]
 [ext_resource type="AudioStream" uid="uid://dvi562if8kevk" path="res://Audio/SoundFX/MachineGun.wav" id="2_5m6nf"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://b4lmc73n8y7mc" path="res://Audio/SoundFX/Pickup.wav" id="15_ipxi7"]
 [ext_resource type="AudioStream" uid="uid://vnnn70hrmejj" path="res://Audio/SoundFX/InvalidAction.wav" id="16_uw6iq"]
 [ext_resource type="AudioStream" uid="uid://bnw5xqaj73i5v" path="res://Audio/SoundFX/StartGame.wav" id="17_8tcay"]
+[ext_resource type="AudioStream" uid="uid://b26rixsw0u0co" path="res://Audio/SoundFX/ButtonClick.wav" id="18_r3j77"]
 
 [node name="AudioManager" type="Node"]
 process_mode = 3
@@ -75,3 +76,6 @@ stream = ExtResource("16_uw6iq")
 
 [node name="StartGame" type="AudioStreamPlayer" parent="Sfx"]
 stream = ExtResource("17_8tcay")
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("18_r3j77")
