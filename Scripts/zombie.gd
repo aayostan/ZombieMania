@@ -139,6 +139,7 @@ func EVENTS():
 
 
 func _on_game_clear_board():
+	death.emit(0, false)
 	queue_free()
 
 
@@ -184,7 +185,7 @@ func take_damage(amount : int):
 			get_parent().find_child("BossHealthBar").value = remap(curr_health, 0, mob_type['health'], 0, 100)
 		else:
 			get_parent().find_child("BossHealthBar").value = remap(\
-								curr_health + mob_type['health'] * (get_parent().spawn_limiter-1),\
+								curr_health + mob_type['health'] * (get_parent().boss_spawn_limiter-1),\
 								0, mob_type['health'] * get_parent().HORDE_SIZE, 0, 100)
 	
 	if prev_health > 0 and curr_health <= 0: # Dead condition met
@@ -194,7 +195,7 @@ func take_damage(amount : int):
 		queue_free()
 
 
-func queue_scene(scene : String):
+func queue_scene(scene : String, pickup = false):
 	if(not scene):
 		printerr("zombie.gd.queue_scene: scene does not exist")
 		return
@@ -203,6 +204,12 @@ func queue_scene(scene : String):
 	# these throw an error whenn calling from pickup_drop()
 	# don't see a problem in the game yet
 	#var game = get_parent()
+	
+	# Test Memory Leak
+	if pickup:
+		Stats.pickups.append(the_obj)
+		print("Pickup added, size: ", Stats.pickups.size())
+	
 	game.call_deferred("add_child", the_obj)
 	the_obj.global_position = global_position
 
@@ -210,7 +217,7 @@ func queue_scene(scene : String):
 func pickup_drop():
 	var rand = randf()
 	if(rand < mob_type['pickupprob']):
-		queue_scene("res://Scenes/pickup.tscn")
+		queue_scene("res://Scenes/pickup.tscn", true)
 
 
 

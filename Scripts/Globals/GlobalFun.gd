@@ -1,6 +1,11 @@
 extends Node
 
 
+# Built-in section
+func BUILTINS():
+	pass
+
+
 
 # Helpers section
 func HELPERS():

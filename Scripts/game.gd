@@ -28,7 +28,8 @@ var inventory : Dictionary = {
 	"Soda" = 0,
 	"Gun" = 0
 }
-var spawn_limiter = 0
+var boss_spawn_limiter = 0
+var spawn_limiter = Stats.MAX_ZOMBIES
 
 # flags
 var active : bool = true
@@ -55,12 +56,11 @@ func _ready():
 	spawn_trees()
 	
 	# Uncomment tests you want to run
-	if(run_tests):
+	#if(run_tests):
 		#test_inventory_selector()
-		active = false
-		spawn_zombie()
-		
-		pass
+		#active = false
+		#spawn_zombie()
+		#pass
 
 
 func _process(_delta : float) -> void:
@@ -98,7 +98,8 @@ func _on_zombie_death(experience : int, is_boss : bool):
 	
 	# Respond to killing boss
 	if(is_boss):
-		if(spawn_limiter > 0):
+		if(boss_spawn_limiter > 0):
+			print("game._on_zombie_death.is_boss==true.boss_spawn_limiter>0.spawn_zombie")
 			spawn_zombie()
 			return
 		boss = false
@@ -123,8 +124,10 @@ func _on_zombie_death(experience : int, is_boss : bool):
 		
 		return
 	
-	if(run_tests):
-		spawn_zombie()
+	spawn_limiter += 1
+	
+	#if(run_tests):
+		#spawn_zombie()
 
 
 
@@ -153,6 +156,9 @@ func spawn_trees():
 
 
 func spawn_zombie():
+	if(spawn_limiter < 0):
+		print("Reached spawn limit")
+		return
 	#boss : bool = false, mob : bool = false):
 	# randomization
 	%PathFollow2D.progress_ratio = randf()
@@ -169,8 +175,8 @@ func spawn_zombie():
 	connect("clear_board", zombie_inst._on_game_clear_board)
 	
 	# Update spawn limiter
-	if boss: spawn_limiter = max(spawn_limiter - 1, 0)
-
+	if boss: boss_spawn_limiter = max(boss_spawn_limiter - 1, 0)
+	else: spawn_limiter -= 1
 
 func spawn_boss():
 	# Run Boss Fight
@@ -196,7 +202,7 @@ func spawn_boss():
 		# Can count them in the _on_zombie_death
 		# Can count them in the _on_spawntimer_timeout
 		# Can spawn new one after each kill instaed of on timer
-		spawn_limiter = HORDE_SIZE
+		boss_spawn_limiter = HORDE_SIZE
 		spawn_zombie()
 		timer = false
 	elif(round_count == 3):

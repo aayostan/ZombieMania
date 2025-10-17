@@ -11,6 +11,7 @@ const PLAYER_LEVEL_START : int = 0
 const GAME_ROUND_START : int = 1
 const DISPLAY_LABEL_TIME : float = 3.2
 const MAX_EXTRA_GUNS : int = 3
+const MAX_ZOMBIES : int = 50
 
 # Flags
 var run_tests = false
@@ -30,7 +31,7 @@ var player_speed: float:
 		_player_speed = clampf(value, 600.0, 1600.0) # Ensure gun_count stays between 600 and 1600
 
 var two_guns : bool = false
-var guns : Array = []
+var pickups : Array = []
 var gun_type = 0 # Originally pistol
 #var _gun_count : int = 1
 #var gun_count: int:

@@ -82,10 +82,14 @@ func _on_body_entered(body: Node2D) -> void:
 			update_stat(body)
 			if(param['cooldown'] > 0):
 				get_tree().create_timer(param['cooldown']).timeout.connect(body._on_pickup_cooldown.bind(param))
+		Stats.pickups.pop_back()
+		print("Pickup picked up, size: ", Stats.pickups.size())
 		queue_free()
 
 
 func _on_lifetime_end():
+	Stats.pickups.pop_back()
+	print("Pickup dropped, size: ", Stats.pickups.size())
 	queue_free()
 
 
