@@ -1,7 +1,6 @@
 # Zombie Mania
-This is an assigment for ATLS 4140 which is being built off of the contents of this tutorial:  
-[https://www.youtube.com/watch?si=RIg1qYrWa_mMX_Kg&t=2044&v=e1zJS31tr88&feature=youtu.be](https://www.youtube.com/watch?v=GwCiGixlqiU)
-
+This is an assigment for ATLS 4140: Game Design at CU Boulder in the Fall of 2025.  
+Find the game here: https://aayostan.itch.io/zombie-mania (currently password protected)
 
 ## Time Breakdown
 Total: ~47.75hrs\
