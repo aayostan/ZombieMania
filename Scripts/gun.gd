@@ -17,8 +17,8 @@ var player_level
 var reload_active = false;
 var gun_switch_time = 0.5
 var auto_fire : bool = false
-var fire_timer : SceneTreeTimer
-var fire_rate : float = 0.05
+var fire_timer : Timer
+var fire_rate : float = 1
 
 # Class Param Definitions
 enum GUN_TYPE {PISTOL, SHOTGUN, MACHINE_GUN}
@@ -77,8 +77,11 @@ func _ready() -> void:
 	# Auto-fire setup
 	if(gun_num > 1): # 3rd extra gun auto-fires
 		auto_fire = true
-		fire_timer = get_tree().create_timer(fire_rate)
-		fire_timer.one_shot
+		fire_timer = Timer.new()
+		fire_timer.wait_time = fire_rate
+		fire_timer.autostart = true
+		fire_timer.timeout.connect(_on_fire_timer_timeout)
+		add_child(fire_timer)
 
 
 func _process(_delta):
@@ -126,6 +129,10 @@ func _input(event):
 
 func _on_accuracy_changed(multiplier : float):
 	bullet_damage = multiplier
+
+
+func _on_fire_timer_timeout():
+	shoot()
 
 
 
