@@ -23,6 +23,14 @@ var player_health: float:
 	set(value):
 		_player_health = clampf(value, 0, 100) # Ensure health stays between 0 and 100
 
+
+var _helper_health : float = 100.0
+var helper_health: float:
+	get:
+		return _helper_health
+	set(value):
+		_helper_health = clampf(value, 0, 100) # Ensure health stays between 0 and 100
+
 var _player_speed : float = 600.0
 var player_speed: float:
 	get:

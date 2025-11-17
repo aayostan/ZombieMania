@@ -36,14 +36,15 @@ var camera : Camera2D
 @export var max_offset : Vector2 = Vector2(50, 50) # Max hor/ver shake in pixels
 @export var max_roll : float = 0.1 # Maximum rotation in radians (use sparingly)
 
-var trauma : float = 0.0 # Current shake strength
-var trauma_power : float = 1.5 # Trauma exponent. Increase for more extreme shaking
+@export var trauma : float = 0.0 # Current shake strength
+@export var trauma_power : float = 1.5 # Trauma exponent. Increase for more extreme shaking
 
 # Run before _ready()
 @onready var gun = find_child("Gun") 
-@onready var game = get_parent()
+@onready var game = find_parent("Game")
 
-
+var spawned : bool = false
+var spawn : bool = false
 
 # Built-in section
 func BUILTINS():
@@ -51,18 +52,22 @@ func BUILTINS():
 
 
 func _ready():
-	%LevelLabel.text = "L" + str(level)
+	if(!spawn):
+		%LevelLabel.text = "L" + str(level)
 	camera = get_viewport().get_camera_2d()
 	connect("accuracy_changed", gun._on_accuracy_changed)
+	if(!spawn): health = Stats.player_health
+	else: health = Stats.helper_health
 
 
 func _physics_process(delta):
 	if(active):
-		var SPEED = Stats.player_speed
-		var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-		velocity = direction * SPEED
-		
-		move_and_slide()
+		if(!spawn):
+			var SPEED = Stats.player_speed
+			var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+			velocity = direction * SPEED
+			
+			move_and_slide()
 	
 		if velocity.length() > 0.0:
 			%HappyBoo.play_walk_animation()
@@ -84,7 +89,10 @@ func _physics_process(delta):
 			shake()
 			
 			if health <= 0.0:
-				health_depleted.emit()
+				if(!spawn):
+					health_depleted.emit()
+				else:
+					queue_free()
 		
 		else:
 			trauma = 0.3
@@ -107,6 +115,12 @@ func _input(event):
 		elif event.is_action_pressed("use_item"):
 			#print("Using item")
 			use_item(items[item_choice])
+		elif event.is_action_pressed("spawn"):
+			print("spawn pressed")
+			if(!spawned and !spawn):
+				print("spawned")
+				spawn_helper()
+				spawned = true
 		#if event.is_action_pressed("use_item_1"):
 			#use_item("Sandwhich")
 		#elif event.is_action_pressed("use_item_2"):
@@ -118,7 +132,8 @@ func _input(event):
 func _on_game_level_up() -> void:
 	AudioManager.play_sfx("LevelUp")
 	level += 1
-	%LevelLabel.text = "L" + str(level)
+	if(!spawn):
+		%LevelLabel.text = "L" + str(level)
 	
 	if(level == 1):
 		text = "Unlocked: Backpack\nScroll to Choose\nQ to Use"
@@ -194,6 +209,14 @@ func _on_pickup_cooldown(param: Dictionary):
 # Helper section
 func HELPERS():
 	pass
+
+
+func spawn_helper():
+	var new_helper = preload("res://Scenes/helper.tscn")
+	var new_obj = new_helper.instantiate()
+	new_obj.position.x += 175
+	new_obj.spawn = true
+	call_deferred("add_child", new_obj)
 
 
 func create_gun():
