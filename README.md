@@ -27,6 +27,8 @@ Added Inventory to Store and Use Items: ~3.5hrs
 Enemy Color Variability + Boss Horde Mode: ~3hrs  
 Build + Deploy + Promotional Materials: ~2hrs  
 Start, Pause, and Display Screens: ~2hrs
+Included Basic Spawn of Helpers: ~1.5hrs
+Started Work on Zombies with Guns: ~1hr
 
 ## Ideas
 1. Extra Game Loop: Ammo and reload (Time: ~1.5hrs)
