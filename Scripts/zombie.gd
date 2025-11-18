@@ -17,6 +17,7 @@ func RESOURCES():
 
 # Declare signals
 signal death(experience : int, isboss : bool)
+signal in_range
 
 # Resources
 var base_mob = {
@@ -32,6 +33,19 @@ var base_mob = {
 	"ignore_trees" = false
 }
 
+var big_mob = {
+	"name" = "big_zombie",
+ 	"speed" = base_mob["speed"] - 50,
+	"health" = base_mob['health'] * 15,
+	"experience" = base_mob['experience'] * 10,
+	"sfx" = ["OwLo"],
+	"pickupprob" = base_mob['pickupprob'] * 1.5,
+	"scale" = Vector2(2, 2),
+	"color" = Color.GREEN,
+	"hurt_color" = Color(Color.ORANGE, 0),
+	"ignore_trees" = true
+}
+
 var fast_mob = {
 	"name" = "fast_zombie",
  	"speed" = base_mob["speed"] * 2.25,
@@ -45,17 +59,17 @@ var fast_mob = {
 	"ignore_trees" = false
 }
 
-var big_mob = {
-	"name" = "big_zombie",
- 	"speed" = base_mob["speed"] - 50,
-	"health" = base_mob['health'] * 15,
-	"experience" = base_mob['experience'] * 10,
-	"sfx" = ["OwLo"],
-	"pickupprob" = base_mob['pickupprob'] * 1.5,
-	"scale" = Vector2(2, 2),
-	"color" = Color.GREEN,
-	"hurt_color" = Color(Color.ORANGE, 0),
-	"ignore_trees" = true
+var gunner_mob = {
+	"name" = "gunner_zombie",
+ 	"speed" = base_mob['speed'] - 25,
+	"health" = base_mob['health'] - 2,
+	"experience" = base_mob['experience'] - 50,
+	"sfx" = ["Ow"],
+	"pickupprob" = 1,
+	"scale" = Vector2(1, 1),
+	"color" = Color.DARK_GREEN,
+	"hurt_color" = Color(Color.DARK_GOLDENROD, 0),
+	"ignore_trees" = false
 }
 
 var big_mob_boss = {
@@ -97,8 +111,8 @@ var big_fast_mob_boss = {
 	"ignore_trees" = true
 }
 
-var reg_zombies : Array = [base_mob, big_mob, fast_mob]
-var reg_zombies_probs : Array = [0.7, 0.1, 0.2]
+var reg_zombies : Array = [base_mob, big_mob, fast_mob, gunner_mob]
+var reg_zombies_probs : Array = [0.69, 0.1, 0.2, 0.01]
 
 
 # Probabilities
@@ -114,7 +128,7 @@ var round_count : int = 1
 
 # Flags
 var ignore_trees : bool = false
-
+var gunner : bool = false
 
 
 # Built-in Functions
@@ -128,8 +142,12 @@ func _ready():
 func _physics_process(_delta):
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * mob_type['speed']
+	if(gunner and Stats.G_FIRE_DIST < position.distance_to(player.position)):
+		velocity = direction * 0 # No more movement
+		in_range.emit()
 	move_and_slide()
 	#move_and_collide() here?
+	
 
 
 
@@ -168,6 +186,9 @@ func choose_mob():
 	ignore_trees = mob_type['ignore_trees'] # Flag ignore trees
 	%Slime.find_child("SlimeBody").self_modulate = mob_type['color'] # Modulate sprite
 	%Slime.find_child("SlimeBodyHurt").modulate = mob_type['hurt_color']
+	if(mob_type['name'] == "gunner_zombie"): 
+		gunner = true
+		connect("in_range", %Enemy_Gun._in_range)
 
 
 func take_damage(amount : int):
@@ -208,7 +229,7 @@ func queue_scene(scene : String, pickup = false):
 	# Test Memory Leak
 	if pickup:
 		Stats.pickups.append(the_obj)
-		print("Pickup added, size: ", Stats.pickups.size())
+		#print("Pickup added, size: ", Stats.pickups.size())
 	
 	game.call_deferred("add_child", the_obj)
 	the_obj.global_position = global_position

@@ -84,7 +84,7 @@ func _physics_process(delta):
 			# SoundFX
 			AudioManager.play_sfx("Ow", 0, false, false, true)
 			
-			# Camera Shake
+			# Camera Shake - need to return camera to original position after shake finishes
 			trauma = min(trauma + (DAMAGE_RATE * overlapping_mobs.size()) / 1000, 1.2)
 			shake()
 			
@@ -116,9 +116,7 @@ func _input(event):
 			#print("Using item")
 			use_item(items[item_choice])
 		elif event.is_action_pressed("spawn"):
-			print("spawn pressed")
 			if(!spawned and !spawn):
-				print("spawned")
 				spawn_helper()
 				spawned = true
 		#if event.is_action_pressed("use_item_1"):
@@ -229,6 +227,7 @@ func create_gun():
 	# Test: print("Created gun number: ", new_obj.gun_num)
 
 
+# Need to bring camera back to normal after a shaking expression
 func shake() -> void:
 	#? Set the camera's rotation and offset based on the shake strength
 	var amount = pow(trauma, trauma_power)

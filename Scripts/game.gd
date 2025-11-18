@@ -157,7 +157,6 @@ func spawn_trees():
 
 func spawn_zombie():
 	if(spawn_limiter < 0):
-		print("Reached spawn limit")
 		return
 	#boss : bool = false, mob : bool = false):
 	# randomization
