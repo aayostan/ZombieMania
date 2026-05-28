@@ -72,11 +72,15 @@ Settings/Use_Shift_instead_of_Alt=false
 Settings/Surface_Placement_Collision_Mask=4294967295
 Settings/Show_Tooltips=true
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Zombie Mania"
 run/main_scene="res://ZombieMania.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.png"
 
 [audio]

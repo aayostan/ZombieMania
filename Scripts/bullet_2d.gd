@@ -42,9 +42,13 @@ func _on_body_entered(body):
 	if(damage <= 0):
 		queue_free()
 	elif body.has_method("take_damage"):
-		var temp = damage - body.mob_type['health']
-		body.take_damage(damage)
-		damage = temp
+		if body.has_method("spawn_helper"):
+			body.take_damage(damage)
+			damage = 0
+		else:
+			var temp = damage - body.mob_type['health']
+			body.take_damage(damage)
+			damage = temp
 		if(damage <= 0):
 			AudioManager.play_sfx("TongueClick",0,true)
 			queue_free()

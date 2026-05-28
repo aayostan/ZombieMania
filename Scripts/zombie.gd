@@ -18,6 +18,7 @@ func RESOURCES():
 # Declare signals
 signal death(experience : int, isboss : bool)
 signal in_range
+signal out_range
 
 # Resources
 var base_mob = {
@@ -112,7 +113,7 @@ var big_fast_mob_boss = {
 }
 
 var reg_zombies : Array = [base_mob, big_mob, fast_mob, gunner_mob]
-var reg_zombies_probs : Array = [0.69, 0.1, 0.2, 0.01]
+var reg_zombies_probs : Array = [0.65, 0.1, 0.2, 0.05]
 
 
 # Probabilities
@@ -137,14 +138,16 @@ func _ready():
 	%Slime.play_walk()
 	curr_health = mob_type['health']
 	animator.connect("animation_changed", _on_animation_changed)
-
+	
 
 func _physics_process(_delta):
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * mob_type['speed']
-	if(gunner and Stats.G_FIRE_DIST < position.distance_to(player.position)):
+	if(gunner and Stats.G_FIRE_DIST > position.distance_to(player.position)):
 		velocity = direction * 0 # No more movement
 		in_range.emit()
+	else:
+		out_range.emit()
 	move_and_slide()
 	#move_and_collide() here?
 	
@@ -186,9 +189,15 @@ func choose_mob():
 	ignore_trees = mob_type['ignore_trees'] # Flag ignore trees
 	%Slime.find_child("SlimeBody").self_modulate = mob_type['color'] # Modulate sprite
 	%Slime.find_child("SlimeBodyHurt").modulate = mob_type['hurt_color']
+	var enemy_gun = null
 	if(mob_type['name'] == "gunner_zombie"): 
 		gunner = true
-		connect("in_range", %Enemy_Gun._in_range)
+		# Add Gun to Zombie
+		enemy_gun = preload("res://Scenes/enemy_gun.tscn")
+		enemy_gun = enemy_gun.instantiate()
+		add_child(enemy_gun)
+		connect("in_range", enemy_gun._in_range)
+		connect("out_range", enemy_gun._out_range)
 
 
 func take_damage(amount : int):

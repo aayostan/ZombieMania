@@ -124,7 +124,7 @@ func _input(event):
 		elif event.is_action_pressed("reload"):
 			reload(guns[Stats.gun_type]["reload_time"], false)
 		elif event.is_action_pressed("cycle_guns"):
-			if(gun_num == 1): change_gun()
+			if(gun_num == -1): change_gun()
 
 
 func _on_accuracy_changed(multiplier : float):

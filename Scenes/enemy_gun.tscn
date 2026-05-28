@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bei3c3q1dd4l0"]
+[gd_scene format=3 uid="uid://bei3c3q1dd4l0"]
 
 [ext_resource type="Script" uid="uid://bbkqfwf1kx7me" path="res://Scripts/enemy_gun.gd" id="1_00xa2"]
 [ext_resource type="Texture2D" uid="uid://cswb5do8rrj7q" path="res://Resources/Player/Gun/pistol.png" id="2_ie121"]
@@ -9,44 +9,41 @@ radius = 987.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7uwb"]
 bg_color = Color(1, 0, 0, 1)
 
-[node name="Enemy_Gun" type="Area2D"]
+[node name="Enemy_Gun" type="Area2D" unique_id=1606384565]
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 script = ExtResource("1_00xa2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1319956796]
 shape = SubResource("CircleShape2D_nthgb")
 
-[node name="WeaponPivot" type="Marker2D" parent="."]
+[node name="WeaponPivot" type="Marker2D" parent="." unique_id=192028207]
 position = Vector2(62, 0)
 gizmo_extents = 47.7
 
-[node name="Pistol" type="Sprite2D" parent="WeaponPivot"]
+[node name="Pistol" type="Sprite2D" parent="WeaponPivot" unique_id=1105446215]
 texture = ExtResource("2_ie121")
 offset = Vector2(16, 0)
 
-[node name="ShootingPoint2" type="Marker2D" parent="WeaponPivot/Pistol"]
-unique_name_in_owner = true
+[node name="ShootingPoint2" type="Marker2D" parent="WeaponPivot/Pistol" unique_id=1851983744]
 show_behind_parent = true
 position = Vector2(35, -11)
 rotation = 0.610865
 gizmo_extents = 30.6
 
-[node name="ShootingPoint3" type="Marker2D" parent="WeaponPivot/Pistol"]
-unique_name_in_owner = true
+[node name="ShootingPoint3" type="Marker2D" parent="WeaponPivot/Pistol" unique_id=982611680]
 show_behind_parent = true
 position = Vector2(35, -11)
 rotation = -0.610865
 gizmo_extents = 30.6
 
-[node name="ShootingPoint" type="Marker2D" parent="WeaponPivot/Pistol"]
-unique_name_in_owner = true
+[node name="ShootingPoint" type="Marker2D" parent="WeaponPivot/Pistol" unique_id=1636393359]
 show_behind_parent = true
 position = Vector2(35, -11)
 gizmo_extents = 30.6
 
-[node name="ReloadBar" type="ProgressBar" parent="WeaponPivot/Pistol"]
+[node name="ReloadBar" type="ProgressBar" parent="WeaponPivot/Pistol" unique_id=90531016]
 unique_name_in_owner = true
 z_index = 100
 offset_left = -13.0
@@ -57,7 +54,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_b7uwb")
 value = 100.0
 show_percentage = false
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1414615499]
 unique_name_in_owner = true
 wait_time = 0.353
 autostart = true

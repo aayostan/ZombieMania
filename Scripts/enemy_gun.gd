@@ -4,6 +4,7 @@ extends Area2D
 var spread_arr : Array
 var ammo : int
 var range : bool = false
+var bullet_damage = 5
 
 @onready var player = find_parent("Game").find_child("Player")
 
@@ -41,7 +42,8 @@ func _in_range():
 	# Fire
 func _on_timer_timeout() -> void:
 	if(range):
-		inst_bullet(%Shooting_Point)
+		var shooting_point = get_child(1).get_child(0).get_child(2)
+		inst_bullet(shooting_point)
 	pass # Replace with function body.
 
 # Player exits range

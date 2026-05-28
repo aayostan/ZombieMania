@@ -13,6 +13,7 @@ const DISPLAY_LABEL_TIME : float = 3.2
 const MAX_EXTRA_GUNS : int = 3
 const MAX_ZOMBIES : int = 50
 const ENEMY_AMMO : int = 3
+const G_FIRE_DIST : float = 500
 
 # Flags
 var run_tests = false
@@ -51,7 +52,7 @@ var gun_type = 0 # Originally pistol
 
 var game_round : int = 1
 @export var enemy_damage = 10.0
-@export var pickup_probability = .5
+@export var pickup_probability = .15
 
 enum pickup {
 	SODA,
@@ -66,8 +67,8 @@ const PICKUP_PARAMS = [
 		"modifier" = "multiply",
 		"value" = 1.5,
 		"cooldown" = 12,
-		"spritepath" = "res://Resources/Pickups/soda_can.png",
-		"scale" = Vector2(0.05,0.05),
+		"spritepath" = "res://Resources/Pickups/AI_GEN_Soda.png",
+		"scale" = Vector2(0.1,0.1),
 		"g_mod" = 0.05,
 		"sfx" = "PUSo",
 		"lifetime" = 5
@@ -78,7 +79,7 @@ const PICKUP_PARAMS = [
 		"modifier" = "add",
 		"value" = 10,
 		"cooldown" = 0,
-		"spritepath" = "res://Resources/Pickups/sandwhich.png",
+		"spritepath" = "res://Resources/Pickups/AI_GEN_Sandwhich.png",
 		"scale" = Vector2(0.1,0.1),
 		"g_mod" = 0.1,
 		"sfx" = "PUSa",
@@ -89,7 +90,7 @@ const PICKUP_PARAMS = [
 		"stat" = "gun",
 		"modifier" = "add",
 		"value" = 1,
-		"cooldown" = 100,#15
+		"cooldown" = 15,
 		"spritepath" = "res://Resources/Player/Gun/pistol.png",
 		"scale" = Vector2(1,1),
 		"g_mod" = 1,

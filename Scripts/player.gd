@@ -78,21 +78,7 @@ func _physics_process(delta):
 		var DAMAGE_RATE = Stats.enemy_damage
 		var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 		if overlapping_mobs:
-			health -= DAMAGE_RATE * overlapping_mobs.size() * delta
-			%HealthBar.value = health
-			
-			# SoundFX
-			AudioManager.play_sfx("Ow", 0, false, false, true)
-			
-			# Camera Shake - need to return camera to original position after shake finishes
-			trauma = min(trauma + (DAMAGE_RATE * overlapping_mobs.size()) / 1000, 1.2)
-			shake()
-			
-			if health <= 0.0:
-				if(!spawn):
-					health_depleted.emit()
-				else:
-					queue_free()
+			take_damage(DAMAGE_RATE * overlapping_mobs.size() * delta)
 		
 		else:
 			trauma = 0.3
@@ -141,8 +127,8 @@ func _on_game_level_up() -> void:
 			game.update_inventory("Gun")
 			
 			# Running test on additional guns
-			for i in range(4):
-				game.update_inventory("Gun")
+			#for i in range(4):
+				#game.update_inventory("Gun")
 			
 		Stats.pickup_probability = 0.15
 	elif(level == 2):
@@ -208,6 +194,22 @@ func _on_pickup_cooldown(param: Dictionary):
 func HELPERS():
 	pass
 
+func take_damage(damage):
+	health -= damage
+	%HealthBar.value = health
+	
+	# SoundFX
+	AudioManager.play_sfx("Ow", 0, false, false, true)
+	
+	# Camera Shake - need to return camera to original position after shake finishes
+	trauma = min(trauma + (damage) / 1000, 1.2)
+	shake()
+	
+	if health <= 0.0:
+		if(!spawn):
+			health_depleted.emit()
+		else:
+			queue_free()
 
 func spawn_helper():
 	var new_helper = preload("res://Scenes/helper.tscn")

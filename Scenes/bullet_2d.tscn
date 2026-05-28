@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://br65mgv2n0bbd"]
+[gd_scene format=3 uid="uid://br65mgv2n0bbd"]
 
 [ext_resource type="Script" uid="uid://cobx0ou5nkyau" path="res://Scripts/bullet_2d.gd" id="1_lg2ne"]
 [ext_resource type="Texture2D" uid="uid://dftkbqwsfd68r" path="res://Resources/Player/Gun/projectile.png" id="2_q0pid"]
@@ -12,21 +12,21 @@ _limits = [0.0, 0.75, 0.0, 2.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.261364, 0.741573), 0.0, 0.0, 0, 0, Vector2(0.545455, 0), 0.0841501, 0.0841501, 0, 0, Vector2(0.772727, 0.75), 0.0, 0.0, 0, 0, Vector2(1, 0.337079), 0.0, 0.0, 0, 0, Vector2(1.23864, 0.75), 0.0, 0.0, 0, 0, Vector2(1.48864, 0), 0.0, 0.0, 0, 0, Vector2(1.72727, 0.75), 0.0, 0.0, 0, 0, Vector2(2, 0), 0.0, 0.0, 0, 0]
 point_count = 9
 
-[node name="Bullet2D" type="Area2D"]
+[node name="Bullet2D" type="Area2D" unique_id=1232441115]
 top_level = true
 collision_layer = 0
 collision_mask = 3
 monitorable = false
 script = ExtResource("1_lg2ne")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1282840389]
 position = Vector2(-11, -1)
 texture = ExtResource("2_q0pid")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1567996472]
 shape = SubResource("CircleShape2D_naqkr")
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=495702665]
 position = Vector2(-30, 0)
 amount = 12
 texture = ExtResource("3_cq7x4")

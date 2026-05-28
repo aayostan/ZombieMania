@@ -1,10 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dun1cpardk2xw"]
+[gd_scene format=3 uid="uid://dun1cpardk2xw"]
 
 [ext_resource type="Script" uid="uid://b56o2gqw1kccx" path="res://Scripts/game.gd" id="1_nr0af"]
 [ext_resource type="PackedScene" uid="uid://dsw8raqgacxsc" path="res://Scenes/player.tscn" id="2_4mm5m"]
-[ext_resource type="Texture2D" uid="uid://bbon11blvk4e0" path="res://Resources/Pickups/sandwhich.png" id="3_4mm5m"]
+[ext_resource type="Texture2D" uid="uid://mwaseeyx468r" path="res://Resources/Pickups/AI_GEN_Sandwhich.png" id="3_8oqby"]
 [ext_resource type="Texture2D" uid="uid://cswb5do8rrj7q" path="res://Resources/Player/Gun/pistol.png" id="3_nr0af"]
-[ext_resource type="Texture2D" uid="uid://gr1msdd1q8gh" path="res://Resources/Pickups/soda_can.png" id="4_3ds3e"]
+[ext_resource type="Texture2D" uid="uid://dysjuav2ipa4h" path="res://Resources/Pickups/AI_GEN_Soda.png" id="4_150yy"]
 [ext_resource type="Script" uid="uid://b4sjldhm2wfv8" path="res://Scripts/display.gd" id="6_8oqby"]
 [ext_resource type="Script" uid="uid://cirhslil5ylyy" path="res://Scripts/game_over.gd" id="6_60bub"]
 
@@ -23,43 +23,43 @@ bg_color = Color(0.541176, 0.054902, 0.521569, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3louf"]
 bg_color = Color(1, 0, 0, 1)
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" unique_id=195992757]
 y_sort_enabled = true
 script = ExtResource("1_nr0af")
 
-[node name="SpawnTimer" type="Timer" parent="."]
+[node name="SpawnTimer" type="Timer" parent="." unique_id=566233442]
 unique_name_in_owner = true
 wait_time = 0.3
 autostart = true
 
-[node name="PlayTimer" type="Timer" parent="."]
+[node name="PlayTimer" type="Timer" parent="." unique_id=286248503]
 unique_name_in_owner = true
 wait_time = 60.0
 one_shot = true
 autostart = true
 
-[node name="Player" parent="." instance=ExtResource("2_4mm5m")]
+[node name="Player" parent="." unique_id=989650011 instance=ExtResource("2_4mm5m")]
 
-[node name="Path2D" type="Path2D" parent="Player"]
+[node name="Path2D" type="Path2D" parent="Player" unique_id=2078245169]
 curve = SubResource("Curve2D_cp6e5")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D" unique_id=913116273]
 unique_name_in_owner = true
 position = Vector2(-1055, -697)
 
-[node name="Background" type="CanvasLayer" parent="."]
+[node name="Background" type="CanvasLayer" parent="." unique_id=465259725]
 layer = -32
 
-[node name="ColorRect" type="ColorRect" parent="Background"]
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1078783338]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=825481292]
 
-[node name="Score" type="Label" parent="UI"]
+[node name="Score" type="Label" parent="UI" unique_id=86071740]
 unique_name_in_owner = true
 anchors_preset = 1
 anchor_left = 1.0
@@ -75,7 +75,7 @@ text = "Kills: 0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="ExpBar" type="ProgressBar" parent="UI"]
+[node name="ExpBar" type="ProgressBar" parent="UI" unique_id=836663887]
 unique_name_in_owner = true
 offset_left = 60.0
 offset_right = 120.0
@@ -86,7 +86,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_4mm5m")
 fill_mode = 3
 show_percentage = false
 
-[node name="TimeBar" type="ProgressBar" parent="UI"]
+[node name="TimeBar" type="ProgressBar" parent="UI" unique_id=999471610]
 unique_name_in_owner = true
 offset_right = 60.0
 offset_bottom = 1080.0
@@ -95,7 +95,7 @@ value = 100.0
 fill_mode = 3
 show_percentage = false
 
-[node name="Ammo" type="Label" parent="UI"]
+[node name="Ammo" type="Label" parent="UI" unique_id=1313811008]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 5
@@ -110,7 +110,7 @@ theme_override_font_sizes/font_size = 45
 text = "Ammo"
 horizontal_alignment = 1
 
-[node name="Gun_Type" type="Label" parent="UI"]
+[node name="Gun_Type" type="Label" parent="UI" unique_id=642346082]
 visible = false
 anchors_preset = 2
 anchor_top = 1.0
@@ -123,7 +123,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 45
 text = "Gun_Type"
 
-[node name="Level" type="Label" parent="UI"]
+[node name="Level" type="Label" parent="UI" unique_id=1333489299]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 3
@@ -140,7 +140,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 45
 text = "Level"
 
-[node name="Inventory" type="HBoxContainer" parent="UI"]
+[node name="Inventory" type="HBoxContainer" parent="UI" unique_id=507702669]
 unique_name_in_owner = true
 offset_left = 701.0
 offset_top = 936.0
@@ -153,70 +153,70 @@ size_flags_vertical = 8
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/Inventory"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Inventory" unique_id=2139380495]
 layout_mode = 2
 
-[node name="Sandwhich" type="HBoxContainer" parent="UI/Inventory/PanelContainer"]
+[node name="Sandwhich" type="HBoxContainer" parent="UI/Inventory/PanelContainer" unique_id=855210329]
 visible = false
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/PanelContainer/Sandwhich"]
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/PanelContainer/Sandwhich" unique_id=1283006986]
 layout_mode = 2
-texture = ExtResource("3_4mm5m")
+texture = ExtResource("3_8oqby")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Count" type="Label" parent="UI/Inventory/PanelContainer/Sandwhich"]
+[node name="Count" type="Label" parent="UI/Inventory/PanelContainer/Sandwhich" unique_id=301285196]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 text = "X 0"
 
-[node name="PanelContainer2" type="PanelContainer" parent="UI/Inventory"]
+[node name="PanelContainer2" type="PanelContainer" parent="UI/Inventory" unique_id=2026437834]
 layout_mode = 2
 
-[node name="Soda" type="HBoxContainer" parent="UI/Inventory/PanelContainer2"]
+[node name="Soda" type="HBoxContainer" parent="UI/Inventory/PanelContainer2" unique_id=984730019]
 visible = false
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/PanelContainer2/Soda"]
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/PanelContainer2/Soda" unique_id=1008763609]
 layout_mode = 2
-texture = ExtResource("4_3ds3e")
+texture = ExtResource("4_150yy")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Count" type="Label" parent="UI/Inventory/PanelContainer2/Soda"]
+[node name="Count" type="Label" parent="UI/Inventory/PanelContainer2/Soda" unique_id=1178001916]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 text = "X 0"
 
-[node name="PanelContainer3" type="PanelContainer" parent="UI/Inventory"]
+[node name="PanelContainer3" type="PanelContainer" parent="UI/Inventory" unique_id=354166938]
 layout_mode = 2
 
-[node name="Gun" type="HBoxContainer" parent="UI/Inventory/PanelContainer3"]
+[node name="Gun" type="HBoxContainer" parent="UI/Inventory/PanelContainer3" unique_id=1053429442]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/PanelContainer3/Gun"]
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/PanelContainer3/Gun" unique_id=1900289654]
 layout_mode = 2
 texture = ExtResource("3_nr0af")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Count" type="Label" parent="UI/Inventory/PanelContainer3/Gun"]
+[node name="Count" type="Label" parent="UI/Inventory/PanelContainer3/Gun" unique_id=857916236]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 text = "X 0"
 
-[node name="Display" type="CanvasLayer" parent="."]
+[node name="Display" type="CanvasLayer" parent="." unique_id=1849487980]
 unique_name_in_owner = true
 visible = false
 script = ExtResource("6_8oqby")
 
-[node name="Display_Label" type="Label" parent="Display"]
+[node name="Display_Label" type="Label" parent="Display" unique_id=1360010276]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -234,12 +234,12 @@ text = "Test Words"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GameOver" type="CanvasLayer" parent="."]
+[node name="GameOver" type="CanvasLayer" parent="." unique_id=1078716511]
 unique_name_in_owner = true
 process_mode = 3
 script = ExtResource("6_60bub")
 
-[node name="ColorRect" type="ColorRect" parent="GameOver"]
+[node name="ColorRect" type="ColorRect" parent="GameOver" unique_id=64928012]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -247,7 +247,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.439216)
 
-[node name="Label" type="Label" parent="GameOver/ColorRect"]
+[node name="Label" type="Label" parent="GameOver/ColorRect" unique_id=1486091312]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -266,7 +266,7 @@ text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="FinalScore" type="Label" parent="GameOver/ColorRect"]
+[node name="FinalScore" type="Label" parent="GameOver/ColorRect" unique_id=463867252]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -285,7 +285,7 @@ theme_override_font_sizes/font_size = 124
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="GameOver/ColorRect"]
+[node name="Button" type="Button" parent="GameOver/ColorRect" unique_id=993402658]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -302,11 +302,11 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 80
 text = "Restart"
 
-[node name="BossOverlay" type="CanvasLayer" parent="."]
+[node name="BossOverlay" type="CanvasLayer" parent="." unique_id=977810008]
 unique_name_in_owner = true
 visible = false
 
-[node name="BossHealthBar" type="ProgressBar" parent="BossOverlay"]
+[node name="BossHealthBar" type="ProgressBar" parent="BossOverlay" unique_id=707750985]
 unique_name_in_owner = true
 anchors_preset = 5
 anchor_left = 0.5
@@ -319,7 +319,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_3louf")
 value = 100.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="BossOverlay/BossHealthBar"]
+[node name="Label" type="Label" parent="BossOverlay/BossHealthBar" unique_id=734008590]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -336,7 +336,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
 text = "Boss Health"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=359381146]
 
 [connection signal="level_up" from="." to="Player" method="_on_game_level_up"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawntimer_timeout"]
